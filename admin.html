@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration - Chicken Paradise</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>Chicken Paradise - Administration</h1>
+            </div>
+            <ul>
+                <li><a href="index.html">Accueil site</a></li>
+                <li><a href="admin.html">Tableau de bord</a></li>
+                <li><a href="connexion.html">Déconnexion</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="admin-section">
+            <div class="admin-container">
+                <h2>Panneau d'administration</h2>
+                <p>Gestion des utilisateurs et des commandes</p>
+
+                <div class="admin-filters">
+                    <h3>Filtres de recherche</h3>
+                    <form action="admin.html" method="get">
+                        <div class="filter-group">
+                            <label for="recherche-utilisateur">Rechercher un utilisateur</label>
+                            <input type="text" id="recherche-utilisateur" name="recherche-utilisateur" placeholder="Nom, prénom, email...">
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="type-utilisateur">Type d'utilisateur</label>
+                            <select id="type-utilisateur" name="type-utilisateur">
+                                <option value="tous">Tous les utilisateurs</option>
+                                <option value="clients">Clients uniquement</option>
+                                <option value="avec-commandes">Clients avec commandes</option>
+                                <option value="administrateurs">Administrateurs</option>
+                                <option value="restaurateurs">Restaurateurs</option>
+                                <option value="livreurs">Livreurs</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="statut-compte">Statut du compte</label>
+                            <select id="statut-compte" name="statut-compte">
+                                <option value="tous">Tous les statuts</option>
+                                <option value="actif">Actifs</option>
+                                <option value="inactif">Inactifs</option>
+                                <option value="suspendu">Suspendus</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="date-inscription">Inscrit depuis</label>
+                            <select id="date-inscription" name="date-inscription">
+                                <option value="tous">Toutes les dates</option>
+                                <option value="7jours">7 derniers jours</option>
+                                <option value="30jours">30 derniers jours</option>
+                                <option value="6mois">6 derniers mois</option>
+                                <option value="1an">1 an</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <button type="submit">Rechercher</button>
+                            <button type="reset">Réinitialiser</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="admin-stats">
+                    <h3>Statistiques</h3>
+                    <div class="stats-container">
+                        <div class="stat-item">
+                            <p class="stat-label">Total utilisateurs</p>
+                            <p class="stat-value">1 247</p>
+                        </div>
+                        <div class="stat-item">
+                            <p class="stat-label">Clients actifs</p>
+                            <p class="stat-value">892</p>
+                        </div>
+                        <div class="stat-item">
+                            <p class="stat-label">Nouveaux ce mois</p>
+                            <p class="stat-value">43</p>
+                        </div>
+                        <div class="stat-item">
+                            <p class="stat-label">Avec commandes</p>
+                            <p class="stat-value">678</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="users-list">
+                    <h3>Liste des utilisateurs</h3>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Email</th>
+                                <th>Type</th>
+                                <th>Date inscription</th>
+                                <th>Nb commandes</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>001</td>
+                                <td>Dupont</td>
+                                <td>Jean</td>
+                                <td>jean.dupont@email.fr</td>
+                                <td>Client</td>
+                                <td>15/01/2025</td>
+                                <td>12</td>
+                                <td>Actif</td>
+                                <td>
+                                    <a href="profil.html">Voir profil</a>
+                                    <a href="modifier-utilisateur.html">Modifier</a>
+                                    <a href="suspendre-utilisateur.html">Suspendre</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>002</td>
+                                <td>Martin</td>
+                                <td>Sophie</td>
+                                <td>sophie.martin@email.fr</td>
+                                <td>Client</td>
+                                <td>20/01/2025</td>
+                                <td>8</td>
+                                <td>Actif</td>
+                                <td>
+                                    <a href="profil.html">Voir profil</a>
+                                    <a href="modifier-utilisateur.html">Modifier</a>
+                                    <a href="suspendre-utilisateur.html">Suspendre</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>003</td>
+                                <td>Bernard</td>
+                                <td>Marc</td>
+                                <td>marc.bernard@email.fr</td>
+                                <td>Client</td>
+                                <td>22/01/2025</td>
+                                <td>5</td>
+                                <td>Actif</td>
+                                <td>
+                                    <a href="profil.html">Voir profil</a>
+                                    <a href="modifier-utilisateur.html">Modifier</a>
+                                    <a href="suspendre-utilisateur.html">Suspendre</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>004</td>
+                                <td>Petit</td>
+                                <td>Julie</td>
+                                <td>julie.petit@email.fr</td>
+                                <td>Client</td>
+                                <td>25/01/2025</td>
+                                <td>15</td>
+                                <td>Actif</td>
+                                <td>
+                                    <a href="profil.html">Voir profil</a>
+                                    <a href="modifier-utilisateur.html">Modifier</a>
+                                    <a href="suspendre-utilisateur.html">Suspendre</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>005</td>
+                                <td>Robert</td>
+                                <td>Pierre</td>
+                                <td>pierre.robert@email.fr</td>
+                                <td>Client</td>
+                                <td>28/01/2025</td>
+                                <td>3</td>
+                                <td>Actif</td>
+                                <td>
+                                    <a href="profil.html">Voir profil</a>
+                                    <a href="modifier-utilisateur.html">Modifier</a>
+                                    <a href="suspendre-utilisateur.html">Suspendre</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>006</td>
+                                <td>Moreau</td>
+                                <td>Claire</td>
+                                <td>claire.moreau@email.fr</td>
+                                <td>Client</td>
+                                <td>29/01/2025</td>
+                                <td>0</td>
+                                <td>Actif</td>
+                                <td>
+                                    <a href="profil.html">Voir profil</a>
+                                    <a href="modifier-utilisateur.html">Modifier</a>
+                                    <a href="suspendre-utilisateur.html">Suspendre</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>007</td>
+                                <td>Simon</td>
+                                <td>Thomas</td>
+                                <td>thomas.simon@email.fr</td>
+                                <td>Client</td>
+                                <td>30/01/2025</td>
+                                <td>7</td>
+                                <td>Suspendu</td>
+                                <td>
+                                    <a href="profil.html">Voir profil</a>
+                                    <a href="modifier-utilisateur.html">Modifier</a>
+                                    <a href="reactiver-utilisateur.html">Réactiver</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>008</td>
+                                <td>Laurent</td>
+                                <td>Marie</td>
+                                <td>marie.laurent@email.fr</td>
+                                <td>Client</td>
+                                <td>01/02/2025</td>
+                                <td>2</td>
+                                <td>Actif</td>
+                                <td>
+                                    <a href="profil.html">Voir profil</a>
+                                    <a href="modifier-utilisateur.html">Modifier</a>
+                                    <a href="suspendre-utilisateur.html">Suspendre</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>009</td>
+                                <td>Lefevre</td>
+                                <td>Antoine</td>
+                                <td>antoine.lefevre@email.fr</td>
+                                <td>Livreur</td>
+                                <td>10/01/2025</td>
+                                <td>-</td>
+                                <td>Actif</td>
+                                <td>
+                                    <a href="profil.html">Voir profil</a>
+                                    <a href="modifier-utilisateur.html">Modifier</a>
+                                    <a href="suspendre-utilisateur.html">Suspendre</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>010</td>
+                                <td>Roux</td>
+                                <td>Isabelle</td>
+                                <td>isabelle.roux@email.fr</td>
+                                <td>Restaurateur</td>
+                                <td>05/01/2025</td>
+                                <td>-</td>
+                                <td>Actif</td>
+                                <td>
+                                    <a href="profil.html">Voir profil</a>
+                                    <a href="modifier-utilisateur.html">Modifier</a>
+                                    <a href="suspendre-utilisateur.html">Suspendre</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="pagination">
+                        <a href="admin.html?page=1">1</a>
+                        <a href="admin.html?page=2">2</a>
+                        <a href="admin.html?page=3">3</a>
+                        <a href="admin.html?page=4">4</a>
+                        <a href="admin.html?page=5">5</a>
+                        <span>...</span>
+                        <a href="admin.html?page=25">25</a>
+                    </div>
+                </div>
+
+                <div class="admin-actions">
+                    <h3>Actions rapides</h3>
+                    <div class="actions-container">
+                        <a href="ajouter-utilisateur.html">Ajouter un utilisateur</a>
+                        <a href="export-utilisateurs.html">Exporter la liste</a>
+                        <a href="statistiques.html">Voir statistiques détaillées</a>
+                        <a href="logs.html">Consulter les logs</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>À propos</h3>
+                <p>Chicken Paradise - Le meilleur poulet frit en ville</p>
+            </div>
+            <div class="footer-section">
+                <h3>Nous contacter</h3>
+                <p>Email : contact@chickenparadise.fr</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Chicken Paradise. Tous droits réservés.</p>
+        </div>
+    </footer>
+</body>
+</html>

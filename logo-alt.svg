@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Fond -->
+  <rect width="200" height="200" fill="#1a1a1a"/>
+  
+  <!-- Forme de poulet géométrique stylisé -->
+  <g transform="translate(100, 100)">
+    <!-- Corps principal (forme en goutte) -->
+    <path d="M 0 -40 Q 30 -35 35 -10 Q 40 20 20 45 Q 0 55 -20 45 Q -40 20 -35 -10 Q -30 -35 0 -40 Z" fill="#ff6b35"/>
+    
+    <!-- Tête (cercle) -->
+    <circle cx="0" cy="-45" r="18" fill="#ff6b35"/>
+    
+    <!-- Crête minimaliste -->
+    <path d="M -8 -58 L -3 -63 L 2 -58 L 7 -63 L 8 -58" fill="none" stroke="#fafafa" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- Œil -->
+    <circle cx="6" cy="-45" r="3" fill="#1a1a1a"/>
+    
+    <!-- Bec -->
+    <path d="M 12 -43 L 20 -44 L 12 -46 Z" fill="#fafafa"/>
+    
+    <!-- Aile (trait courbe) -->
+    <path d="M -25 -5 Q -40 5 -35 20" fill="none" stroke="#fafafa" stroke-width="4" stroke-linecap="round"/>
+    
+    <!-- Pattes minimalistes -->
+    <line x1="-10" y1="45" x2="-10" y2="60" stroke="#fafafa" stroke-width="3" stroke-linecap="round"/>
+    <line x1="10" y1="45" x2="10" y2="60" stroke="#fafafa" stroke-width="3" stroke-linecap="round"/>
+    
+    <!-- Doigts -->
+    <line x1="-10" y1="60" x2="-15" y2="65" stroke="#fafafa" stroke-width="2" stroke-linecap="round"/>
+    <line x1="-10" y1="60" x2="-5" y2="65" stroke="#fafafa" stroke-width="2" stroke-linecap="round"/>
+    <line x1="10" y1="60" x2="5" y2="65" stroke="#fafafa" stroke-width="2" stroke-linecap="round"/>
+    <line x1="10" y1="60" x2="15" y2="65" stroke="#fafafa" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Texte "CP" en bas (optionnel) -->
+  <text x="100" y="185" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#ff6b35" text-anchor="middle">CHICKEN PARADISE</text>
+</svg>
