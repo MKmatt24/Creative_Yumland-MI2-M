@@ -1,367 +1,77 @@
-/* ========================================
-   CHICKEN PARADISE - CHARTE GRAPHIQUE
-   ========================================
-   Couleurs principales :
-   - Noir profond : #1a1a1a
-   - Orange vif : #ff6b35
-   - Orange foncé : #e85d2a
-   - Blanc cassé : #fafafa
-   - Gris clair : #f5f5f5
-   - Gris moyen : #666666
-   ======================================== */
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Los Pollos Hermanos</title>
+    <link rel="icon" type="image/png" href="logo.svg">
+    <link rel="stylesheet" href="connexion.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>Los Pollos Hermanos</h1>
+            </div>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="connexion.html">Connexion</a></li>
+            </ul>
+        </nav>
+    </header>
 
-/* === RESET ET BASE === */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+    <main>
+        <section class="connexion-section">
+            <div class="connexion-container">
+                <h2>Connexion</h2>
+                <p>Connectez-vous pour accéder à votre compte</p>
+                
+                <form action="traitement-connexion.php" method="post">
+                    <div class="form-group">
+                        <label for="email">Adresse email</label>
+                        <input type="email" id="email" name="email" required placeholder="exemple@email.com">
+                    </div>
 
-body {
-    font-family: 'Arial', 'Helvetica', sans-serif;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-    color: #fafafa;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" name="password" required placeholder="Votre mot de passe">
+                    </div>
 
-/* === HEADER === */
-header {
-    background-color: #1a1a1a;
-    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="remember" name="remember">
+                            <span>Se souvenir de moi</span>
+                        </label>
+                    </div>
 
-nav {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+                    <div class="form-group">
+                        <button type="submit">Se connecter</button>
+                    </div>
+                </form>
 
-.logo h1 {
-    color: #ff6b35;
-    font-size: 1.8rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
+                <div class="inscription-link">
+                    <p>Vous n'avez pas de compte ? <a href="inscription.html">Inscrivez-vous ici</a></p>
+                </div>
+            </div>
+        </section>
+    </main>
 
-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 2rem;
-}
-
-nav ul li a {
-    color: #fafafa;
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 500;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-}
-
-nav ul li a:hover {
-    background-color: #ff6b35;
-    color: #1a1a1a;
-    transform: translateY(-2px);
-}
-
-/* === MAIN CONTENT === */
-main {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-}
-
-.connexion-section {
-    width: 100%;
-    max-width: 500px;
-}
-
-.connexion-container {
-    background: linear-gradient(145deg, #2d2d2d 0%, #1a1a1a 100%);
-    border-radius: 20px;
-    padding: 3rem;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
-                0 0 0 1px rgba(255, 107, 53, 0.1);
-    border: 2px solid rgba(255, 107, 53, 0.2);
-}
-
-.connexion-container h2 {
-    color: #ff6b35;
-    font-size: 2.2rem;
-    margin-bottom: 0.5rem;
-    text-align: center;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.connexion-container > p {
-    color: #fafafa;
-    text-align: center;
-    margin-bottom: 2rem;
-    font-size: 1rem;
-    opacity: 0.9;
-}
-
-/* === FORMULAIRE === */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.form-group label {
-    color: #fafafa;
-    font-size: 0.95rem;
-    font-weight: 600;
-    margin-bottom: 0.3rem;
-}
-
-.form-group input[type="email"],
-.form-group input[type="password"] {
-    width: 100%;
-    padding: 1rem;
-    background-color: #1a1a1a;
-    border: 2px solid #3d3d3d;
-    border-radius: 10px;
-    color: #fafafa;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-}
-
-.form-group input[type="email"]:focus,
-.form-group input[type="password"]:focus {
-    outline: none;
-    border-color: #ff6b35;
-    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
-    background-color: #242424;
-}
-
-.form-group input::placeholder {
-    color: #666666;
-    opacity: 0.8;
-}
-
-/* Checkbox "Se souvenir de moi" */
-.checkbox-group {
-    display: flex;
-    align-items: center;
-}
-
-.checkbox-group label {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    user-select: none;
-    font-weight: normal;
-}
-
-.checkbox-group input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    margin-right: 0.7rem;
-    accent-color: #ff6b35;
-    cursor: pointer;
-}
-
-.checkbox-group label span {
-    color: #fafafa;
-    font-size: 0.95rem;
-}
-
-/* === BOUTON === */
-button[type="submit"] {
-    width: 100%;
-    padding: 1.2rem;
-    background: linear-gradient(135deg, #ff6b35 0%, #e85d2a 100%);
-    color: #fafafa;
-    border: none;
-    border-radius: 10px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
-}
-
-button[type="submit"]:hover {
-    background: linear-gradient(135deg, #e85d2a 0%, #d14d1f 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
-}
-
-button[type="submit"]:active {
-    transform: translateY(0);
-}
-
-/* === LIEN D'INSCRIPTION === */
-.inscription-link {
-    text-align: center;
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid #3d3d3d;
-}
-
-.inscription-link p {
-    color: #fafafa;
-    font-size: 0.95rem;
-}
-
-.inscription-link a {
-    color: #ff6b35;
-    text-decoration: none;
-    font-weight: bold;
-    transition: all 0.3s ease;
-}
-
-.inscription-link a:hover {
-    color: #e85d2a;
-    text-decoration: underline;
-}
-
-/* === FOOTER === */
-footer {
-    background-color: #1a1a1a;
-    color: #fafafa;
-    padding: 2rem 0 1rem;
-    margin-top: auto;
-    border-top: 3px solid #ff6b35;
-}
-
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-bottom: 1.5rem;
-}
-
-.footer-section h3 {
-    color: #ff6b35;
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.footer-section p {
-    color: #fafafa;
-    line-height: 1.8;
-    opacity: 0.9;
-}
-
-.footer-section ul {
-    list-style: none;
-}
-
-.footer-section ul li {
-    margin-bottom: 0.5rem;
-}
-
-.footer-section ul li a {
-    color: #fafafa;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    opacity: 0.9;
-}
-
-.footer-section ul li a:hover {
-    color: #ff6b35;
-    padding-left: 5px;
-}
-
-.footer-bottom {
-    text-align: center;
-    padding-top: 1.5rem;
-    border-top: 1px solid #3d3d3d;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.footer-bottom p {
-    color: #fafafa;
-    font-size: 0.9rem;
-    opacity: 0.8;
-}
-
-/* === RESPONSIVE === */
-@media (max-width: 768px) {
-    nav {
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1rem;
-    }
-
-    nav ul {
-        flex-direction: column;
-        gap: 0.5rem;
-        text-align: center;
-        width: 100%;
-    }
-
-    nav ul li a {
-        display: block;
-    }
-
-    .logo h1 {
-        font-size: 1.5rem;
-    }
-
-    .connexion-container {
-        padding: 2rem 1.5rem;
-    }
-
-    .connexion-container h2 {
-        font-size: 1.8rem;
-    }
-
-    main {
-        padding: 1rem;
-    }
-}
-
-/* === ANIMATIONS === */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.connexion-container {
-    animation: fadeIn 0.5s ease-out;
-}
-
-/* === ACCESSIBILITÉ === */
-input:focus-visible,
-button:focus-visible,
-a:focus-visible {
-    outline: 2px solid #ff6b35;
-    outline-offset: 2px;
-}
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>À propos</h3>
+                <p>Los Pollos Hermanos - Le meilleur poulet frit en ville</p>
+            </div>
+            <div class="footer-section">
+                <h3>Nous contacter</h3>
+                <p>Email : contact@chickenparadise.fr</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Los Pollos Hermanos. Tous droits réservés.</p>
+        </div>
+    </footer>
+</body>
+</html>
