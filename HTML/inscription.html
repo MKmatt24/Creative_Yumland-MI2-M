@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Los Pollos Hermanos</title>
+    <link rel="icon" type="image/png" href="logo.svg">
+    <link rel="stylesheet" href="inscription.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>Los Pollos Hermanos</h1>
+            </div>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="connexion.html">Connexion</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="inscription-section">
+            <div class="inscription-container">
+                <h2>Créer un compte</h2>
+                <p>Rejoignez Los Pollos Hermanos et profitez d'offres exclusives</p>
+                
+                <form action="traitement-inscription.php" method="post">
+                    <div class="form-group">
+                        <label for="nom">Nom</label>
+                        <input type="text" id="nom" name="nom" required placeholder="Votre nom">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prenom">Prénom</label>
+                        <input type="text" id="prenom" name="prenom" required placeholder="Votre prénom">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Adresse email</label>
+                        <input type="email" id="email" name="email" required placeholder="exemple@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telephone">Numéro de téléphone</label>
+                        <input type="tel" id="telephone" name="telephone" required placeholder="06 12 34 56 78">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adresse">Adresse</label>
+                        <input type="text" id="adresse" name="adresse" required placeholder="Numéro et nom de rue">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="code-postal">Code postal</label>
+                        <input type="text" id="code-postal" name="code-postal" required placeholder="75000">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ville">Ville</label>
+                        <input type="text" id="ville" name="ville" required placeholder="Paris">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" name="password" required placeholder="Minimum 8 caractères">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm-password">Confirmer le mot de passe</label>
+                        <input type="password" id="confirm-password" name="confirm-password" required placeholder="Retapez votre mot de passe">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="checkbox" id="newsletter" name="newsletter">
+                        <label for="newsletter">Je souhaite recevoir les offres et actualités par email</label>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="checkbox" id="cgu" name="cgu" required>
+                        <label for="cgu">J'accepte les <a href="cgu.html">conditions générales d'utilisation</a></label>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit">S'inscrire</button>
+                    </div>
+                </form>
+
+                <div class="connexion-link">
+                    <p>Vous avez déjà un compte ? <a href="connexion.html">Connectez-vous ici</a></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>À propos</h3>
+                <p>Los Pollos Hermanos - Le meilleur poulet frit en ville</p>
+            </div>
+            <div class="footer-section">
+                <h3>Nous contacter</h3>
+                <p>Email : contact@lospolloshermanos.fr</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Los Pollos Hermanos. Tous droits réservés.</p>
+        </div>
+    </footer>
+</body>
+</html>

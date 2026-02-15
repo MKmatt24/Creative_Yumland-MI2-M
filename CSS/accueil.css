@@ -1,0 +1,123 @@
+/* === CONFIGURATION & SMOOTH SCROLL === */
+html {
+    scroll-behavior: smooth;
+}
+
+:root {
+    --noir: #1a1a1a;
+    --orange: #ff6b35;
+    --blanc: #fafafa;
+    --gris-fonce: #242424;
+}
+
+/* === BASE === */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--noir);
+    color: var(--blanc);
+}
+
+/* === HEADER FIXE === */
+header {
+    background-color: rgba(26, 26, 26, 0.98);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2000;
+    border-bottom: 1px solid rgba(255, 107, 53, 0.2);
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 5%; /* Réduit un peu le padding vertical pour le logo large */
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.logo-box {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.nav-logo {
+    height: 100px; /* Logo agrandi pour une visibilité maximale */
+    width: auto;
+    filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.3)); /* Petit éclat orange */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.nav-logo:hover {
+    transform: scale(1.15) rotate(-3deg);
+}
+
+.nav-links {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    gap: 40px; /* Plus d'espace entre les onglets restants */
+}
+
+.nav-links a {
+    color: var(--blanc);
+    text-decoration: none;
+    font-weight: 800; /* Texte un peu plus gras */
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    transition: 0.3s;
+    letter-spacing: 2px;
+}
+
+.nav-links a:hover { color: var(--orange); }
+
+.header-right-spacer {
+    flex: 1;
+}
+
+/* === TITRE MONUMENTAL === */
+.main-title-screen {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--noir);
+}
+
+.huge-title {
+    font-size: clamp(3rem, 15vw, 10rem);
+    line-height: 0.85;
+    text-align: center;
+    font-weight: 900;
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: -3px;
+    animation: titleFade 1.5s ease-out;
+}
+
+.huge-title .outline {
+    color: transparent;
+    -webkit-text-stroke: 2px var(--orange);
+}
+
+/* ... Le reste des styles (hero, sections, animations) reste identique ... */
+
+.scroll-indicator { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); text-align: center; }
+.arrow { width: 2px; height: 50px; background: linear-gradient(to bottom, var(--orange), transparent); margin: 0 auto; animation: scrollLine 2s infinite; }
+.hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; }
+.badge-hero { background: rgba(255, 107, 53, 0.1); color: var(--orange); padding: 6px 16px; border-radius: 20px; font-weight: bold; font-size: 0.75rem; text-transform: uppercase; margin-bottom: 1.5rem; display: inline-block; }
+.hero-container h2 { font-size: 3.5rem; text-transform: uppercase; margin-bottom: 1.5rem; }
+.btn-primary { background-color: var(--orange); color: var(--noir); text-decoration: none; padding: 15px 35px; border-radius: 10px; font-weight: bold; text-transform: uppercase; display: inline-block; }
+.btn-secondary { border: 2px solid #333; color: var(--blanc); text-decoration: none; padding: 15px 35px; border-radius: 10px; font-weight: bold; text-transform: uppercase; display: inline-block; margin-left: 10px; }
+.section-padding { padding: 100px 10%; }
+.section-title { font-size: 2.5rem; color: var(--orange); text-transform: uppercase; margin-bottom: 40px; text-align: center;}
+.history-text { background: var(--gris-fonce); padding: 40px; border-radius: 20px; border-left: 5px solid var(--orange); }
+.quote { color: var(--orange); font-style: italic; font-size: 1.3rem; margin-top: 30px; text-align: center; display: block;}
+.contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+.contact-card { background: #111; padding: 30px; border-radius: 15px; border: 1px solid #333; text-align: center; }
+footer { text-align: center; padding: 3rem; border-top: 1px solid #333; color: #555; font-size: 0.8rem; }
+@keyframes titleFade { from { opacity: 0; transform: translateY(20px); filter: blur(5px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+@keyframes scrollLine { 0% { transform: scaleY(0); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform: scaleY(1); transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
