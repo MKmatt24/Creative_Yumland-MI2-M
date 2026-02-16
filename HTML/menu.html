@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu | Los Pollos Hermanos</title>
+    <link rel="stylesheet" href="menu.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <h1>LOS POLLOS</h1>
+    </div>
+    <nav class="nav-links">
+        <a href="index.html">Accueil</a>
+        <a href="menu.html" class="active">Menu</a>
+    </nav>
+</header>
+
+<section class="menu-hero">
+    <h2>Nos Menus Légendaires</h2>
+    <p>Le goût inimitable du Nouveau-Mexique, livré chez vous.</p>
+</section>
+
+<div class="categories">
+    <button class="cat-btn active">Tout</button>
+    <button class="cat-btn">Burgers</button>
+    <button class="cat-btn">Poulet</button>
+    <button class="cat-btn">Accompagnements</button>
+    <button class="cat-btn">Desserts</button>
+</div>
+
+<main class="menu-container">
+    <script>
+        const plats = [
+            { nom: "Le Seau Albuquerque", desc: "12 pièces de poulet frit secret, servi avec 2 sauces.", prix: "19.99€", cat: "Poulet" },
+            { nom: "Pollos Burger", desc: "Filet de poulet pané, cheddar fondu, laitue et sauce iconique.", prix: "8.50€", cat: "Burgers" },
+            { nom: "Ailes Fuego", desc: "8 ailes marinées dans notre sauce pimentée signature.", prix: "11.00€", cat: "Poulet" },
+            { nom: "Tendres Hermano", desc: "5 filets de poulet panés à la main, ultra tendres.", prix: "9.00€", cat: "Poulet" },
+            { nom: "Burrito Breakfast", desc: "L'original : œufs, chorizo, pommes de terre et fromage.", prix: "7.50€", cat: "Spécialités" },
+            { nom: "Tacos Al Pastor", desc: "3 tacos au porc mariné, oignons rouges et ananas.", prix: "9.50€", cat: "Spécialités" },
+            { nom: "Burrito Suprême", desc: "Poulet effiloché, riz épicé, haricots noirs et salsa.", prix: "10.50€", cat: "Spécialités" },
+            { nom: "Quesadilla XL", desc: "Tortilla géante grillée au mélange de trois fromages.", prix: "6.50€", cat: "Spécialités" },
+            { nom: "Enchiladas Rouges", desc: "Nappées de notre sauce chili traditionnelle maison.", prix: "12.00€", cat: "Spécialités" },
+            { nom: "Bol de Rice Pollos", desc: "Riz épicé, maïs grillé, poulet et guacamole frais.", prix: "9.90€", cat: "Accompagnements" },
+            { nom: "Nachos de la Loma", desc: "Cheddar fondu, jalapeños et crème acidulée.", prix: "8.00€", cat: "Accompagnements" },
+            { nom: "Wrap Spicy", desc: "Poulet croustillant, mayo épicée et légumes frais.", prix: "7.90€", cat: "Burgers" },
+            { nom: "Frites Maison", desc: "Coupées main avec notre mélange de sel secret.", prix: "3.50€", cat: "Accompagnements" },
+            { nom: "Coleslaw Crémeux", desc: "La recette originale de Gus, croquante à souhait.", prix: "3.00€", cat: "Accompagnements" },
+            { nom: "Sopapillas", desc: "Beignets légers servis chauds avec du miel local.", prix: "4.50€", cat: "Desserts" },
+            { nom: "Flan au Caramel", desc: "Un classique onctueux pour finir en douceur.", prix: "4.00€", cat: "Desserts" }
+        ];
+
+        const container = document.querySelector('.menu-container');
+        plats.forEach(p => {
+            container.innerHTML += `
+                <div class="menu-card" data-category="${p.cat}">
+                    <div class="card-image"><span>LOS POLLOS</span></div>
+                    <div class="card-body">
+                        <span class="badge">${p.cat}</span>
+                        <h3>${p.nom}</h3>
+                        <p>${p.desc}</p>
+                        <div class="card-footer">
+                            <span class="price">${p.prix}</span>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    </script>
+</main>
+
+<footer>
+    <p>&copy; 2026 LOS POLLOS HERMANOS - TASTE THE FAMILY</p>
+</footer>
+
+</body>
+</html>
