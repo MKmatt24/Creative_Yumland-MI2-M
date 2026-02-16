@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil - Chicken Paradise</title>
+    <link rel="stylesheet" href="Profil.css"> 
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>Chicken Paradise</h1>
+            </div>
+            <ul>
+                <li><a href="accueil.html">Accueil</a></li>
+                <li><a href="menu.html">Menu</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="connexion.html">Connexion</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="profil-section">
+            <div class="profil-container">
+                
+                <div class="profil-header">
+                    <div class="avatar-container">
+                        <img src="avatar_jotaro.png" alt="Avatar">
+                        <button class="edit-avatar-btn" aria-label="Changer la photo">📷</button>
+                    </div>
+                    <div class="user-identity">
+                        <h2>Maxence MARCHAND</h2>
+                        <p class="member-date">Membre depuis 2024</p>
+                        
+                        <div class="loyalty-card">
+                            <span class="loyalty-label">Points Fidélité</span>
+                            <span class="loyalty-points">1,050 PTS</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 70%;"></div>
+                            </div>
+                            <small>Plus que 450 pts pour un Menu offert ! 🍗</small>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="divider">
+
+                <div class="profil-content-grid">
+                    <div class="info-column">
+                        <h3>Mes Coordonnées</h3>
+                        <form class="profil-form">
+                            <div class="form-group-row">
+                                <div class="form-group">
+                                    <label>Nom complet</label>
+                                    <div class="input-with-btn">
+                                        <input type="text" value="Maxence MARCHAND" readonly>
+                                        <button type="button" class="icon-btn">✏️</button>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Date de naissance 🎁</label>
+                                    <div class="input-with-btn">
+                                        <input type="text" value="26/06/2006" readonly>
+                                        <button type="button" class="icon-btn">✏️</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Email</label>
+                                <div class="input-with-btn">
+                                    <input type="email" value="maxence.marchand16@gmail.com" readonly>
+                                    <button type="button" class="icon-btn">✏️</button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Téléphone</label>
+                                <div class="input-with-btn">
+                                    <input type="tel" value="07 86 00 58 47" readonly>
+                                    <button type="button" class="icon-btn">✏️</button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Adresse de livraison</label>
+                                <div class="input-with-btn">
+                                    <input type="text" value="12 Rue du Poulet Croustillant, 95000 Cergy" readonly>
+                                    <button type="button" class="icon-btn">✏️</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="history-column">
+                        <h3>Dernières Commandes</h3>
+                        <div class="order-list">
+                            <div class="order-card">
+                                <div class="order-icon">🍗</div>
+                                <div class="order-details">
+                                    <h4>Commande #4023</h4>
+                                    <span>14/01/2026 • 24.50€</span>
+                                </div>
+                                <button class="reorder-btn">Commander à nouveau</button>
+                            </div>
+
+                            <div class="order-card">
+                                <div class="order-icon">🍔</div>
+                                <div class="order-details">
+                                    <h4>Commande #3890</h4>
+                                    <span>05/11/2025 • 18.90€</span>
+                                </div>
+                                <button class="reorder-btn">Commander à nouveau</button>
+                            </div>
+                             <div class="order-card">
+                                <div class="order-icon">🍟</div>
+                                <div class="order-details">
+                                    <h4>Commande #3100</h4>
+                                    <span>12/08/2025 • 12.00€</span>
+                                </div>
+                                <button class="reorder-btn">Commander à nouveau</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div> </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>À propos</h3>
+                <p>Chicken Paradise - Le meilleur poulet frit en ville</p>
+            </div>
+            <div class="footer-section">
+                <h3>Nous contacter</h3>
+                <p>Email : contact@chickenparadise.fr</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Chicken Paradise. Tous droits réservés.</p>
+        </div>
+    </footer>
+</body>
+</html>
