@@ -94,7 +94,7 @@ header {
     
     /* Ajout de l'image de fond */
     background: linear-gradient(rgba(26, 26, 26, 0.6), rgba(26, 26, 26, 0.6)), 
-                url('../Images/fond.jpg') no-repeat center center;
+                url('../IMAGES/fond.jpg') no-repeat center center;
     background-size: cover; /* L'image couvre tout l'écran */
     
     /* Optionnel : fixe l'image pour un effet parallaxe léger */
