@@ -44,29 +44,22 @@ nav {
     align-items: center;
 }
 
-.logo h1 {
-    color: #ff6b35;
-    font-size: 1.8rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+.logo-box {
+    flex: 1;
+    display: flex;
+    align-items: center;
 }
 
-.logo a {
-    text-decoration: none;
-    color: inherit;
-    transition: all 0.3s ease;
+.nav-logo {
+    height: 100px; /* Logo agrandi pour une visibilité maximale */
+    width: auto;
+    filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.3)); /* Petit éclat orange */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.logo a:hover h1 {
-    color: #e85d2a;
+.nav-logo:hover {
+    transform: scale(1.15) rotate(-3deg);
 }
-
-.logo a:visited {
-    color: inherit;
-}
-
 nav ul {
     list-style: none;
     display: flex;
