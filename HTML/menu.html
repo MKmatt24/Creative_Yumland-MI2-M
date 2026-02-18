@@ -9,12 +9,20 @@
 <body>
 
 <header>
-    <div class="logo">
-        <h1>LOS POLLOS</h1>
-    </div>
-    <nav class="nav-links">
-        <a href="index.html">Accueil</a>
-        <a href="menu.html" class="active">Menu</a>
+    <nav>
+        <div class="logo">
+            <div class="logo-box">
+                <img src="../IMAGES/logo.png" alt="Logo Los Pollos" class="nav-logo">
+            </div>
+        </div>
+        <ul>
+            <li><a href="accueil.html">Accueil</a></li>
+            <li><a href="menu.html" class="active">Menu</a></li>
+            <li><a href="profil.html">Profil</a></li>
+            <li><a href="connexion.html">Se connecter</a></li>
+            <li><a href="notation.html">Avis</a></li>
+            <li><a href="livraisons.html">Livraisons</a></li>
+        </ul>
     </nav>
 </header>
 
@@ -63,7 +71,7 @@
                         <p>${p.desc}</p>
                         <div class="card-footer">
                             <span class="price">${p.prix}</span>
-                            <button class="add-btn">+</button>
+                            <button class="add-btn" onclick="alert('Ajouté au panier !')">+</button>
                         </div>
                     </div>
                 </div>

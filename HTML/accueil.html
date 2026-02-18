@@ -11,13 +11,16 @@
     <header>
         <div class="header-container">
             <div class="logo-box">
-                <img src="logo.png" alt="Logo Los Pollos" class="nav-logo">
+                <img src="../IMAGES/logo.png" alt="Logo Los Pollos" class="nav-logo">
             </div>
             
             <nav class="nav-links">
-                <a href="#top">Accueil</a>
+                <a href="accueil.html">Accueil</a>
                 <a href="menu.html">Menu</a>
-                <a href="#contact">Contact</a>
+                <a href="profil.html">Profil</a>
+                <a href="connexion.html">Se connecter</a>
+                <a href="notation.html">Avis</a>
+                <a href="Livraison.html">Livraisons</a>
             </nav>
 
             <div class="header-right-spacer"></div>
@@ -28,6 +31,14 @@
         <section id="top" class="main-title-screen">
             <div class="title-wrap">
                 <h1 class="huge-title">LOS POLLOS<br><span class="outline">HERMANOS</span></h1>
+                
+                <div class="search-container">
+                    <form action="menu.html" method="GET">
+                        <input type="text" placeholder="Rechercher un plat (ex: Poulet frit...)" name="search">
+                        <button type="submit">Rechercher</button>
+                    </form>
+                </div>
+
                 <div class="scroll-indicator">
                     <p>SCROLL</p>
                     <div class="arrow"></div>
@@ -43,6 +54,22 @@
                 <div class="hero-buttons">
                     <a href="menu.html" class="btn-primary">Découvrir la carte</a>
                     <a href="#histoire" class="btn-secondary">Notre histoire</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding">
+            <div class="container">
+                <h2 class="section-title">Nos Incontournables</h2>
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <h3>Plat du Jour</h3>
+                        <p>Le seau "Familia" - 12 pièces</p>
+                    </div>
+                    <div class="contact-card">
+                        <h3>Le plus commandé</h3>
+                        <p>Ailes de poulet épicées</p>
+                    </div>
                 </div>
             </div>
         </section>
