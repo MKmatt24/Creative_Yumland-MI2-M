@@ -1,0 +1,167 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    color: #fafafa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/*Page de livraison fini*/
+
+.success-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background: #1a1a1a;
+}
+
+.success-container {
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.success-container h1 {
+    color: #fff;
+    font-size: 2rem;
+    margin: 20px 0 10px 0;
+    text-transform: uppercase;
+}
+
+.success-container p {
+    color: #888;
+    margin-bottom: 30px;
+}
+
+/*Animation du check vert*/
+
+.check-animation {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+}
+
+.checkmark__circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 2;
+    stroke-miterlimit: 10;
+    stroke: #7ac142;
+    fill: none;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 2;
+    stroke: #fff;
+    stroke-miterlimit: 10;
+    margin: 10% auto;
+    box-shadow: inset 0px 0px 0px #7ac142;
+    animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+}
+
+.checkmark__check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+@keyframes stroke {
+    100% { stroke-dashoffset: 0; }
+}
+
+@keyframes scale {
+    0%, 100% { transform: none; }
+    50% { transform: scale3d(1.1, 1.1, 1); }
+}
+
+@keyframes fill {
+    100% { box-shadow: inset 0px 0px 0px 50px #7ac142; }
+}
+
+/*Bloc des gains de la course*/
+
+.earnings-card {
+    background: linear-gradient(145deg, #2d2d2d 0%, #1a1a1a 100%);
+    border-radius: 20px;
+    padding: 30px;
+    border: 1px solid #333;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    margin-bottom: 30px;
+}
+
+.earnings-card .label {
+    display: block;
+    color: #ff6b35;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.earnings-card .amount {
+    display: block;
+    font-size: 3rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.earnings-card hr {
+    border: 0;
+    height: 1px;
+    background: #333;
+    margin: 20px 0;
+}
+
+.stats-row {
+    display: flex;
+    justify-content: space-around;
+}
+
+.stats-row .small-label {
+    display: block;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.stats-row .value {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+/*Bouton retour*/
+
+.primary-btn {
+    display: block;
+    background-color: #ff6b35;
+    color: #1a1a1a;
+    padding: 15px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: transform 0.2s;
+}
+
+.primary-btn:hover {
+    background-color: #fff;
+    transform: scale(1.05);
+}
+
