@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐔 Secret découvert ! 🐔</title>
+    <link rel="icon" type="image/png" href="../Images/logo.svg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Helvetica', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #fafafa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animation de confettis */
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ff6b35;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        .confetti:nth-child(2n) {
+            background-color: #fafafa;
+        }
+
+        .confetti:nth-child(3n) {
+            background-color: #e85d2a;
+        }
+
+        .container {
+            max-width: 900px;
+            text-align: center;
+            background: linear-gradient(145deg, #2d2d2d 0%, #1a1a1a 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+                        0 0 0 1px rgba(255, 107, 53, 0.1);
+            border: 2px solid rgba(255, 107, 53, 0.3);
+            animation: fadeInScale 0.6s ease-out;
+            z-index: 10;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        h1 {
+            color: #ff6b35;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                text-shadow: 0 0 10px #ff6b35, 0 0 20px #ff6b35;
+            }
+            50% {
+                text-shadow: 0 0 20px #ff6b35, 0 0 30px #ff6b35, 0 0 40px #ff6b35;
+            }
+        }
+
+        .subtitle {
+            color: #fafafa;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+
+        .logos-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .logo-box {
+            background: rgba(255, 107, 53, 0.05);
+            border: 2px solid rgba(255, 107, 53, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .logo-box:hover {
+            transform: scale(1.05) rotate(2deg);
+            border-color: #ff6b35;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+        }
+
+        .logo-box img {
+            max-width: 200px;
+            height: auto;
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
+        }
+
+        .logo-label {
+            color: #ff6b35;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-top: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .vs-text {
+            font-size: 3rem;
+            color: #ff6b35;
+            font-weight: bold;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        .cta-button {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 1.5rem 3rem;
+            background: linear-gradient(135deg, #ff6b35 0%, #e85d2a 100%);
+            color: #fafafa;
+            text-decoration: none;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .cta-button:hover {
+            background: linear-gradient(135deg, #e85d2a 0%, #d14d1f 100%);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.6);
+        }
+
+        .secret-message {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(255, 107, 53, 0.08);
+            border-left: 4px solid #ff6b35;
+            border-radius: 5px;
+            font-style: italic;
+            color: #fafafa;
+            opacity: 0.8;
+        }
+
+        .close-hint {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #666666;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .logos-container {
+                gap: 1.5rem;
+            }
+
+            .logo-box img {
+                max-width: 120px;
+            }
+
+            .vs-text {
+                font-size: 2rem;
+            }
+
+            .cta-button {
+                font-size: 1rem;
+                padding: 1.2rem 2rem;
+            }
+
+            .container {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Confettis animés -->
+    <div class="confetti" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="confetti" style="left: 20%; animation-delay: 0.5s;"></div>
+    <div class="confetti" style="left: 30%; animation-delay: 1s;"></div>
+    <div class="confetti" style="left: 40%; animation-delay: 1.5s;"></div>
+    <div class="confetti" style="left: 50%; animation-delay: 0.3s;"></div>
+    <div class="confetti" style="left: 60%; animation-delay: 0.8s;"></div>
+    <div class="confetti" style="left: 70%; animation-delay: 1.2s;"></div>
+    <div class="confetti" style="left: 80%; animation-delay: 0.6s;"></div>
+    <div class="confetti" style="left: 90%; animation-delay: 1.8s;"></div>
+
+    <div class="container">
+        <h1>🎉 Félicitations ! 🎉</h1>
+        <p class="subtitle">Vous avez découvert notre Easter Egg secret !</p>
+
+        <div class="logos-container">
+            <div class="logo-box">
+                <img src="../Images/logo.png" alt="Los Pollos Hermanos">
+                <p class="logo-label">Los Pollos Hermanos</p>
+            </div>
+
+            <div class="vs-text">VS</div>
+
+            <div class="logo-box">
+                <img src="../Images/logo.svg" alt="Chicken Paradise">
+                <p class="logo-label">Chicken Paradise</p>
+            </div>
+        </div>
+
+        <div class="secret-message">
+            "Deux empires du poulet frit, une seule passion : la perfection croustillante !"
+        </div>
+
+        <button class="cta-button" onclick="alert('🐔 Commande en cours... Le meilleur poulet de l\'univers arrive bientôt ! 🚀')">
+            🍗 Commander le meilleur poulet de l'univers 🍗
+        </button>
+
+    </div>
+
+    <script>
+        // Animation sonore au clic du bouton (optionnel)
+        document.querySelector('.cta-button').addEventListener('click', function() {
+            this.style.animation = 'none';
+            setTimeout(() => {
+                this.style.animation = '';
+            }, 10);
+        });
+
+        // Créer plus de confettis dynamiquement
+        function createConfetti() {
+            const colors = ['#ff6b35', '#fafafa', '#e85d2a'];
+            for (let i = 0; i < 15; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                document.body.appendChild(confetti);
+            }
+        }
+        createConfetti();
+    </script>
+</body>
+</html>

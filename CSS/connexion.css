@@ -365,3 +365,40 @@ a:focus-visible {
     outline: 2px solid #ff6b35;
     outline-offset: 2px;
 }
+
+
+/* === EASTER EGG === */
+.easter-egg {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 0 2px;
+}
+
+.easter-egg:hover {
+    color: #ff6b35;
+    text-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+    transform: scale(1.05);
+}
+
+.easter-egg::after {
+    content: '🐔';
+    position: absolute;
+    right: -20px;
+    top: -5px;
+    opacity: 0;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.easter-egg:hover::after {
+    opacity: 1;
+    right: -25px;
+    animation: wiggle 0.5s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(10deg); }
+    75% { transform: rotate(-10deg); }
+}
