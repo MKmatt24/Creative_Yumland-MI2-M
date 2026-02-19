@@ -15,6 +15,13 @@
                 <img src="../IMAGES/logo.png" alt="Logo Los Pollos" class="nav-logo">
             </div>
             </div>
+
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
             <ul>
                 <li><a href="accueil.html">Accueil</a></li>
                 <li><a href="menu.html">Menu</a></li>
@@ -206,4 +213,33 @@
         </div>
     </footer>
 </body>
+
+<script>
+    // Menu hamburger toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navMenu = document.querySelector('nav ul');
+
+    menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+
+    // Fermer le menu quand on clique sur un lien
+    const navLinks = document.querySelectorAll('nav ul li a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            menuToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+        });
+    });
+
+    // Fermer le menu si on clique en dehors
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('nav')) {
+            menuToggle.classList.remove('active');
+            navMenu.classList.remove('active');
+        }
+    });
+</script>
+
 </html>
