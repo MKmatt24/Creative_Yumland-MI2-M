@@ -12,7 +12,9 @@
     <nav>
         <div class="logo">
             <div class="logo-box">
-                <img src="../IMAGES/logo.png" alt="Logo Los Pollos" class="nav-logo">
+                <a href="accueil.html">
+                    <img src="../IMAGES/logo.png" alt="Logo Los Pollos" class="nav-logo">
+                </a>
             </div>
         </div>
         <ul>
@@ -25,21 +27,35 @@
     </nav>
 </header>
 
-<section class="menu-hero">
-    <h2>Nos Menus Légendaires</h2>
-    <p>Le goût inimitable du Nouveau-Mexique, livré chez vous.</p>
-</section>
+<main>
+    <section class="menu-hero">
+        <h2>Nos Menus Légendaires</h2>
+        <p>Le goût inimitable du Nouveau-Mexique, livré chez vous.</p>
+        
+        <div class="search-bar-container">
+            <input type="text" id="menu-search" placeholder="Rechercher un plat... (ex: Burger, Frites)">
+        </div>
+    </section>
 
-<div class="categories">
-    <button class="cat-btn active">Tout</button>
-    <button class="cat-btn">Burgers</button>
-    <button class="cat-btn">Poulet</button>
-    <button class="cat-btn">Accompagnements</button>
-    <button class="cat-btn">Desserts</button>
-</div>
+    <div class="categories">
+        <button class="cat-btn active">Tout</button>
+        <button class="cat-btn">Burgers</button>
+        <button class="cat-btn">Poulet</button>
+        <button class="cat-btn">Spécialités</button>
+        <button class="cat-btn">Accompagnements</button>
+        <button class="cat-btn">Desserts</button>
+    </div>
 
-<main class="menu-container">
-    <script>
+    <div class="menu-container" id="menu-grid">
+        </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 LOS POLLOS HERMANOS - TASTE THE FAMILY</p>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
         const plats = [
             { nom: "Le Seau Albuquerque", desc: "12 pièces de poulet frit secret, servi avec 2 sauces.", prix: "19.99€", cat: "Poulet" },
             { nom: "Pollos Burger", desc: "Filet de poulet pané, cheddar fondu, laitue et sauce iconique.", prix: "8.50€", cat: "Burgers" },
@@ -59,29 +75,63 @@
             { nom: "Flan au Caramel", desc: "Un classique onctueux pour finir en douceur.", prix: "4.00€", cat: "Desserts" }
         ];
 
-        const container = document.querySelector('.menu-container');
-        plats.forEach(p => {
-            container.innerHTML += `
-                <div class="menu-card" data-category="${p.cat}">
-                    <div class="card-image"><span>LOS POLLOS</span></div>
-                    <div class="card-body">
-                        <span class="badge">${p.cat}</span>
-                        <h3>${p.nom}</h3>
-                        <p>${p.desc}</p>
-                        <div class="card-footer">
-                            <span class="price">${p.prix}</span>
-                            <button class="add-btn" onclick="alert('Ajouté au panier !')">+</button>
+        const container = document.getElementById('menu-grid');
+        const searchInput = document.getElementById('menu-search');
+        const buttons = document.querySelectorAll('.cat-btn');
+
+        function filtrerEtAfficher() {
+            const boutonActif = document.querySelector('.cat-btn.active').textContent;
+            const recherche = searchInput.value.toLowerCase();
+
+            
+            const resultats = plats.filter(p => {
+                const correspondCategorie = (boutonActif === "Tout" || p.cat === boutonActif);
+                const correspondRecherche = p.nom.toLowerCase().includes(recherche) || 
+                                           p.desc.toLowerCase().includes(recherche);
+                return correspondCategorie && correspondRecherche;
+            });
+
+            
+            container.innerHTML = "";
+            if (resultats.length === 0) {
+                container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #666;">Aucun plat ne correspond à votre recherche.</p>`;
+                return;
+            }
+
+            resultats.forEach(p => {
+                container.innerHTML += `
+                    <div class="menu-card">
+                        <div class="card-image"><span>LOS POLLOS</span></div>
+                        <div class="card-body">
+                            <span class="badge">${p.cat}</span>
+                            <h3>${p.nom}</h3>
+                            <p>${p.desc}</p>
+                            <div class="card-footer">
+                                <span class="price">${p.prix}</span>
+                                <button class="add-btn" onclick="alert('Ajouté au panier !')">+</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            `;
-        });
-    </script>
-</main>
+                `;
+            });
+        }
 
-<footer>
-    <p>&copy; 2026 LOS POLLOS HERMANOS - TASTE THE FAMILY</p>
-</footer>
+        
+        searchInput.addEventListener('input', filtrerEtAfficher);
+
+        
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                buttons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                filtrerEtAfficher();
+            });
+        });
+
+        
+        filtrerEtAfficher();
+    });
+</script>
 
 </body>
 </html>
