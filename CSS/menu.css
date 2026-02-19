@@ -23,12 +23,17 @@ body {
 
 /* === HEADER === */
 header {
-    background-color: var(--noir);
-    padding: 1rem 5%;
+    background-color: #1a1a1a;
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
     position: sticky;
     top: 0;
     z-index: 1000;
-    border-bottom: 1px solid rgba(255, 107, 53, 0.2);
+}
+
+nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -41,9 +46,9 @@ header {
 }
 
 .nav-logo {
-    height: 100px; /* Logo agrandi pour une visibilité maximale */
+    height: 100px; 
     width: auto;
-    filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.3)); /* Petit éclat orange */
+    filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.3));
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -212,6 +217,42 @@ nav ul li a:hover {
 .add-btn:hover {
     transform: scale(1.1);
     background: var(--orange-hover);
+}
+
+/* === BARRE DE RECHERCHE === */
+.search-bar-container {
+    max-width: 500px;
+    margin: 1.5rem auto 0 auto; /* Centré sous le texte du Hero */
+    padding: 0 1rem;
+}
+
+#menu-search {
+    width: 100%;
+    background-color: var(--gris-carte); /* Fond sombre comme les cartes */
+    border: 2px solid #333; /* Bordure discrète par défaut */
+    border-radius: 30px; /* Look arrondi moderne */
+    padding: 12px 25px;
+    color: var(--blanc);
+    font-size: 1rem;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+#menu-search::placeholder {
+    color: #666; /* Couleur du texte d'aide */
+}
+
+#menu-search:focus {
+    border-color: var(--orange); /* La bordure devient orange quand on clique */
+    box-shadow: 0 0 15px rgba(255, 107, 53, 0.2); /* Petit halo lumineux */
+    background-color: #2a2a2a; /* Légère éclaircie au focus */
+}
+
+/* Optionnel : Ajustement du Hero pour laisser de la place */
+.menu-hero {
+    padding-bottom: 2rem;
 }
 
 /* === FOOTER === */
