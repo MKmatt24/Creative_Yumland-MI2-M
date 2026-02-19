@@ -13,7 +13,7 @@ body {
     flex-direction: column;
 }
 
-/*Bande supérieur*/
+/*Header*/
 
 header {
     background-color: #1a1a1a;
@@ -354,7 +354,7 @@ nav ul li a:hover {
     }
 }
 
-/*Bande inférieur*/
+/*Footer*/
 
 footer {
     background-color: #1a1a1a;
