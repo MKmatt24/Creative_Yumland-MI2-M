@@ -20,20 +20,19 @@ body {
 
 /* === HEADER FIXE === */
 header {
-    background-color: rgba(26, 26, 26, 0.98);
-    position: fixed;
+    background-color: #1a1a1a;
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
+    position: sticky;
     top: 0;
-    width: 100%;
-    z-index: 2000;
-    border-bottom: 1px solid rgba(255, 107, 53, 0.2);
+    z-index: 1000;
 }
 
 .header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5rem 5%; /* Réduit un peu le padding vertical pour le logo large */
-    max-width: 1600px;
+    padding: 1rem 2rem; /* Réduit un peu le padding vertical pour le logo large */
+    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -44,9 +43,9 @@ header {
 }
 
 .nav-logo {
-    height: 100px; /* Logo agrandi pour une visibilité maximale */
+    height: 100px; 
     width: auto;
-    filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.3)); /* Petit éclat orange */
+    filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.3));
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -55,10 +54,9 @@ header {
 }
 
 .nav-links {
-    flex: 2;
+    list-style: none;
     display: flex;
-    justify-content: center;
-    gap: 40px; /* Plus d'espace entre les onglets restants */
+    gap: 2rem;
 }
 
 /* === BOUTONS DE NAVIGATION UNIQUEMENT === */
@@ -80,9 +78,6 @@ header {
     transform: translateY(-2px);
 }
 
-.header-right-spacer {
-    flex: 1;
-}
 
 /* === TITRE MONUMENTAL === */
 .main-title-screen {
