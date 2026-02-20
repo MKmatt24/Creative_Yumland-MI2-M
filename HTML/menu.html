@@ -57,22 +57,22 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const plats = [
-            { nom: "Le Seau Albuquerque", desc: "12 pièces de poulet frit secret, servi avec 2 sauces.", prix: "19.99€", cat: "Poulet" },
-            { nom: "Pollos Burger", desc: "Filet de poulet pané, cheddar fondu, laitue et sauce iconique.", prix: "8.50€", cat: "Burgers" },
-            { nom: "Ailes Fuego", desc: "8 ailes marinées dans notre sauce pimentée signature.", prix: "11.00€", cat: "Poulet" },
-            { nom: "Tendres Hermano", desc: "5 filets de poulet panés à la main, ultra tendres.", prix: "9.00€", cat: "Poulet" },
-            { nom: "Burrito Breakfast", desc: "L'original : œufs, chorizo, pommes de terre et fromage.", prix: "7.50€", cat: "Spécialités" },
-            { nom: "Tacos Al Pastor", desc: "3 tacos au porc mariné, oignons rouges et ananas.", prix: "9.50€", cat: "Spécialités" },
-            { nom: "Burrito Suprême", desc: "Poulet effiloché, riz épicé, haricots noirs et salsa.", prix: "10.50€", cat: "Spécialités" },
-            { nom: "Quesadilla XL", desc: "Tortilla géante grillée au mélange de trois fromages.", prix: "6.50€", cat: "Spécialités" },
-            { nom: "Enchiladas Rouges", desc: "Nappées de notre sauce chili traditionnelle maison.", prix: "12.00€", cat: "Spécialités" },
-            { nom: "Bol de Rice Pollos", desc: "Riz épicé, maïs grillé, poulet et guacamole frais.", prix: "9.90€", cat: "Accompagnements" },
-            { nom: "Nachos de la Loma", desc: "Cheddar fondu, jalapeños et crème acidulée.", prix: "8.00€", cat: "Accompagnements" },
-            { nom: "Wrap Spicy", desc: "Poulet croustillant, mayo épicée et légumes frais.", prix: "7.90€", cat: "Burgers" },
-            { nom: "Frites Maison", desc: "Coupées main avec notre mélange de sel secret.", prix: "3.50€", cat: "Accompagnements" },
-            { nom: "Coleslaw Crémeux", desc: "La recette originale de Gus, croquante à souhait.", prix: "3.00€", cat: "Accompagnements" },
-            { nom: "Sopapillas", desc: "Beignets légers servis chauds avec du miel local.", prix: "4.50€", cat: "Desserts" },
-            { nom: "Flan au Caramel", desc: "Un classique onctueux pour finir en douceur.", prix: "4.00€", cat: "Desserts" }
+            { nom: "Albuquerque Bucket", desc: "12 pièces de poulet frit secret, servi avec 2 sauces.", prix: "19.99€", cat: "Poulet", image: "../IMAGES/albuquerque_bucket.jpg" },
+            { nom: "Pollos Burger", desc: "Filet de poulet pané, cheddar fondu, laitue, tomate et sauce iconique.", prix: "8.50€", cat: "Burgers", image: "../IMAGES/pollos_burger.jpg" },
+            { nom: "Fuego Wings", desc: "8 ailes marinées dans notre sauce pimentée signature.", prix: "11.00€", cat: "Poulet", image: "../IMAGES/fuego_wings.jpg" },
+            { nom: "Hermano Tenders", desc: "5 filets de poulet panés à la main, ultra tendres.", prix: "9.00€", cat: "Poulet", image: "../IMAGES/hermano_tenders.jpg" },
+            { nom: "Burrito Breakfast", desc: "L'original : œufs, chorizo, pommes de terre et fromage.", prix: "7.50€", cat: "Spécialités", image: "../IMAGES/burrito_breakfast.jpg" },
+            { nom: "Tacos Al Pastor", desc: "3 tacos au porc mariné, oignons rouges et ananas.", prix: "9.50€", cat: "Spécialités", image: "../IMAGES/tacos_al_pastor.jpg" },
+            { nom: "Ultimate Burrito", desc: "Poulet effiloché, riz épicé, haricots noirs et salsa.", prix: "10.50€", cat: "Spécialités", image: "../IMAGES/ultimate_burrito.jpg" },
+            { nom: "Quesadilla XL", desc: "Tortilla géante grillée au mélange de trois fromages.", prix: "6.50€", cat: "Spécialités", image: "../IMAGES/quesadilla_xl.jpg" },
+            { nom: "Red enchiladas", desc: "Nappées de notre sauce chili traditionnelle maison.", prix: "12.00€", cat: "Spécialités", image: "../IMAGES/red_enchiladas.jpg" },
+            { nom: "Rice Pollos bowl", desc: "Riz épicé, maïs grillé, poulet et guacamole frais.", prix: "9.90€", cat: "Accompagnements", image: "../IMAGES/rice_pollos_bowl.jpg" },
+            { nom: "Nachos de la Loma", desc: "Cheddar fondu, jalapeños et crème acidulée.", prix: "8.00€", cat: "Accompagnements", image: "../IMAGES/nachos_de_la_loma.jpg" },
+            { nom: "Spicy Wrap", desc: "Poulet croustillant, mayo épicée et légumes frais.", prix: "7.90€", cat: "Burgers", image: "../IMAGES/spicy_wrap.jpg" },
+            { nom: "Fries", desc: "Coupées main avec notre mélange de sel secret.", prix: "3.50€", cat: "Accompagnements", image: "../IMAGES/fries.jpg" },
+            { nom: "Creamy Coleslaw", desc: "La recette originale de Gus, croquante à souhait.", prix: "3.00€", cat: "Accompagnements", image: "../IMAGES/creamy_coleslaw.jpg" },
+            { nom: "Sopapillas", desc: "Beignets légers servis chauds avec du miel local.", prix: "4.50€", cat: "Desserts", image: "../IMAGES/sopapillas.jpg" },
+            { nom: "Butterscotch Pudding", desc: "Un classique onctueux pour finir en douceur.", prix: "4.00€", cat: "Desserts", image: "../IMAGES/butterscotch_pudding.jpg" }
         ];
 
         const container = document.getElementById('menu-grid');
@@ -101,7 +101,9 @@
             resultats.forEach(p => {
                 container.innerHTML += `
                     <div class="menu-card">
-                        <div class="card-image"><span>LOS POLLOS</span></div>
+                        <div class="card-image">
+                            <img src="${p.image}" alt="${p.nom}">
+                        </div>
                         <div class="card-body">
                             <span class="badge">${p.cat}</span>
                             <h3>${p.nom}</h3>
