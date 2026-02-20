@@ -4,6 +4,11 @@
     box-sizing: border-box;
 }
 
+html, body {
+    overflow-x: hidden; 
+    max-width: 100vw; 
+}
+
 body {
     font-family: 'Arial', 'Helvetica', sans-serif;
     background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
@@ -47,6 +52,41 @@ nav {
 
 .nav-logo:hover {
     transform: scale(1.15) rotate(-3deg);
+}
+
+/*Menu sur téléphone*/
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1001;
+}
+
+.menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background-color: #ff6b35;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+/*Animation du menu en X*/
+
+.menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5.65px, 5.65px);
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5.65px, -5.65px);
 }
 
 nav ul {
@@ -267,8 +307,126 @@ nav ul li a:hover {
 footer {
     background-color: #1a1a1a;
     color: #fafafa;
-    padding: 2rem 0;
+    padding: 2rem 0 1rem;
     margin-top: auto;
     border-top: 3px solid #ff6b35;
+}
+
+.footer-content {
     text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.footer-section h3 {
+    color: #ff6b35;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.footer-section p {
+    color: #fafafa;
+    line-height: 1.8;
+    opacity: 0.9;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid #3d3d3d;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-bottom p {
+    color: #fafafa;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/*Adaptation pour téléphone*/
+
+@media (max-width: 768px) {
+    nav {
+        padding: 1rem;
+    }
+
+    .nav-logo {
+        height: 60px;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    nav ul {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background: linear-gradient(145deg, #1a1a1a 0%, #2d2d2d 100%);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        padding: 2rem;
+    }
+
+    nav ul.active {
+        right: 0;
+    }
+
+    nav ul li {
+        width: 100%;
+        text-align: center;
+    }
+
+    nav ul li a {
+        display: block;
+        width: 100%;
+        padding: 25px 10px; 
+        font-size: 1.3rem;
+    }
+
+/*Grossissement des boutons sur téléphone pour les livreurs*/
+
+    .customer-block {
+        flex-direction: column; 
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .phone-btn {
+        width: 100%; 
+        height: auto;
+        border-radius: 12px;
+        padding: 20px;    
+        font-size: 2rem;   
+    }
+
+    .gps-btn, .finish-btn {
+        width: 100%;
+        padding: 24px 10px; 
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+    }
+
+    .gps-btn {
+        margin-bottom: 30px; 
+    }
+
+    header {
+        position: relative; 
+    }
 }
