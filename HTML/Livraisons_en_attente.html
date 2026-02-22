@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Livraison en cours - LOS POLLOS HERMANOS</title>
-    <link rel="stylesheet" href="../CSS/Livraison.css">
+    <title>Courses Disponibles - LOS POLLOS HERMANOS</title>
+    <link rel="stylesheet" href="../CSS/Livraisons_en_attente.css"> 
 </head>
 <body>
 
@@ -35,59 +35,68 @@
     </header>
 
     <main>
-        <section class="delivery-section" id="zone-livraison">
+        <section class="radar-section">
             
-            <div class="delivery-header">
-                <h2>Commande #2606</h2>
-                <span class="status-badge">En cours de livraison 🛵</span>
+            <div class="status-banner">
+                <div class="pulse-ring"></div>
+                <h2>En ligne - Recherche de livraisons en attente...</h2>
             </div>
 
-            <div class="delivery-container">
-                <div class="customer-block">
-                    <div class="customer-info">
-                        <h3>Maxence MARCHAND</h3>
+            <div class="offers-grid">
+                
+                <div class="offer-card highlight-offer">
+                    <div class="offer-header">
+                        <div class="price-block">
+                            <span class="price-label">Gains estimés</span>
+                            <h3 class="offer-price">26.60 €</h3>
+                        </div>
+                        <div class="time-block">
+                            <span class="offer-time">⏱ 26 min</span>
+                            <span class="offer-distance">📍 6.6 km au total</span>
+                        </div>
                     </div>
-                    <a href="tel:0786005847" class="phone-btn" aria-label="Appeler le client">
-                        📞
-                    </a>
-                </div>
 
-                <hr class="divider">
-
-                <div class="address-block">
-                    <label>📍 Adresse de livraison</label>
-                    <p class="address-text">12 rue du Poulet Croustillant,<br>95000 Cergy</p>
-                    <a href="https://www.google.com/maps/search/?api=1&query=12+Rue+du+Poulet+Croustillant+95000+Cergy" target="_blank" class="gps-btn">
-                        🗺️ Ouvrir le GPS
-                    </a>
-                </div>
-
-                <div class="access-grid">
-                    <div class="access-item">
-                        <span class="icon">🔢</span>
-                        <span class="label">Digicode</span>
-                        <span class="value">2014</span>
+                    <div class="offer-route">
+                        <div class="route-step pickup">
+                            <strong>Récupération :</strong> Los Pollos - Centre Ville
+                        </div>
+                        <div class="route-step dropoff">
+                            <strong>Livraison :</strong> Client - Quartier Nord (95000)
+                        </div>
                     </div>
-                    <div class="access-item">
-                        <span class="icon">🏢</span>
-                        <span class="label">Étage</span>
-                        <span class="value">3ème</span>
-                    </div>
-                    <div class="access-item">
-                        <span class="icon">🚪</span>
-                        <span class="label">Appartement</span>
-                        <span class="value">317</span>
+
+                    <div class="offer-actions">
+                        <button class="decline-btn" aria-label="Refuser la course">❌</button>
+                        <button class="accept-btn">Accepter la course</button>
                     </div>
                 </div>
 
-                <div class="comment-block">
-                    <label>💬 Commentaire client</label>
-                    <div class="comment-box">
-                        "Pas besoin de monter, je descendrai à votre arrivée. Si je ne suis pas là, appelez-moi. Merci."
+                <div class="offer-card">
+                    <div class="offer-header">
+                        <div class="price-block">
+                            <span class="price-label">Gains estimés</span>
+                            <h3 class="offer-price">6.20 €</h3>
+                        </div>
+                        <div class="time-block">
+                            <span class="offer-time">⏱ 10 min</span>
+                            <span class="offer-distance">📍 1.6 km au total</span>
+                        </div>
+                    </div>
+
+                    <div class="offer-route">
+                        <div class="route-step pickup">
+                            <strong>Récupération :</strong> Los Pollos - Le Haut
+                        </div>
+                        <div class="route-step dropoff">
+                            <strong>Livraison :</strong> Client - Résidence du Parc (95000)
+                        </div>
+                    </div>
+
+                    <div class="offer-actions">
+                        <button class="decline-btn" aria-label="Refuser la course">❌</button>
+                        <button class="accept-btn">Accepter la course</button>
                     </div>
                 </div>
-
-                <a href="Livraison_fini.html"><button class="finish-btn">Livraison Terminée</button></a>
 
             </div>
         </section>
@@ -104,6 +113,7 @@
             <p>&copy; 2024 Los Pollos Hermanos. Espace Livreur.</p>
         </div>
     </footer>
+    
 </body>
 <script>
     const menuToggle = document.querySelector('.menu-toggle');
