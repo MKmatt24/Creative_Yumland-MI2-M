@@ -1,4 +1,17 @@
-/* === CONFIGURATION COULEURS === */
+/* ========================================
+   CHICKEN PARADISE - CHARTE GRAPHIQUE
+   ========================================
+   Couleurs principales :
+   - Noir profond : #1a1a1a
+   - Orange vif : #ff6b35
+   - Orange foncé : #e85d2a
+   - Blanc cassé : #fafafa
+   - Gris clair : #f5f5f5
+   - Gris moyen : #666666
+   ======================================== */
+   
+   
+   /* === CONFIGURATION COULEURS === */
 :root {
     --noir: #1a1a1a;
     --orange: #ff6b35;
