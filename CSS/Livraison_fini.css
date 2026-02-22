@@ -1,17 +1,4 @@
-/* ========================================
-   LOS POLLOS HERMANOS - CHARTE GRAPHIQUE
-   ========================================
-   Couleurs principales :
-   - Noir profond : #1a1a1a
-   - Orange vif : #ff6b35
-   - Orange foncé : #e85d2a
-   - Blanc cassé : #fafafa
-   - Gris clair : #f5f5f5
-   - Gris moyen : #666666
-   ======================================== */
-   
-   
-   * {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
