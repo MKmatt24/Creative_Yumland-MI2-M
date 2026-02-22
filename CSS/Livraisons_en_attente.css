@@ -1,0 +1,474 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    overflow-x: hidden; 
+    max-width: 100vw; 
+}
+
+body {
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    color: #fafafa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/*Header*/
+
+header {
+    background-color: #1a1a1a;
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-box {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.nav-logo {
+    height: 100px;
+    width: auto;
+    filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.3)); 
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.nav-logo:hover {
+    transform: scale(1.15) rotate(-3deg);
+}
+
+/*Menu sur téléphone*/
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1001;
+}
+
+.menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background-color: #ff6b35;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+/*Animation du menu en X*/
+
+.menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5.65px, 5.65px);
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5.65px, -5.65px);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+nav ul li a {
+    color: #fafafa;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+nav ul li a:hover {
+    background-color: #ff6b35;
+    color: #1a1a1a;
+    transform: translateY(-2px);
+}
+
+/*Banderole de recherche de livraison en attente*/
+
+.radar-section {
+    width: 100%;
+    max-width: 800px; 
+    margin: 0 auto;
+    padding: 2rem;
+    flex: 1;
+}
+
+.status-banner {
+    background-color: #242424;
+    border: 1px solid #333;
+    border-radius: 50px;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.status-banner h2 {
+    font-size: 1.1rem;
+    color: #2ecc71;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/*Animation du point vert qui clignote*/
+
+.pulse-ring {
+    width: 15px;
+    height: 15px;
+    background-color: #2ecc71;
+    border-radius: 50%;
+    position: relative;
+}
+
+.pulse-ring::before {
+    content: '';
+    position: absolute; left: -5px; top: -5px; right: -5px; bottom: -5px;
+    border-radius: 50%;
+    border: 2px solid #2ecc71;
+    animation: radarPulse 1.5s linear infinite;
+}
+
+@keyframes radarPulse {
+    0% {
+        transform: scale(0.5);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.8);
+        opacity: 0;
+    }
+}
+
+/*Carte des offres de livraisons*/
+
+.offers-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.offer-card {
+    background: linear-gradient(145deg, #2d2d2d 0%, #1a1a1a 100%);
+    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid #333;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    transition: transform 0.2s;
+}
+
+.offer-card:hover {
+    transform: translateY(-3px);
+}
+
+.highlight-offer {
+    border: 1px solid #ff6b35;
+    box-shadow: 0 5px 20px rgba(255, 107, 53, 0.2);
+}
+
+.offer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px dashed #444;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.price-label {
+    color: #888;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    display: block;
+}
+
+.offer-price {
+    color: #2ecc71;
+    font-size: 2.2rem;
+    text-shadow: 0 0 10px rgba(46, 204, 113, 0.2);
+}
+
+.time-block {
+    text-align: right;
+}
+
+.offer-time {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.offer-distance {
+    display: block;
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+/*Design du Trajet*/
+
+.offer-route {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 25px;
+}
+
+/*Ligne verticale en pointillé*/
+
+.offer-route::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    background: repeating-linear-gradient(to bottom, #666, #666 4px, transparent 4px, transparent 8px);
+}
+
+.route-step {
+    position: relative;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+    line-height: 1.4;
+    color: #ccc;
+}
+
+.route-step:last-child {
+    margin-bottom: 0;
+}
+
+.route-step strong {
+    color: #fff;
+    display: block;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #ff6b35;
+}
+
+/*Petits ronds sur la ligne */
+
+.route-step::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 18px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #1a1a1a;
+    border: 2px solid #ff6b35;
+}
+
+.pickup::before {
+    border-color: #fff;
+}
+
+.dropoff::before {
+    background-color: #ff6b35;
+}
+
+/*Boutons accepter ou refuser*/
+
+.offer-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.decline-btn {
+    background: #242424;
+    color: #888;
+    border: 1px solid #444;
+    width: 60px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.decline-btn:hover {
+    background: #e74c3c;
+    color: #fff;
+    border-color: #e74c3c;
+}
+
+.accept-btn {
+    flex: 1;
+    background: linear-gradient(135deg, #ff6b35 0%, #e85d2a 100%);
+    color: #fff;
+    border: none;
+    padding: 18px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+    transition: transform 0.2s;
+}
+
+.accept-btn:active {
+    transform: scale(0.98);
+}
+
+/*Footer*/
+
+footer {
+    background-color: #1a1a1a;
+    color: #fafafa;
+    padding: 2rem 0 1rem;
+    margin-top: auto;
+    border-top: 3px solid #ff6b35;
+}
+
+.footer-content {
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.footer-section h3 {
+    color: #ff6b35;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.footer-section p {
+    color: #fafafa;
+    line-height: 1.8;
+    opacity: 0.9;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid #3d3d3d;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-bottom p {
+    color: #fafafa;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/*Adaptation pour téléphone*/
+
+@media (max-width: 768px) {
+    nav {
+        padding: 1rem;
+    }
+
+    .nav-logo {
+        height: 60px;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    nav ul {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background: linear-gradient(145deg, #1a1a1a 0%, #2d2d2d 100%);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        padding: 2rem;
+    }
+
+    nav ul.active {
+        right: 0;
+    }
+
+    nav ul li {
+        width: 100%;
+        text-align: center;
+    }
+
+    nav ul li a {
+        display: block;
+        width: 100%;
+        padding: 25px 10px; 
+        font-size: 1.3rem;
+    }
+
+
+/*Conteneur principal*/
+
+    .radar-section {
+        padding: 10px;
+    }
+    
+    .status-banner {
+        padding: 12px 20px;
+    }
+
+    .status-banner h2 {
+        font-size: 0.95rem;
+    }
+
+/*Carte des offres de livraisons*/
+
+    .offer-card {
+        padding: 15px;
+    }
+
+    .offer-price {
+        font-size: 2rem;
+    }
+
+    .offer-time {
+        font-size: 1.1rem;
+    }
+    
+    .accept-btn {
+        padding: 20px 10px;
+        font-size: 1.2rem;
+    }
+}
