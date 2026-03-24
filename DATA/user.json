@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "nom": "Fring",
+    "prenom": "Gustavo",
+    "email": "admin@lospolloshermanos.fr",
+    "password": "$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "telephone": "",
+    "adresse": "",
+    "code_interphone": "",
+    "code_postal": "",
+    "ville": "",
+    "role": "admin",
+    "date_inscription": "2025-01-01",
+    "statut": "actif"
+  },
+  {
+    "id": 2,
+    "nom": "White",
+    "prenom": "Walter",
+    "email": "admin2@lospolloshermanos.fr",
+    "password": "$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+    "telephone": "",
+    "adresse": "",
+    "code_interphone": "",
+    "code_postal": "",
+    "ville": "",
+    "role": "admin",
+    "date_inscription": "2025-01-01",
+    "statut": "actif"
+  }
+]

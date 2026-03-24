@@ -1,0 +1,9 @@
+  {
+    "id": 1,
+    "commande_id": 12345,
+    "user_id": 1,
+    "note_livraison": 5,
+    "note_produits": 4,
+    "commentaire": "Très bon !",
+    "date": "2026-02-02"
+  }
