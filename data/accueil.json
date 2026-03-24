@@ -1,0 +1,30 @@
+{
+  "hero": {
+    "badge": "Authentique & Frais",
+    "titre": "Le meilleur poulet frit de l'univers",
+    "sous_titre": "La recette légendaire de Gustavo Fring. Un goût explosif qui vous fera revenir, encore et encore.",
+    "image_gus": "../IMAGES/gus_fring.png"
+  },
+  "incontournables": [
+    {
+      "type": "Plat du Jour",
+      "nom_plat": "Le seau 'Familia' - 12 pièces",
+      "id_reference": 1
+    },
+    {
+      "type": "Le plus commandé",
+      "nom_plat": "Ailes de poulet épicées",
+      "id_reference": 3
+    }
+  ],
+  "histoire": {
+    "date_fondation": "Depuis 1989",
+    "description": "Fondé par Gustavo Fring et Max Arciniega, Los Pollos Hermanos est né d'une passion pour la cuisine traditionnelle du Sud-Ouest. Notre secret ? Des ingrédients frais, une panure préparée chaque matin et, surtout, le respect de la famille.",
+    "citation": "Où quelque chose de délicieux est toujours en train de cuire."
+  },
+  "contact": {
+    "adresse": "12001 Central Ave NE, NM 87123",
+    "telephone": "(505) 148-3369",
+    "horaires": "Lun - Sam : 10h - 22h"
+  }
+}

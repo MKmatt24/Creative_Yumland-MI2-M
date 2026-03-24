@@ -1,0 +1,37 @@
+[
+  {
+    "id": 101,
+    "client": "Walter White",
+    "articles": [
+      { "nom": "Le Seau Albuquerque", "quantite": 1 }
+    ],
+    "prix_total": 19.99,
+    "statut": "livraison",
+    "adresse": "308 Negra Arroyo Lane",
+    "date": "2026-03-24 12:30"
+  },
+  {
+    "id": 102,
+    "client": "Jesse Pinkman",
+    "articles": [
+      { "nom": "Ailes Fuego", "quantite": 2 },
+      { "nom": "Frites Maison", "quantite": 1 }
+    ],
+    "prix_total": 25.50,
+    "statut": "preparation",
+    "adresse": "Moneo 42",
+    "date": "2026-03-24 12:45"
+  },
+  {
+    "id": 103,
+    "client": "Saul Goodman",
+    "articles": [
+      { "nom": "Pollos Burger", "quantite": 1 },
+      { "nom": "Sopapillas", "quantite": 2 }
+    ],
+    "prix_total": 17.50,
+    "statut": "preparation",
+    "adresse": "Office 12, Lomas Blvd",
+    "date": "2026-03-24 13:00"
+  }
+]
