@@ -32,7 +32,7 @@
                 <h2>Créer un compte</h2>
                 <p>Rejoignez Los Pollos Hermanos et profitez d'offres exclusives</p>
                 
-                <form action="traitement-inscription.php" method="post">
+                <form action="traitement_inscription.php" method="post">
                     <div class="form-group">
                         <label for="nom">Nom</label>
                         <input type="text" id="nom" name="nom" required placeholder="Votre nom">
