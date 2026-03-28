@@ -1,3 +1,11 @@
+:root {
+    --noir: #1a1a1a;
+    --orange: #ff6b35;
+    --orange-hover: #e85d2a;
+    --blanc: #fafafa;
+    --gris-carte: #242424;
+}
+
 /* === RESET ET BASE === */
 * {
     margin: 0;
@@ -7,8 +15,8 @@
 
 body {
     font-family: 'Arial', 'Helvetica', sans-serif;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-    color: #fafafa;
+    background: linear-gradient(135deg, --noir 0%, #2d2d2d 100%);
+    color: var(--blanc);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -16,7 +24,7 @@ body {
 
 /* === HEADER === */
 header {
-    background-color: #1a1a1a;
+    background-color: var(--noir);
     box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
     position: sticky;
     top: 0;
@@ -56,7 +64,7 @@ nav ul {
 }
 
 nav ul li a {
-    color: #fafafa;
+    color: var(--blanc);
     text-decoration: none;
     font-size: 1rem;
     font-weight: 500;
@@ -66,8 +74,8 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    background-color: #ff6b35;
-    color: #1a1a1a;
+    background-color: var(--orange);
+    color: var(--noir);
     transform: translateY(-2px);
 }
 
@@ -86,7 +94,7 @@ main {
 }
 
 .notation-container {
-    background: linear-gradient(145deg, #2d2d2d 0%, #1a1a1a 100%);
+    background: linear-gradient(145deg, #2d2d2d 0%, --noir 100%);
     border-radius: 20px;
     padding: 3rem;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
@@ -96,7 +104,7 @@ main {
 }
 
 .notation-container h2 {
-    color: #ff6b35;
+    color: var(--orange);
     font-size: 2.2rem;
     margin-bottom: 0.5rem;
     text-align: center;
@@ -105,7 +113,7 @@ main {
 }
 
 .notation-container > p {
-    color: #fafafa;
+    color: var(--blanc);
     text-align: center;
     margin-bottom: 2rem;
     font-size: 1rem;
@@ -122,13 +130,13 @@ main {
 }
 
 .commande-info h3 {
-    color: #ff6b35;
+    color: var(--orange);
     font-size: 1.1rem;
     margin-bottom: 0.5rem;
 }
 
 .commande-info p {
-    color: #fafafa;
+    color: var(--blanc);
     font-size: 0.9rem;
     opacity: 0.85;
     line-height: 1.6;
@@ -146,13 +154,13 @@ main {
 }
 
 .form-section h3 {
-    color: #ff6b35;
+    color: var(--orange);
     font-size: 1.2rem;
     margin-bottom: 1.5rem;
     text-transform: uppercase;
     letter-spacing: 1px;
     padding-left: 0.8rem;
-    border-left: 3px solid #ff6b35;
+    border-left: 3px solid var(--orange);
 }
 
 /* === FORMULAIRE === */
@@ -169,7 +177,7 @@ form {
 }
 
 .form-group label {
-    color: #fafafa;
+    color: var(--blanc);
     font-size: 0.95rem;
     font-weight: 600;
     margin-bottom: 0.3rem;
@@ -178,10 +186,10 @@ form {
 .form-group select {
     width: 100%;
     padding: 1rem;
-    background-color: #1a1a1a;
+    background-color: var(--noir);
     border: 2px solid #3d3d3d;
     border-radius: 10px;
-    color: #fafafa;
+    color: var(--blanc);
     font-size: 1rem;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -193,23 +201,23 @@ form {
 
 .form-group select:focus {
     outline: none;
-    border-color: #ff6b35;
+    border-color: var(--orange);
     box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
-    background-color: #242424;
+    background-color: var(--gris-carte);
 }
 
 .form-group select option {
-    background-color: #1a1a1a;
-    color: #fafafa;
+    background-color: var(--noir);
+    color: var(--blanc);
 }
 
 .form-group textarea {
     width: 100%;
     padding: 1rem;
-    background-color: #1a1a1a;
+    background-color: var(--noir);
     border: 2px solid #3d3d3d;
     border-radius: 10px;
-    color: #fafafa;
+    color: var(--blanc);
     font-size: 1rem;
     resize: vertical;
     font-family: inherit;
@@ -218,9 +226,9 @@ form {
 
 .form-group textarea:focus {
     outline: none;
-    border-color: #ff6b35;
+    border-color: var(--orange);
     box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
-    background-color: #242424;
+    background-color: var(--gris-carte);
 }
 
 .form-group textarea::placeholder {
@@ -230,7 +238,7 @@ form {
 
 /* === RADIO BUTTONS === */
 .form-group input[type="radio"] {
-    accent-color: #ff6b35;
+    accent-color: var(--orange);
     cursor: pointer;
     margin-right: 0.5rem;
     vertical-align: middle;
@@ -247,8 +255,8 @@ form {
 button[type="submit"] {
     width: 100%;
     padding: 1.2rem;
-    background: linear-gradient(135deg, #ff6b35 0%, #e85d2a 100%);
-    color: #fafafa;
+    background: linear-gradient(135deg, --orange 0%, --orange-hover 100%);
+    color: var(--blanc);
     border: none;
     border-radius: 10px;
     font-size: 1.1rem;
@@ -262,7 +270,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background: linear-gradient(135deg, #e85d2a 0%, #d14d1f 100%);
+    background: linear-gradient(135deg, --orange-hover 0%, #d14d1f 100%);
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
 }
@@ -273,11 +281,11 @@ button[type="submit"]:active {
 
 /* === FOOTER === */
 footer {
-    background-color: #1a1a1a;
-    color: #fafafa;
+    background-color: var(--noir);
+    color: var(--blanc);
     padding: 2rem 0 1rem;
     margin-top: auto;
-    border-top: 3px solid #ff6b35;
+    border-top: 3px solid var(--orange);
 }
 
 .footer-content {
@@ -291,7 +299,7 @@ footer {
 }
 
 .footer-section h3 {
-    color: #ff6b35;
+    color: var(--orange);
     font-size: 1.2rem;
     margin-bottom: 1rem;
     text-transform: uppercase;
@@ -299,7 +307,7 @@ footer {
 }
 
 .footer-section p {
-    color: #fafafa;
+    color: var(--orange);
     line-height: 1.8;
     opacity: 0.9;
 }
@@ -313,7 +321,7 @@ footer {
 }
 
 .footer-bottom p {
-    color: #fafafa;
+    color: var(--blanc);
     font-size: 0.9rem;
     opacity: 0.8;
 }
@@ -372,7 +380,7 @@ select:focus-visible,
 textarea:focus-visible,
 button:focus-visible,
 a:focus-visible {
-    outline: 2px solid #ff6b35;
+    outline: 2px solid var(--orange);
     outline-offset: 2px;
 }
 
@@ -392,7 +400,7 @@ a:focus-visible {
 .menu-toggle span {
     width: 25px;
     height: 3px;
-    background-color: #ff6b35;
+    background-color: var(--orange);
     border-radius: 3px;
     transition: all 0.3s ease;
 }
@@ -422,7 +430,7 @@ a:focus-visible {
         right: -100%;
         width: 70%;
         height: 100vh;
-        background: linear-gradient(145deg, #1a1a1a 0%, #2d2d2d 100%);
+        background: linear-gradient(145deg, --noir 0%, #2d2d2d 100%);
         flex-direction: column;
         justify-content: center;
         align-items: center;

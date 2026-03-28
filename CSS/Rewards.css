@@ -1,3 +1,11 @@
+:root {
+    --noir: #1a1a1a;
+    --orange: #ff6b35;
+    --orange-hover: #e85d2a;
+    --blanc: #fafafa;
+    --gris-carte: #242424;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -11,8 +19,8 @@ html, body {
 
 body {
     font-family: 'Arial', 'Helvetica', sans-serif;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-    color: #fafafa;
+    background: linear-gradient(135deg, --noir 0%, #2d2d2d 100%);
+    color: var(--blanc);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -21,7 +29,7 @@ body {
 /*Header*/
 
 header {
-    background-color: #1a1a1a;
+    background-color: var(--noir);
     box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
     position: sticky;
     top: 0;
@@ -70,7 +78,7 @@ nav {
 .menu-toggle span {
     width: 25px;
     height: 3px;
-    background-color: #ff6b35;
+    background-color: var(--orange);
     border-radius: 3px;
     transition: all 0.3s ease;
 }
@@ -96,7 +104,7 @@ nav ul {
 }
 
 nav ul li a {
-    color: #fafafa;
+    color: var(--blanc);
     text-decoration: none;
     font-size: 1rem;
     font-weight: 500;
@@ -106,8 +114,8 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    background-color: #ff6b35;
-    color: #1a1a1a;
+    background-color: var(--orange);
+    color: var(--noir);
     transform: translateY(-2px);
 }
 
@@ -122,7 +130,7 @@ nav ul li a:hover {
 }
 
 .dashboard-container {
-    background: linear-gradient(145deg, #2d2d2d 0%, #1a1a1a 100%);
+    background: linear-gradient(145deg, #2d2d2d 0%, --noir 100%);
     border-radius: 20px;
     padding: 3rem;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 107, 53, 0.1);
@@ -130,7 +138,7 @@ nav ul li a:hover {
 }
 
 .dashboard-header h1 {
-    color: #ff6b35;
+    color: var(--orange);
     text-transform: uppercase;
     font-size: 1.8rem;
     margin-bottom: 0.5rem;
@@ -156,7 +164,7 @@ nav ul li a:hover {
 
 .balance-card {
     background: rgba(255, 107, 53, 0.05);
-    border: 1px solid #ff6b35;
+    border: 1px solid var(--orange);
     border-radius: 15px;
     padding: 2rem;
     text-align: center;
@@ -166,7 +174,7 @@ nav ul li a:hover {
 
 .balance-label {
     display: block;
-    color: #ff6b35;
+    color: var(--orange);
     text-transform: uppercase;
     font-size: 0.9rem;
     letter-spacing: 1px;
@@ -204,13 +212,13 @@ nav ul li a:hover {
 .progress-bar { 
     width: 100%;
     height: 8px;
-    background-color: #1a1a1a;
+    background-color: var(--noir);
     border-radius: 4px;
     overflow: hidden;
 }
 
 .progress-fill { height: 100%;
-    background: linear-gradient(90deg, #ff6b35, #e85d2a);
+    background: linear-gradient(90deg, --orange, --orange-hover);
     border-radius: 4px;
 }
 
@@ -218,7 +226,7 @@ nav ul li a:hover {
 
 .withdraw-btn {
     width: 100%;
-    background: linear-gradient(135deg, #ff6b35 0%, #e85d2a 100%);
+    background: linear-gradient(135deg, --orange 0%, --orange-hover 100%);
     color: #fff;
     border: none;
     padding: 15px;
@@ -243,7 +251,7 @@ transform: translateY(0);
 /*Conteneur de l'historique de livraisons*/
 
 .history-column h3 {
-    color: #fafafa;
+    color: var(--blanc);
     margin-bottom: 1.5rem;
     font-size: 1.2rem;
     border-bottom: 2px solid #333;
@@ -264,7 +272,7 @@ transform: translateY(0);
 }
 
 .history-list::-webkit-scrollbar-track {
-    background: #1a1a1a; 
+    background: var(--noir); 
     border-radius: 10px;
 }
 
@@ -274,11 +282,11 @@ transform: translateY(0);
 }
 
 .history-list::-webkit-scrollbar-thumb:hover {
-    background: #ff6b35; 
+    background: var(--orange); 
 }
 
 .history-card {
-    background-color: #242424;
+    background-color: var(--gris-carte);
     padding: 1.2rem;
     border-radius: 10px;
     display: flex;
@@ -302,7 +310,7 @@ transform: translateY(0);
 }
 
 .history-details h4 {
-    color: #fafafa;
+    color: var(--blanc);
     font-size: 1rem;
     margin-bottom: 0.3rem;
 }
@@ -347,11 +355,11 @@ transform: translateY(0);
 /*Footer*/
 
 footer {
-    background-color: #1a1a1a;
-    color: #fafafa;
+    background-color: var(--noir);
+    color: var(--blanc);
     padding: 2rem 0 1rem;
     margin-top: auto;
-    border-top: 3px solid #ff6b35;
+    border-top: 3px solid var(--orange);
 }
 
 .footer-content {
@@ -366,7 +374,7 @@ footer {
 }
 
 .footer-section h3 {
-    color: #ff6b35;
+    color: var(--orange);
     font-size: 1.2rem;
     margin-bottom: 1rem;
     text-transform: uppercase;
@@ -374,7 +382,7 @@ footer {
 }
 
 .footer-section p {
-    color: #fafafa;
+    color: var(--blanc);
     line-height: 1.8;
     opacity: 0.9;
 }
@@ -388,7 +396,7 @@ footer {
 }
 
 .footer-bottom p {
-    color: #fafafa;
+    color: var(--blanc);
     font-size: 0.9rem;
     opacity: 0.8;
 }
@@ -426,7 +434,7 @@ footer {
         right: -100%;
         width: 70%;
         height: 100vh;
-        background: linear-gradient(145deg, #1a1a1a 0%, #2d2d2d 100%);
+        background: linear-gradient(145deg, --noir 0%, #2d2d2d 100%);
         flex-direction: column;
         justify-content: center;
         align-items: center;
