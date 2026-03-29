@@ -1,22 +1,86 @@
 <?php
-    session_start();
+session_start();
 
-    // Vérifier que c'est un admin
-    if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-        header('Location: connexion.php');
-        exit;
-    }
+// Vérifier que c'est un admin
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    header('Location: connexion.php');
+    exit;
+}
 
-    // Charger les utilisateurs
-    $users = json_decode(file_get_contents('../DATA/users.json'), true);
+// Charger les utilisateurs
+$users = json_decode(file_get_contents('../DATA/users.json'), true);
 
-    // Filtrage (si formulaire soumis)
-    $type_filtre = $_GET['type-utilisateur'] ?? 'tous';
-    if ($type_filtre !== 'tous') {
-        $users = array_filter($users, function($u) use ($type_filtre) {
-            return $u['role'] === $type_filtre;
+// CALCUL DES STATISTIQUES DYNAMIQUES
+$total_users = count($users);
+$clients_actifs = count(array_filter($users, function($u) {
+    return $u['role'] === 'client' && $u['statut'] === 'actif';
+}));
+
+// Nouveaux utilisateurs ce mois
+$nouveaux_ce_mois = count(array_filter($users, function($u) {
+    $date_inscription = strtotime($u['date_inscription'] ?? '1970-01-01');
+    $debut_mois = strtotime('first day of this month');
+    return $date_inscription >= $debut_mois;
+}));
+
+// FILTRAGE - Recherche par nom/prénom/email
+$recherche = $_GET['recherche-utilisateur'] ?? '';
+if (!empty($recherche)) {
+    $users = array_filter($users, function($u) use ($recherche) {
+        $recherche_lower = strtolower($recherche);
+        return strpos(strtolower($u['nom']), $recherche_lower) !== false ||
+               strpos(strtolower($u['prenom']), $recherche_lower) !== false ||
+               strpos(strtolower($u['email']), $recherche_lower) !== false;
+    });
+}
+
+// FILTRAGE - Type d'utilisateur
+$type_filtre = $_GET['type-utilisateur'] ?? 'tous';
+if ($type_filtre !== 'tous') {
+    // Conversion des valeurs du select vers les rôles réels
+    $role_map = [
+        'clients' => 'client',
+        'administrateurs' => 'admin',
+        'restaurateurs' => 'restaurateur',
+        'livreurs' => 'livreur'
+    ];
+    
+    if (isset($role_map[$type_filtre])) {
+        $users = array_filter($users, function($u) use ($role_map, $type_filtre) {
+            return $u['role'] === $role_map[$type_filtre];
         });
     }
+}
+
+// FILTRAGE - Statut du compte
+$statut_filtre = $_GET['statut-compte'] ?? 'tous';
+if ($statut_filtre !== 'tous') {
+    $users = array_filter($users, function($u) use ($statut_filtre) {
+        return $u['statut'] === $statut_filtre;
+    });
+}
+
+// FILTRAGE - Date d'inscription
+$date_filtre = $_GET['date-inscription'] ?? 'tous';
+if ($date_filtre !== 'tous') {
+    $now = time();
+    $users = array_filter($users, function($u) use ($date_filtre, $now) {
+        $date_inscription = strtotime($u['date_inscription'] ?? '1970-01-01');
+        
+        switch ($date_filtre) {
+            case '7jours':
+                return ($now - $date_inscription) <= (7 * 24 * 60 * 60);
+            case '30jours':
+                return ($now - $date_inscription) <= (30 * 24 * 60 * 60);
+            case '6mois':
+                return ($now - $date_inscription) <= (180 * 24 * 60 * 60);
+            case '1an':
+                return ($now - $date_inscription) <= (365 * 24 * 60 * 60);
+            default:
+                return true;
+        }
+    });
+}
 ?>
 
 <!DOCTYPE html>
@@ -36,8 +100,8 @@
             </div>
             <ul>
                 <li><a href="accueil.html">Accueil</a></li>
-                <li><a href="admin.html">Tableau de bord</a></li>
-                <li><a href="connexion.html">Déconnexion</a></li>
+                <li><a href="admin.php">Tableau de bord</a></li>
+                <li><a href="deconnexion.php">Déconnexion</a></li>
             </ul>
         </nav>
     </header>
@@ -50,48 +114,49 @@
 
                 <div class="admin-filters">
                     <h3>Filtres de recherche</h3>
-                    <form action="admin.html" method="get">
+                    <form action="" method="get">
                         <div class="filter-group">
                             <label for="recherche-utilisateur">Rechercher un utilisateur</label>
-                            <input type="text" id="recherche-utilisateur" name="recherche-utilisateur" placeholder="Nom, prénom, email...">
+                            <input type="text" id="recherche-utilisateur" name="recherche-utilisateur" 
+                                   placeholder="Nom, prénom, email..." 
+                                   value="<?= htmlspecialchars($recherche) ?>">
                         </div>
 
                         <div class="filter-group">
                             <label for="type-utilisateur">Type d'utilisateur</label>
                             <select id="type-utilisateur" name="type-utilisateur">
-                                <option value="tous">Tous les utilisateurs</option>
-                                <option value="clients">Clients uniquement</option>
-                                <option value="avec-commandes">Clients avec commandes</option>
-                                <option value="administrateurs">Administrateurs</option>
-                                <option value="restaurateurs">Restaurateurs</option>
-                                <option value="livreurs">Livreurs</option>
+                                <option value="tous" <?= $type_filtre === 'tous' ? 'selected' : '' ?>>Tous les utilisateurs</option>
+                                <option value="clients" <?= $type_filtre === 'clients' ? 'selected' : '' ?>>Clients uniquement</option>
+                                <option value="administrateurs" <?= $type_filtre === 'administrateurs' ? 'selected' : '' ?>>Administrateurs</option>
+                                <option value="restaurateurs" <?= $type_filtre === 'restaurateurs' ? 'selected' : '' ?>>Restaurateurs</option>
+                                <option value="livreurs" <?= $type_filtre === 'livreurs' ? 'selected' : '' ?>>Livreurs</option>
                             </select>
                         </div>
 
                         <div class="filter-group">
                             <label for="statut-compte">Statut du compte</label>
                             <select id="statut-compte" name="statut-compte">
-                                <option value="tous">Tous les statuts</option>
-                                <option value="actif">Actifs</option>
-                                <option value="inactif">Inactifs</option>
-                                <option value="suspendu">Suspendus</option>
+                                <option value="tous" <?= $statut_filtre === 'tous' ? 'selected' : '' ?>>Tous les statuts</option>
+                                <option value="actif" <?= $statut_filtre === 'actif' ? 'selected' : '' ?>>Actifs</option>
+                                <option value="inactif" <?= $statut_filtre === 'inactif' ? 'selected' : '' ?>>Inactifs</option>
+                                <option value="suspendu" <?= $statut_filtre === 'suspendu' ? 'selected' : '' ?>>Suspendus</option>
                             </select>
                         </div>
 
                         <div class="filter-group">
                             <label for="date-inscription">Inscrit depuis</label>
                             <select id="date-inscription" name="date-inscription">
-                                <option value="tous">Toutes les dates</option>
-                                <option value="7jours">7 derniers jours</option>
-                                <option value="30jours">30 derniers jours</option>
-                                <option value="6mois">6 derniers mois</option>
-                                <option value="1an">1 an</option>
+                                <option value="tous" <?= $date_filtre === 'tous' ? 'selected' : '' ?>>Toutes les dates</option>
+                                <option value="7jours" <?= $date_filtre === '7jours' ? 'selected' : '' ?>>7 derniers jours</option>
+                                <option value="30jours" <?= $date_filtre === '30jours' ? 'selected' : '' ?>>30 derniers jours</option>
+                                <option value="6mois" <?= $date_filtre === '6mois' ? 'selected' : '' ?>>6 derniers mois</option>
+                                <option value="1an" <?= $date_filtre === '1an' ? 'selected' : '' ?>>1 an</option>
                             </select>
                         </div>
 
                         <div class="filter-group">
                             <button type="submit">Rechercher</button>
-                            <button type="reset">Réinitialiser</button>
+                            <button type="reset" onclick="window.location.href='admin.php'">Réinitialiser</button>
                         </div>
                     </form>
                 </div>
@@ -101,19 +166,19 @@
                     <div class="stats-container">
                         <div class="stat-item">
                             <p class="stat-label">Total utilisateurs</p>
-                            <p class="stat-value">1 247</p>
+                            <p class="stat-value"><?= $total_users ?></p>
                         </div>
                         <div class="stat-item">
                             <p class="stat-label">Clients actifs</p>
-                            <p class="stat-value">892</p>
+                            <p class="stat-value"><?= $clients_actifs ?></p>
                         </div>
                         <div class="stat-item">
                             <p class="stat-label">Nouveaux ce mois</p>
-                            <p class="stat-value">43</p>
+                            <p class="stat-value"><?= $nouveaux_ce_mois ?></p>
                         </div>
                         <div class="stat-item">
-                            <p class="stat-label">Avec commandes</p>
-                            <p class="stat-value">678</p>
+                            <p class="stat-label">Résultats filtrés</p>
+                            <p class="stat-value"><?= count($users) ?></p>
                         </div>
                     </div>
                 </div>
@@ -121,6 +186,11 @@
                 <div class="users-list">
                     <h3>Liste des utilisateurs</h3>
                     
+                    <?php if (empty($users)): ?>
+                        <p style="text-align: center; color: #ff6b35; padding: 2rem;">
+                            Aucun utilisateur trouvé avec ces critères.
+                        </p>
+                    <?php else: ?>
                     <table>
                         <thead>
                             <tr>
@@ -130,7 +200,6 @@
                                 <th>Email</th>
                                 <th>Type</th>
                                 <th>Date inscription</th>
-                                <th>Nb commandes</th>
                                 <th>Statut</th>
                                 <th>Actions</th>
                             </tr>
@@ -144,7 +213,6 @@
                                 <td><?= htmlspecialchars($user['email']) ?></td>
                                 <td><?= htmlspecialchars($user['role']) ?></td>
                                 <td><?= htmlspecialchars($user['date_inscription'] ?? 'N/A') ?></td>
-                                <td>-</td>
                                 <td><?= htmlspecialchars($user['statut']) ?></td>
                                 <td>
                                     <a href="profil.php?id=<?= $user['id'] ?>">Voir profil</a>
@@ -153,25 +221,14 @@
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-
-                    <div class="pagination">
-                        <a href="admin.html?page=1">1</a>
-                        <a href="admin.html?page=2">2</a>
-                        <a href="admin.html?page=3">3</a>
-                        <a href="admin.html?page=4">4</a>
-                        <a href="admin.html?page=5">5</a>
-                        <span>...</span>
-                        <a href="admin.html?page=25">25</a>
-                    </div>
+                    <?php endif; ?>
                 </div>
 
                 <div class="admin-actions">
                     <h3>Actions rapides</h3>
                     <div class="actions-container">
-                        <a href="ajouter-utilisateur.html">Ajouter un utilisateur</a>
-                        <a href="export-utilisateurs.html">Exporter la liste</a>
-                        <a href="statistiques.html">Voir statistiques détaillées</a>
-                        <a href="logs.html">Consulter les logs</a>
+                        <a href="inscription.php">Ajouter un utilisateur</a>
+                        <a href="export_utilisateurs.php">Exporter la liste (CSV)</a>
                     </div>
                 </div>
             </div>

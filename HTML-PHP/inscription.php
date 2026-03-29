@@ -1,3 +1,23 @@
+<?php
+    $error_message = '';
+    $success_message = '';
+
+    if (isset($_GET['error'])) {
+        switch ($_GET['error']) {
+            case 'password_mismatch':
+                $error_message = 'Les mots de passe ne correspondent pas.';
+                break;
+            case 'email_exists':
+                $error_message = 'Cette adresse email est déjà utilisée.';
+                break;
+        }
+    }
+
+    if (isset($_GET['success'])) {
+        $success_message = 'Inscription réussie ! Vous pouvez maintenant vous connecter.';
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -30,6 +50,19 @@
         <section class="inscription-section">
             <div class="inscription-container">
                 <h2>Créer un compte</h2>
+
+                <?php if ($error_message): ?>
+                    <div style="background-color: #ff4444; color: white; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                        <?= htmlspecialchars($error_message) ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if ($success_message): ?>
+                    <div style="background-color: #44ff44; color: #1a1a1a; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                        <?= htmlspecialchars($success_message) ?>
+                    </div>
+                <?php endif; ?>
+
                 <p>Rejoignez Los Pollos Hermanos et profitez d'offres exclusives</p>
                 
                 <form action="traitement_inscription.php" method="post">
