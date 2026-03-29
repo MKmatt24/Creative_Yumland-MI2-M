@@ -1,3 +1,25 @@
+<?php
+session_start();
+
+// Vérifier que l'utilisateur est connecté
+if (!isset($_SESSION['user_id'])) {
+    header('Location: connexion.php');
+    exit;
+}
+
+// Simuler une commande (en Phase 2, tu n'as pas encore de système de commandes)
+// Plus tard, tu récupéreras la vraie commande depuis un fichier ou une BDD
+$commande_id = $_GET['commande'] ?? 12345;
+$commande = [
+    'id' => $commande_id,
+    'date' => '02/02/2026',
+    'montant' => '32,50 €'
+];
+
+// Message de succès si la notation a été enregistrée
+$success = $_GET['success'] ?? false;
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -12,10 +34,10 @@
         <nav>
             <div class="logo">
                 <div class="logo-box">
-                <a href="accueil.html">
-                    <img src="../IMAGES/logo.png" alt="Logo Los Pollos" class="nav-logo">
-                </a>
-            </div>
+                    <a href="accueil.html">
+                        <img src="../IMAGES/logo.png" alt="Logo Los Pollos" class="nav-logo">
+                    </a>
+                </div>
             </div>
 
             <button class="menu-toggle" aria-label="Toggle menu">
@@ -28,7 +50,7 @@
                 <li><a href="accueil.html">Accueil</a></li>
                 <li><a href="menu.html">Menu</a></li>
                 <li><a href="accueil.html#contact">Contact</a></li>
-                <li><a href="profil.html">Mon Profil</a></li>
+                <li><a href="profil.php">Mon Profil</a></li>
             </ul>
         </nav>
     </header>
@@ -39,13 +61,23 @@
                 <h2>Notez votre commande</h2>
                 <p>Votre avis nous aide à améliorer nos services</p>
 
+                <!-- Message de succès -->
+                <?php if ($success): ?>
+                    <div style="background-color: rgba(68, 255, 68, 0.2); border: 2px solid #44ff44; color: #44ff44; padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem; text-align: center;">
+                        ✅ Merci pour votre avis ! Votre notation a été enregistrée avec succès.
+                    </div>
+                <?php endif; ?>
+
                 <div class="commande-info">
-                    <h3>Commande n°12345</h3>
-                    <p>Date : 02/02/2026</p>
-                    <p>Montant : 32,50 €</p>
+                    <h3>Commande n°<?= htmlspecialchars($commande['id']) ?></h3>
+                    <p>Date : <?= htmlspecialchars($commande['date']) ?></p>
+                    <p>Montant : <?= htmlspecialchars($commande['montant']) ?></p>
                 </div>
 
-                <form action="traitement-notation.php" method="post">
+                <form action="traitement_notation.php" method="post">
+                    <!-- Champ caché pour envoyer l'ID de la commande -->
+                    <input type="hidden" name="commande_id" value="<?= htmlspecialchars($commande['id']) ?>">
+                    
                     <div class="form-section">
                         <h3>Qualité de la livraison</h3>
                         
@@ -153,10 +185,12 @@
 
                         <div class="form-group">
                             <label>Commande complète</label>
-                            <input type="radio" id="commande-complete-oui" name="commande-complete" value="oui" required>
-                            <label for="commande-complete-oui">Oui, tout était présent</label>
-                            <input type="radio" id="commande-complete-non" name="commande-complete" value="non" required>
-                            <label for="commande-complete-non">Non, il manquait des éléments</label>
+                            <div>
+                                <input type="radio" id="commande-complete-oui" name="commande-complete" value="oui" required>
+                                <label for="commande-complete-oui">Oui, tout était présent</label>
+                                <input type="radio" id="commande-complete-non" name="commande-complete" value="non">
+                                <label for="commande-complete-non">Non, il manquait des éléments</label>
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -214,34 +248,33 @@
             <p>&copy; 2024 Los Pollos Hermanos. Tous droits réservés.</p>
         </div>
     </footer>
-</body>
 
-<script>
-    // Menu hamburger toggle
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navMenu = document.querySelector('nav ul');
+    <script>
+        // Menu hamburger toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.querySelector('nav ul');
 
-    menuToggle.addEventListener('click', () => {
-        menuToggle.classList.toggle('active');
-        navMenu.classList.toggle('active');
-    });
-
-    // Fermer le menu quand on clique sur un lien
-    const navLinks = document.querySelectorAll('nav ul li a');
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            menuToggle.classList.remove('active');
-            navMenu.classList.remove('active');
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
         });
-    });
 
-    // Fermer le menu si on clique en dehors
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('nav')) {
-            menuToggle.classList.remove('active');
-            navMenu.classList.remove('active');
-        }
-    });
-</script>
+        // Fermer le menu quand on clique sur un lien
+        const navLinks = document.querySelectorAll('nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
 
+        // Fermer le menu si on clique en dehors
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('nav')) {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
 </html>
