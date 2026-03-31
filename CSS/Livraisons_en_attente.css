@@ -1,3 +1,11 @@
+:root {
+    --noir: #1a1a1a;
+    --orange: #ff6b35;
+    --orange-hover: #e85d2a;
+    --blanc: #fafafa;
+    --gris-carte: #242424;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -11,8 +19,8 @@ html, body {
 
 body {
     font-family: 'Arial', 'Helvetica', sans-serif;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-    color: #fafafa;
+    background: linear-gradient(135deg, var(--noir) 0%, #2d2d2d 100%);
+    color: var(--blanc);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -21,7 +29,7 @@ body {
 /*Header*/
 
 header {
-    background-color: #1a1a1a;
+    background-color: var(--noir);
     box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
     position: sticky;
     top: 0;
@@ -70,7 +78,7 @@ nav {
 .menu-toggle span {
     width: 25px;
     height: 3px;
-    background-color: #ff6b35;
+    background-color: var(--orange);
     border-radius: 3px;
     transition: all 0.3s ease;
 }
@@ -96,7 +104,7 @@ nav ul {
 }
 
 nav ul li a {
-    color: #fafafa;
+    color: var(--blanc);
     text-decoration: none;
     font-size: 1rem;
     font-weight: 500;
@@ -106,8 +114,8 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    background-color: #ff6b35;
-    color: #1a1a1a;
+    background-color: var(--orange);
+    color: var(--noir);
     transform: translateY(-2px);
 }
 
@@ -122,7 +130,7 @@ nav ul li a:hover {
 }
 
 .status-banner {
-    background-color: #242424;
+    background-color: var(--gris-carte);
     border: 1px solid #333;
     border-radius: 50px;
     padding: 15px 30px;
@@ -179,7 +187,7 @@ nav ul li a:hover {
 }
 
 .offer-card {
-    background: linear-gradient(145deg, #2d2d2d 0%, #1a1a1a 100%);
+    background: linear-gradient(145deg, #2d2d2d 0%, var(--noir) 100%);
     border-radius: 15px;
     padding: 20px;
     border: 1px solid #333;
@@ -192,7 +200,7 @@ nav ul li a:hover {
 }
 
 .highlight-offer {
-    border: 1px solid #ff6b35;
+    border: 1px solid var(--orange);
     box-shadow: 0 5px 20px rgba(255, 107, 53, 0.2);
 }
 
@@ -269,11 +277,10 @@ nav ul li a:hover {
 }
 
 .route-step strong {
-    color: #fff;
+    color: var(--orange);
     display: block;
     font-size: 0.8rem;
     text-transform: uppercase;
-    color: #ff6b35;
 }
 
 /*Petits ronds sur la ligne */
@@ -286,8 +293,8 @@ nav ul li a:hover {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background-color: #1a1a1a;
-    border: 2px solid #ff6b35;
+    background-color: var(--noir);
+    border: 2px solid var(--orange);
 }
 
 .pickup::before {
@@ -295,7 +302,7 @@ nav ul li a:hover {
 }
 
 .dropoff::before {
-    background-color: #ff6b35;
+    background-color: var(--orange);
 }
 
 /*Boutons accepter ou refuser*/
@@ -306,7 +313,7 @@ nav ul li a:hover {
 }
 
 .decline-btn {
-    background: #242424;
+    background: var(--gris-carte);
     color: #888;
     border: 1px solid #444;
     width: 60px;
@@ -324,7 +331,7 @@ nav ul li a:hover {
 
 .accept-btn {
     flex: 1;
-    background: linear-gradient(135deg, #ff6b35 0%, #e85d2a 100%);
+    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-hover) 100%);
     color: #fff;
     border: none;
     padding: 18px;
@@ -344,11 +351,11 @@ nav ul li a:hover {
 /*Footer*/
 
 footer {
-    background-color: #1a1a1a;
-    color: #fafafa;
+    background-color: var(--noir);
+    color: var(--blanc);
     padding: 2rem 0 1rem;
     margin-top: auto;
-    border-top: 3px solid #ff6b35;
+    border-top: 3px solid var(--orange);
 }
 
 .footer-content {
@@ -363,7 +370,7 @@ footer {
 }
 
 .footer-section h3 {
-    color: #ff6b35;
+    color: var(--orange);
     font-size: 1.2rem;
     margin-bottom: 1rem;
     text-transform: uppercase;
@@ -371,7 +378,7 @@ footer {
 }
 
 .footer-section p {
-    color: #fafafa;
+    color: var(--blanc);
     line-height: 1.8;
     opacity: 0.9;
 }
@@ -385,7 +392,7 @@ footer {
 }
 
 .footer-bottom p {
-    color: #fafafa;
+    color: var(--blanc);
     font-size: 0.9rem;
     opacity: 0.8;
 }
@@ -411,7 +418,7 @@ footer {
         right: -100%;
         width: 70%;
         height: 100vh;
-        background: linear-gradient(145deg, #1a1a1a 0%, #2d2d2d 100%);
+        background: linear-gradient(145deg, var(--noir) 0%, #2d2d2d 100%);
         flex-direction: column;
         justify-content: center;
         align-items: center;

@@ -1,3 +1,11 @@
+:root {
+    --noir: #1a1a1a;
+    --orange: #ff6b35;
+    --orange-hover: #e85d2a;
+    --blanc: #fafafa;
+    --gris-carte: #242424;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -11,8 +19,8 @@ html, body {
 
 body {
     font-family: 'Arial', 'Helvetica', sans-serif;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-    color: #fafafa;
+    background: linear-gradient(135deg, var(--noir) 0%, #2d2d2d 100%);
+    color: var(--blanc);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -21,7 +29,7 @@ body {
 /*Header*/
 
 header {
-    background-color: #1a1a1a;
+    background-color: var(--noir);
     box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
     position: sticky;
     top: 0;
@@ -70,7 +78,7 @@ nav {
 .menu-toggle span {
     width: 25px;
     height: 3px;
-    background-color: #ff6b35;
+    background-color: var(--orange);
     border-radius: 3px;
     transition: all 0.3s ease;
 }
@@ -96,7 +104,7 @@ nav ul {
 }
 
 nav ul li a {
-    color: #fafafa;
+    color: var(--blanc);
     text-decoration: none;
     font-size: 1rem;
     font-weight: 500;
@@ -106,8 +114,8 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    background-color: #ff6b35;
-    color: #1a1a1a;
+    background-color: var(--orange);
+    color: var(--noir);
     transform: translateY(-2px);
 }
 
@@ -135,10 +143,10 @@ nav ul li a:hover {
 
 .status-badge {
     background-color: rgba(255, 107, 53, 0.2);
-    color: #ff6b35;
+    color: var(--orange);
     padding: 5px 15px;
     border-radius: 20px;
-    border: 1px solid #ff6b35;
+    border: 1px solid var(--orange);
     font-size: 0.9rem;
     font-weight: bold;
     display: inline-block;
@@ -148,7 +156,7 @@ nav ul li a:hover {
 /*Conteneur de toute les infos importantes*/
 
 .delivery-container {
-    background: linear-gradient(145deg, #2d2d2d 0%, #1a1a1a 100%);
+    background: linear-gradient(145deg, #2d2d2d 0%, var(--noir) 100%);
     border-radius: 20px;
     padding: 25px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
@@ -164,7 +172,7 @@ nav ul li a:hover {
 }
 
 .customer-info h3 {
-    color: #ff6b35;
+    color: var(--orange);
     font-size: 1.4rem;
     margin-bottom: 5px;
 }
@@ -218,8 +226,8 @@ nav ul li a:hover {
     display: block;
     text-align: center;
     text-decoration: none;
-    color: #ff6b35;
-    border: 2px solid #ff6b35;
+    color: var(--orange);
+    border: 2px solid var(--orange);
     padding: 12px;
     border-radius: 10px;
     font-weight: bold;
@@ -228,7 +236,7 @@ nav ul li a:hover {
 }
 
 .gps-btn:hover {
-    background-color: #ff6b35;
+    background-color: var(--orange);
     color: #000;
 }
 
@@ -242,7 +250,7 @@ nav ul li a:hover {
 }
 
 .access-item {
-    background-color: #242424;
+    background-color: var(--gris-carte);
     padding: 10px;
     border-radius: 10px;
     text-align: center;
@@ -264,20 +272,20 @@ nav ul li a:hover {
 }
 
 .comment-box {
-    background-color: #242424;
+    background-color: var(--gris-carte);
     padding: 15px;
     border-radius: 10px;
     margin-top: 5px;
     font-style: italic;
     color: #ccc;
-    border-left: 3px solid #ff6b35;
+    border-left: 3px solid var(--orange);
 }
 
 /*Bouton "livraison terminée"*/
 
 .finish-btn {
     width: 100%;
-    background: linear-gradient(135deg, #ff6b35 0%, #e85d2a 100%);
+    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-hover) 100%);
     color: #fff;
     border: none;
     padding: 18px;
@@ -305,11 +313,11 @@ nav ul li a:hover {
 /*Footer*/
 
 footer {
-    background-color: #1a1a1a;
-    color: #fafafa;
+    background-color: var(--noir);
+    color: var(--blanc);
     padding: 2rem 0 1rem;
     margin-top: auto;
-    border-top: 3px solid #ff6b35;
+    border-top: 3px solid var(--orange);
 }
 
 .footer-content {
@@ -324,7 +332,7 @@ footer {
 }
 
 .footer-section h3 {
-    color: #ff6b35;
+    color: var(--orange);
     font-size: 1.2rem;
     margin-bottom: 1rem;
     text-transform: uppercase;
@@ -332,7 +340,7 @@ footer {
 }
 
 .footer-section p {
-    color: #fafafa;
+    color: var(--blanc);
     line-height: 1.8;
     opacity: 0.9;
 }
@@ -346,7 +354,7 @@ footer {
 }
 
 .footer-bottom p {
-    color: #fafafa;
+    color: var(--blanc);
     font-size: 0.9rem;
     opacity: 0.8;
 }
@@ -372,7 +380,7 @@ footer {
         right: -100%;
         width: 70%;
         height: 100vh;
-        background: linear-gradient(145deg, #1a1a1a 0%, #2d2d2d 100%);
+        background: linear-gradient(145deg, var(--noir) 0%, #2d2d2d 100%);
         flex-direction: column;
         justify-content: center;
         align-items: center;
