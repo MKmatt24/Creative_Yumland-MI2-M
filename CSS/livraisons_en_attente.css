@@ -119,177 +119,223 @@ nav ul li a:hover {
     transform: translateY(-2px);
 }
 
-/*Page de livraison*/
+/*Banderole de recherche de livraison en attente*/
 
-.delivery-section {
+.radar-section {
     width: 100%;
-    max-width: 600px;
+    max-width: 800px; 
     margin: 0 auto;
-    padding: 20px;
+    padding: 2rem;
+    flex: 1;
 }
 
-.delivery-header {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.delivery-header h2 {
-    color: #fff;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-}
-
-/*Badge "En cours de livraison"*/
-
-.status-badge {
-    background-color: rgba(255, 107, 53, 0.2);
-    color: var(--orange);
-    padding: 5px 15px;
-    border-radius: 20px;
-    border: 1px solid var(--orange);
-    font-size: 0.9rem;
-    font-weight: bold;
-    display: inline-block;
-    animation: pulse 2s infinite;
-}
-
-/*Conteneur de toute les infos importantes*/
-
-.delivery-container {
-    background: linear-gradient(145deg, #2d2d2d 0%, var(--noir) 100%);
-    border-radius: 20px;
-    padding: 25px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    border: 2px solid rgba(255, 107, 53, 0.2);
-}
-
-/*Bloc Client (Nom + Tel)*/
-
-.customer-block {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.customer-info h3 {
-    color: var(--orange);
-    font-size: 1.4rem;
-    margin-bottom: 5px;
-}
-
-/*Bouton Téléphone rond vert*/
-
-.phone-btn {
-    background-color: #2ecc71;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+.status-banner {
+    background-color: var(--gris-carte);
+    border: 1px solid #333;
+    border-radius: 50px;
+    padding: 15px 30px;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-decoration: none;
-    font-size: 1.5rem;
-    transition: transform 0.2s;
-    box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
+    gap: 15px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
-.phone-btn:hover {
-    transform: scale(1.1);
-}
-
-.divider {
-    border: 0;
-    height: 1px;
-    background: #3d3d3d;
-    margin: 20px 0;
-}
-
-/*Bloc Adresse*/
-
-.address-block label {
-    color: #888;
-    font-size: 0.85rem;
+.status-banner h2 {
+    font-size: 1.1rem;
+    color: #2ecc71;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-.address-text {
-    font-size: 1.3rem;
-    font-weight: bold;
-    margin: 10px 0 20px 0;
-    line-height: 1.4;
+/*Animation du point vert qui clignote*/
+
+.pulse-ring {
+    width: 15px;
+    height: 15px;
+    background-color: #2ecc71;
+    border-radius: 50%;
+    position: relative;
 }
 
-/*Bouton GPS*/
-
-.gps-btn {
-    display: block;
-    text-align: center;
-    text-decoration: none;
-    color: var(--orange);
-    border: 2px solid var(--orange);
-    padding: 12px;
-    border-radius: 10px;
-    font-weight: bold;
-    text-transform: uppercase;
-    transition: all 0.3s;
+.pulse-ring::before {
+    content: '';
+    position: absolute; left: -5px; top: -5px; right: -5px; bottom: -5px;
+    border-radius: 50%;
+    border: 2px solid #2ecc71;
+    animation: radarPulse 1.5s linear infinite;
 }
 
-.gps-btn:hover {
-    background-color: var(--orange);
-    color: #000;
+@keyframes radarPulse {
+    0% {
+        transform: scale(0.5);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.8);
+        opacity: 0;
+    }
 }
 
-/*Grille pour Digicode - Etage - Appartement*/
+/*Carte des offres de livraisons*/
 
-.access-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 10px;
-    margin: 25px 0;
+.offers-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
-.access-item {
-    background-color: var(--gris-carte);
-    padding: 10px;
-    border-radius: 10px;
-    text-align: center;
-    border: 1px solid #3d3d3d;
+.offer-card {
+    background: linear-gradient(145deg, #2d2d2d 0%, var(--noir) 100%);
+    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid #333;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    transition: transform 0.2s;
 }
 
-.access-item .icon { display: block; font-size: 1.2rem; margin-bottom: 5px; }
-.access-item .label { display: block; font-size: 0.7rem; color: #888; text-transform: uppercase; }
-.access-item .value { display: block; font-size: 1rem; font-weight: bold; color: #fff; margin-top: 3px; }
+.offer-card:hover {
+    transform: translateY(-3px);
+}
 
-/*Bloc Commentaire client*/
+.highlight-offer {
+    border: 1px solid var(--orange);
+    box-shadow: 0 5px 20px rgba(255, 107, 53, 0.2);
+}
 
-.comment-block { margin-bottom: 30px; }
+.offer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px dashed #444;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
 
-.comment-block label {
+.price-label {
     color: #888;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    display: block;
+}
+
+.offer-price {
+    color: #2ecc71;
+    font-size: 2.2rem;
+    text-shadow: 0 0 10px rgba(46, 204, 113, 0.2);
+}
+
+.time-block {
+    text-align: right;
+}
+
+.offer-time {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.offer-distance {
+    display: block;
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+/*Design du Trajet*/
+
+.offer-route {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 25px;
+}
+
+/*Ligne verticale en pointillé*/
+
+.offer-route::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    background: repeating-linear-gradient(to bottom, #666, #666 4px, transparent 4px, transparent 8px);
+}
+
+.route-step {
+    position: relative;
+    font-size: 0.95rem;
+    margin-bottom: 15px;
+    line-height: 1.4;
+    color: #ccc;
+}
+
+.route-step:last-child {
+    margin-bottom: 0;
+}
+
+.route-step strong {
+    color: var(--orange);
+    display: block;
+    font-size: 0.8rem;
     text-transform: uppercase;
 }
 
-.comment-box {
-    background-color: var(--gris-carte);
-    padding: 15px;
-    border-radius: 10px;
-    margin-top: 5px;
-    font-style: italic;
-    color: #ccc;
-    border-left: 3px solid var(--orange);
+/*Petits ronds sur la ligne */
+
+.route-step::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 18px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--noir);
+    border: 2px solid var(--orange);
 }
 
-/*Bouton "livraison terminée"*/
+.pickup::before {
+    border-color: #fff;
+}
 
-.finish-btn {
-    width: 100%;
+.dropoff::before {
+    background-color: var(--orange);
+}
+
+/*Boutons accepter ou refuser*/
+
+.offer-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.decline-btn {
+    background: var(--gris-carte);
+    color: #888;
+    border: 1px solid #444;
+    width: 60px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.decline-btn:hover {
+    background: #e74c3c;
+    color: #fff;
+    border-color: #e74c3c;
+}
+
+.accept-btn {
+    flex: 1;
     background: linear-gradient(135deg, var(--orange) 0%, var(--orange-hover) 100%);
     color: #fff;
     border: none;
     padding: 18px;
-    border-radius: 12px;
+    border-radius: 10px;
     font-size: 1.1rem;
     font-weight: bold;
     text-transform: uppercase;
@@ -298,16 +344,8 @@ nav ul li a:hover {
     transition: transform 0.2s;
 }
 
-.finish-btn:active {
+.accept-btn:active {
     transform: scale(0.98);
-}
-
-/*Animation de clignotement pour le badge "En cours de livraison"*/
-
-@keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.7; }
-    100% { opacity: 1; }
 }
 
 /*Footer*/
@@ -407,34 +445,37 @@ footer {
         font-size: 1.3rem;
     }
 
-/*Grossissement des boutons sur téléphone pour les livreurs*/
 
-    .customer-block {
-        flex-direction: column; 
-        text-align: center;
-        gap: 15px;
+/*Conteneur principal*/
+
+    .radar-section {
+        padding: 10px;
     }
     
-    .phone-btn {
-        width: 100%; 
-        height: auto;
-        border-radius: 12px;
-        padding: 20px;    
-        font-size: 2rem;   
+    .status-banner {
+        padding: 12px 20px;
     }
 
-    .gps-btn, .finish-btn {
-        width: 100%;
-        padding: 24px 10px; 
+    .status-banner h2 {
+        font-size: 0.95rem;
+    }
+
+/*Carte des offres de livraisons*/
+
+    .offer-card {
+        padding: 15px;
+    }
+
+    .offer-price {
+        font-size: 2rem;
+    }
+
+    .offer-time {
+        font-size: 1.1rem;
+    }
+    
+    .accept-btn {
+        padding: 20px 10px;
         font-size: 1.2rem;
-        letter-spacing: 1px;
-    }
-
-    .gps-btn {
-        margin-bottom: 30px; 
-    }
-
-    header {
-        position: relative; 
     }
 }
