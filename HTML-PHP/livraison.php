@@ -1,8 +1,6 @@
 <?php
 session_start();
 
-$_SESSION['user_id'] = 2; 
-
 //Vérification si l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
     header('Location: connexion.php');
@@ -37,9 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['id_
 $commandeEnCours = null;
 
 foreach ($commandes as $cmd) {
-    // Je dois attendre les ID livreur pour remplacer par :
-    // if ($cmd['statut'] == 'livraison' && $cmd['livreur_id'] == $_SESSION['user_id'])
-    if ($cmd['statut'] === 'livraison') {
+    if ($cmd['statut'] == 'livraison' && $cmd['livreur_id'] == $_SESSION['user_id']) {
         $commandeEnCours = $cmd;
         break;
     }
