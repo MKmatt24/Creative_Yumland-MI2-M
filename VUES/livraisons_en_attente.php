@@ -49,6 +49,7 @@ foreach ($commandes as $cmd) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Courses Disponibles - LOS POLLOS HERMANOS</title>
+    <link rel="icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="stylesheet" href="../CSS/livraisons_en_attente.css"> 
 </head>
 <body>

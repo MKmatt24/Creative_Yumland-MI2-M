@@ -43,6 +43,7 @@ $temps_estime = $commande_trouvee['temps_minutes'] ?? 0;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Livraison Réussie - LOS POLLOS HERMANOS</title>
+    <link rel="icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="stylesheet" href="../CSS/livraison_fini.css">
 </head>
 <body>

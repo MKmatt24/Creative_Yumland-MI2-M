@@ -16,6 +16,7 @@ $role_utilisateur = isset($_SESSION['user']['role']) ? $_SESSION['user']['role']
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Suivi des Commandes | Los Pollos Hermanos</title>
+    <link rel="icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="stylesheet" href="../CSS/commande.css">
 </head>
 <body>
