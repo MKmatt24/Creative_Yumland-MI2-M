@@ -2,8 +2,6 @@
 //Initialisation de la session
 session_start();
 
-$_SESSION['user_id'] = 2; //à enlever, juste pour les tests
-
 //Vérification si l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
     header('Location: connexion.php');
@@ -11,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 //Récupération de tous les utilisateurs depuis le JSON
-$usersData = file_get_contents('../DATA/user.json');
+$usersData = file_get_contents('../DATA/users.json');
 $users = json_decode($usersData, true);
 
 $currentUser = null;
