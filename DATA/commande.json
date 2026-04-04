@@ -2,6 +2,7 @@
   {
     "id": 101,
     "client": "Walter White",
+    "type": "Livraison",
     "articles": [
       { "nom": "Le Seau Albuquerque", "quantite": 1 }
     ],
@@ -9,11 +10,13 @@
     "statut": "livraison",
     "adresse": "308 Negra Arroyo Lane",
     "date": "2026-03-24 12:30",
-    "livreur_id": ""
+    "heure_retrait": "12:45",
+    "livreur_id": "2"
   },
   {
     "id": 102,
     "client": "Jesse Pinkman",
+    "type": "À emporter",
     "articles": [
       { "nom": "Ailes Fuego", "quantite": 2 },
       { "nom": "Frites Maison", "quantite": 1 }
@@ -22,11 +25,13 @@
     "statut": "preparation",
     "adresse": "Moneo 42",
     "date": "2026-03-24 12:45",
+    "heure_retrait": "13:15",
     "livreur_id": ""
   },
   {
     "id": 103,
     "client": "Saul Goodman",
+    "type": "Sur place",
     "articles": [
       { "nom": "Pollos Burger", "quantite": 1 },
       { "nom": "Sopapillas", "quantite": 2 }
@@ -35,6 +40,8 @@
     "statut": "preparation",
     "adresse": "Office 12, Lomas Blvd",
     "date": "2026-03-24 13:00",
+    "heure_retrait": "13:10",
     "livreur_id": ""
   }
 ]
+
