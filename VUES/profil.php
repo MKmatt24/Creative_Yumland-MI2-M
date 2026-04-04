@@ -1,13 +1,6 @@
+<?php include '../LIB/authentification.php'; ?>
+
 <?php
-//Initialisation de la session
-session_start();
-
-//Vérification si l'utilisateur est connecté
-if (!isset($_SESSION['user_id'])) {
-    header('Location: connexion.php');
-    exit();
-}
-
 //Récupération de tous les utilisateurs depuis le JSON
 $usersData = file_get_contents('../DATA/users.json');
 $users = json_decode($usersData, true);
@@ -47,29 +40,7 @@ foreach ($commandes as $cmd) {
 </head>
 <body>
 
-    <header>
-        <nav>
-            <div class="logo">
-                <div class="logo-box">
-                    <a href="accueil.php">
-                    <img src="../IMAGES/logo.png" alt="Logo Los Pollos" class="nav-logo">
-                    </a>
-                </div>
-            </div>
-            <button class="menu-toggle" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul>
-                <li><a href="accueil.php">Accueil</a></li>
-                <li><a href="menu.php">Menu</a></li>
-                <li><a href="accueil.php#contact">Contact</a></li>
-                <li><a href="Livraison.php">Livraisons</a></li>
-                <li><a href="../TRAITEMENTS/deconnexion.php">Déconnexion</a></li>
-            </ul>
-        </nav>
-    </header>
+    <?php include '../LIB/header.php'; ?>
 
     <main>
         <section class="profil-section">
@@ -181,21 +152,8 @@ foreach ($commandes as $cmd) {
         </section>
     </main>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>À propos</h3>
-                <p>Los Pollos Hermanos - Le meilleur poulet frit en ville</p>
-            </div>
-            <div class="footer-section">
-                <h3>Nous contacter</h3>
-                <p>Email : contact@lospolloshermanos.fr</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 Los Pollos Hermanos. Tous droits réservés.</p>
-        </div>
-    </footer>
+    <?php include '../LIB/footer.php'; ?>
+
 </body>
 <script>
     const menuToggle = document.querySelector('.menu-toggle');
