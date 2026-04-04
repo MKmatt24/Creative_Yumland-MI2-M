@@ -1,8 +1,6 @@
 <?php
 session_start();
 
-$_SESSION['user_id'] = 2; 
-
 //Vérification si l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
     header('Location: connexion.php');
@@ -22,8 +20,8 @@ $commandes = json_decode($commandesData, true);
 if (is_array($commandes)) {
     foreach ($commandes as $cmd) {
         $statut = strtolower($cmd['statut'] ?? '');
-//Pareil que pour livraison : && $cmd['livreur_id'] == $_SESSION['user_id']
-        if ($statut === 'livrée' || $statut === 'abandonnée' || $statut === 'annulée') {
+//Pareil que pour livraison : 
+        if (($statut === 'livrée' || $statut === 'abandonnée' || $statut === 'annulée') && $cmd['livreur_id'] == $_SESSION['user_id']) {
             $cmd['statut_propre'] = ($statut === 'livrée') ? 'Livrée' : 'Annulée';
             $cmd['gain_livreur'] = floatval($cmd['gain_livreur'] ?? 0);
             
