@@ -74,7 +74,7 @@ $success = $_GET['success'] ?? false;
                     <p>Montant : <?= htmlspecialchars($commande['montant']) ?></p>
                 </div>
 
-                <form action="traitement_notation.php" method="post">
+                <form action="../TRAITEMENTS/traitement_notation.php" method="post">
                     <!-- Champ caché pour envoyer l'ID de la commande -->
                     <input type="hidden" name="commande_id" value="<?= htmlspecialchars($commande['id']) ?>">
                     

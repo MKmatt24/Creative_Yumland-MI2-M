@@ -101,7 +101,7 @@ if ($date_filtre !== 'tous') {
             <ul>
                 <li><a href="accueil.html">Accueil</a></li>
                 <li><a href="admin.php">Tableau de bord</a></li>
-                <li><a href="deconnexion.php">Déconnexion</a></li>
+                <li><a href="../TRAITEMENTS/deconnexion.php">Déconnexion</a></li>
             </ul>
         </nav>
     </header>
@@ -228,7 +228,7 @@ if ($date_filtre !== 'tous') {
                     <h3>Actions rapides</h3>
                     <div class="actions-container">
                         <a href="inscription.php">Ajouter un utilisateur</a>
-                        <a href="export_utilisateurs.php">Exporter la liste (CSV)</a>
+                        <a href="../TRAITEMENTS/export_utilisateurs.php">Exporter la liste (CSV)</a>
                     </div>
                 </div>
             </div>

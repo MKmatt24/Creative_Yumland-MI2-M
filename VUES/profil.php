@@ -65,7 +65,7 @@ foreach ($commandes as $cmd) {
                 <li><a href="menu.php">Menu</a></li>
                 <li><a href="accueil.php#contact">Contact</a></li>
                 <li><a href="Livraison.php">Livraisons</a></li>
-                <li><a href="deconnexion.php">Déconnexion</a></li>
+                <li><a href="../TRAITEMENTS/deconnexion.php">Déconnexion</a></li>
             </ul>
         </nav>
     </header>

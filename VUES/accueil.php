@@ -40,7 +40,7 @@ $incontournables = $accueil_data['incontournables'];
                 <?php if(!isset($_SESSION['user'])): ?>
                     <a href="connexion.php">Connexion</a>
                 <?php else: ?>
-                    <a href="deconnexion.php">Déconnexion</a>
+                    <a href="../TRAITEMENTS/deconnexion.php">Déconnexion</a>
                 <?php endif; ?>
             </nav>
 

@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // VALIDATION : Vérifier que les mots de passe correspondent
     if ($password !== $confirm_password) {
-        header('Location: inscription.php?error=password_mismatch');
+        header('Location: ../VUES/inscription.php?error=password_mismatch');
         exit;
     }
     
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // VALIDATION : Vérifier que l'email n'existe pas déjà
     foreach ($users as $user) {
         if ($user['email'] === $email) {
-            header('Location: inscription.php?error=email_exists');
+            header('Location: ../VUES/inscription.php?error=email_exists');
             exit;
         }
     }
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     file_put_contents('../DATA/users.json', json_encode($users, JSON_PRETTY_PRINT));
     
     // Redirection vers connexion avec message de succès
-    header('Location: connexion.php?success=1');
+    header('Location: ../VUES/connexion.php?success=1');
     exit;
 }
 ?>
