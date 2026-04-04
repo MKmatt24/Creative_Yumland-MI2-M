@@ -12,7 +12,8 @@
     "ville": "",
     "role": "admin",
     "date_inscription": "2025-01-01",
-    "statut": "actif"
+    "statut": "actif",
+    "date_naissance": ""
   },
   {
     "id": 2,
@@ -27,6 +28,7 @@
     "ville": "",
     "role": "admin",
     "date_inscription": "2025-01-01",
-    "statut": "actif"
+    "statut": "actif",
+    "date_naissance": ""
   }
 ]
