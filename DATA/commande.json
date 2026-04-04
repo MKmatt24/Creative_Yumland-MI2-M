@@ -8,7 +8,8 @@
     "prix_total": 19.99,
     "statut": "livraison",
     "adresse": "308 Negra Arroyo Lane",
-    "date": "2026-03-24 12:30"
+    "date": "2026-03-24 12:30",
+    "livreur_id": null
   },
   {
     "id": 102,
@@ -20,7 +21,8 @@
     "prix_total": 25.50,
     "statut": "preparation",
     "adresse": "Moneo 42",
-    "date": "2026-03-24 12:45"
+    "date": "2026-03-24 12:45",
+    "livreur_id": null
   },
   {
     "id": 103,
@@ -32,6 +34,7 @@
     "prix_total": 17.50,
     "statut": "preparation",
     "adresse": "Office 12, Lomas Blvd",
-    "date": "2026-03-24 13:00"
+    "date": "2026-03-24 13:00",
+    "livreur_id": null
   }
 ]
