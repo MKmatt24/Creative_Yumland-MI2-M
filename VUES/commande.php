@@ -2,7 +2,7 @@
 session_start();
 
 // 1. Chargement des commandes depuis le fichier JSON
-$commandes_json = file_get_contents('../data/commandes.json');
+$commandes_json = file_get_contents('../DATA/commande.json');
 $commandes = json_decode($commandes_json, true);
 
 // Simulation du rôle (Normalement géré par tes camarades via la session)
@@ -63,7 +63,7 @@ $role_utilisateur = isset($_SESSION['user']['role']) ? $_SESSION['user']['role']
                     </p>
                     <p><strong>Total : <?php echo $c['prix_total']; ?>€</strong></p>
                     
-                    <form action="update_statut.php" method="POST" style="margin-top:10px;">
+                    <form action="../TRAITEMENTS/update_statut.php" method="POST" style="margin-top:10px;">
                         <input type="hidden" name="id_commande" value="<?php echo $c['id']; ?>">
                         <input type="hidden" name="nouveau_statut" value="livraison">
                         <button type="submit" class="btn-ready" style="background-color: #27ae60; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; width: 100%;">

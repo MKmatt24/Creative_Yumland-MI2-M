@@ -4,8 +4,8 @@ session_start();
 
 // 2. Chargement des données JSON
 // On suppose que tes fichiers sont dans un dossier /data à la racine
-$accueil_data = json_decode(file_get_contents('../data/accueil.json'), true);
-$menu_data = json_decode(file_get_contents('../data/menu.json'), true);
+$accueil_data = json_decode(file_get_contents('../DATA/accueil.json'), true);
+$menu_data = json_decode(file_get_contents('../DATA/menu.json'), true);
 
 // Extraction des infos du Hero et de l'Histoire depuis accueil.json
 $hero = $accueil_data['hero'];

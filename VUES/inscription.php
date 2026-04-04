@@ -132,7 +132,7 @@
                 </form>
 
                 <div class="connexion-link">
-                    <p>Vous avez déjà un compte ? <a href="connexion.html">Connectez-vous ici</a></p>
+                    <p>Vous avez déjà un compte ? <a href="connexion.php">Connectez-vous ici</a></p>
                 </div>
             </div>
         </section>

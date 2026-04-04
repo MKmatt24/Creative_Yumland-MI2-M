@@ -50,7 +50,7 @@ foreach ($commandes as $cmd) {
         <nav>
             <div class="logo">
                 <div class="logo-box">
-                    <a href="accueil.html">
+                    <a href="accueil.php">
                     <img src="../IMAGES/logo.png" alt="Logo Los Pollos" class="nav-logo">
                     </a>
                 </div>

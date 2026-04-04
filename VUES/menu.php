@@ -2,7 +2,7 @@
 session_start();
 
 // 1. Chargement des données depuis le fichier JSON unique
-$menu_json = file_get_contents('../data/menu.json');
+$menu_json = file_get_contents('../DATA/menu.json');
 $data = json_decode($menu_json, true);
 
 $plats = $data['plats'];
@@ -97,7 +97,7 @@ $plats_filtres = array_filter($plats, function($p) use ($recherche, $categorie_a
 
                         <div class="card-footer">
                             <span class="price"><?php echo number_format($p['prix'], 2); ?>€</span>
-                            <form action="ajouter_panier.php" method="POST">
+                            <form action="../TRAITEMENTS/ajouter_panier.php" method="POST">
                                 <input type="hidden" name="id_plat" value="<?php echo $p['id']; ?>">
                                 <button type="submit" class="add-btn">+</button>
                             </form>

@@ -98,7 +98,7 @@ function formatHeureAffichage($date_jour, $heure) {
                 <li><a href="Livraisons_en_attente.php">Livraisons en attente</a></li>
                 <li><a href="profil.php">Mon Profil</a></li>
                 <li><a href="Rewards.php">Mes Rémunérations</a></li>
-                <li><a href="accueil.php">Déconnexion</a></li>
+                <li><a href="../TRAITEMENTS/deconnexion.php">Déconnexion</a></li>
             </ul>
         </nav>
     </header>
