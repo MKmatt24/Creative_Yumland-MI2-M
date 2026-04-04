@@ -2,7 +2,7 @@
 session_start();
 
 // 1. Chargement des données
-$commandes_json = file_get_contents('../data/commandes.json');
+$commandes_json = file_get_contents('../data/commande.json');
 $commandes = json_decode($commandes_json, true);
 
 // Simulation du rôle
