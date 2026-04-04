@@ -3,7 +3,7 @@ session_start();
 
 // Vérifier que l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
-    header('Location: ../HTML/connexion.php');
+    header('Location: ../VUES/connexion.php');
     exit;
 }
 
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ];
     
     // Charger les notations existantes (ou créer un tableau vide)
-    $fichier_notations = '../DATA/notations.json';
+    $fichier_notations = '../DATA/notation.json';
     
     if (file_exists($fichier_notations)) {
         $notations = json_decode(file_get_contents($fichier_notations), true);
@@ -52,11 +52,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     file_put_contents($fichier_notations, json_encode($notations, JSON_PRETTY_PRINT));
     
     // Redirection avec message de succès
-    header('Location: ../HTML/notation.php?success=1&commande=' . $notation['commande_id']);
+    header('Location: ../VUES/notation.php?success=1&commande=' . $notation['commande_id']);
     exit;
 }
 
 // Si accès direct sans POST
-header('Location: ../HTML/notation.php');
+header('Location: ../VUES/notation.php');
 exit;
 ?>

@@ -3,7 +3,7 @@ session_start();
 
 // Vérifier que c'est un admin
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    header('Location: connexion.php');
+    header('Location: ../VUES/connexion.php');
     exit;
 }
 
