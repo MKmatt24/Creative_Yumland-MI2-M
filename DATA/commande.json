@@ -9,7 +9,7 @@
     "statut": "livraison",
     "adresse": "308 Negra Arroyo Lane",
     "date": "2026-03-24 12:30",
-    "livreur_id": null
+    "livreur_id": ""
   },
   {
     "id": 102,
@@ -22,7 +22,7 @@
     "statut": "preparation",
     "adresse": "Moneo 42",
     "date": "2026-03-24 12:45",
-    "livreur_id": null
+    "livreur_id": ""
   },
   {
     "id": 103,
@@ -35,6 +35,6 @@
     "statut": "preparation",
     "adresse": "Office 12, Lomas Blvd",
     "date": "2026-03-24 13:00",
-    "livreur_id": null
+    "livreur_id": ""
   }
 ]
