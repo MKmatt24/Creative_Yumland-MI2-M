@@ -45,7 +45,7 @@
         "role": "client",
         "statut": "actif",
         "date_inscription": "2026-04-04",
-        "points_fidelite" : "",
+        "points_fidelite" : "0",
         "date_naissance": ""
     },
     {
@@ -62,7 +62,7 @@
         "role": "client",
         "statut": "actif",
         "date_inscription": "2026-04-04",
-        "points_fidelite" : "",
+        "points_fidelite" : "0",
         "date_naissance": ""
     },
     {
@@ -79,7 +79,7 @@
         "role": "client",
         "statut": "actif",
         "date_inscription": "2026-04-04",
-        "points_fidelite" : "",
+        "points_fidelite" : "0",
         "date_naissance": ""
     },
     {
@@ -96,7 +96,7 @@
         "role": "client",
         "statut": "actif",
         "date_inscription": "2026-04-04",
-        "points_fidelite" : "",
+        "points_fidelite" : "0",
         "date_naissance": ""
     },
     {
@@ -113,7 +113,7 @@
         "role": "client",
         "statut": "actif",
         "date_inscription": "2026-04-04",
-        "points_fidelite" : "",
+        "points_fidelite" : "0",
         "date_naissance": ""
     }
 ]
