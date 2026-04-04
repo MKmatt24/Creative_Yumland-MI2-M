@@ -44,7 +44,9 @@
         "ville": "Albuquerque",
         "role": "client",
         "statut": "actif",
-        "date_inscription": "2026-04-04"
+        "date_inscription": "2026-04-04",
+        "points_fidelite" : "",
+        "date_naissance": ""
     },
     {
         "id": 4,
@@ -59,7 +61,9 @@
         "ville": "Albuquerque",
         "role": "client",
         "statut": "actif",
-        "date_inscription": "2026-04-04"
+        "date_inscription": "2026-04-04",
+        "points_fidelite" : "",
+        "date_naissance": ""
     },
     {
         "id": 5,
@@ -74,7 +78,9 @@
         "ville": "Albuquerque",
         "role": "client",
         "statut": "actif",
-        "date_inscription": "2026-04-04"
+        "date_inscription": "2026-04-04",
+        "points_fidelite" : "",
+        "date_naissance": ""
     },
     {
         "id": 6,
@@ -89,7 +95,9 @@
         "ville": "Albuquerque",
         "role": "client",
         "statut": "actif",
-        "date_inscription": "2026-04-04"
+        "date_inscription": "2026-04-04",
+        "points_fidelite" : "",
+        "date_naissance": ""
     },
     {
         "id": 7,
@@ -104,6 +112,8 @@
         "ville": "Albuquerque",
         "role": "client",
         "statut": "actif",
-        "date_inscription": "2026-04-04"
+        "date_inscription": "2026-04-04",
+        "points_fidelite" : "",
+        "date_naissance": ""
     }
 ]
