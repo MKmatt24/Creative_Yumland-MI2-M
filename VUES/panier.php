@@ -91,15 +91,25 @@ $montant_formatte = number_format($total_final, 2, '.', '');
                 </div>
             </div>
 
-            <form action="../TRAITEMENTS/appliquer_coupon.php" method="POST" style="margin: 20px 0; display: flex; gap: 10px;">
-                <input type="text" name="code_coupon" placeholder="Code promo" style="padding: 10px; flex-grow: 1;">
-                <button type="submit" class="btn-secondary" style="background: #444; color: white; border: none; padding: 10px 20px; cursor: pointer;">Appliquer</button>
-            </form>
+            <div class="coupon-container">
+                <label style="display: block; margin-bottom: 10px; font-weight: bold; color: var(--orange);">
+                    Code Promo / Coupon
+                </label>
+                
+                <form action="../TRAITEMENTS/appliquer_coupon.php" method="POST" class="coupon-form">
+                    <input type="text" name="code_coupon" class="coupon-input" placeholder="Entrez votre code ici...">
+                    <button type="submit" class="coupon-btn">Appliquer</button>
+                </form>
 
-            <?php if(isset($_SESSION['coupon'])): ?>
-                <p style="color: #2ecc71;">Coupon appliqué : -<?= $_SESSION['coupon']['valeur'] ?><?= $_SESSION['coupon']['type'] == 'pourcentage' ? '%' : '€' ?> 
-                <a href="../TRAITEMENTS/supprimer_coupon.php" style="color: #e74c3c; font-size: 0.8rem;">(Retirer)</a></p>
-            <?php endif; ?>
+                <?php if(isset($_SESSION['coupon'])): ?>
+                    <div class="coupon-message">
+                        <span>
+                            ✅ Coupon <strong><?= $_SESSION['coupon']['valeur'] ?><?= $_SESSION['coupon']['type'] == 'pourcentage' ? '%' : '€' ?></strong> appliqué !
+                        </span>
+                        <a href="../TRAITEMENTS/supprimer_coupon.php" class="coupon-remove">Retirer</a>
+                    </div>
+                <?php endif; ?>
+            </div>
 
             <div style="text-align: center;">
                 <button type="submit" class="btn-primary" style="width: 100%; padding: 20px; font-size: 1.2rem; background: #ff6b35; border: none; cursor: pointer; font-weight: bold; border-radius: 5px; color: white;">

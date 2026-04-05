@@ -181,13 +181,31 @@ if ($commandes && is_array($commandes)) {
                             <?php endif; ?>
                         </div>
                     </div>
-                    <div class="user-stats-card">
-                        <h3>Mes Coupons de réduction</h3>
-                        <p>Utilisez ces codes lors de votre paiement :</p>
-                        <ul>
-                            <li><strong>POLLOS10</strong> : -10% sur tout le menu</li>
-                            <li><strong>GUSTAVO5</strong> : -5€ sur votre commande</li>
-                        </ul>
+                   <div class="coupons-section">
+                        <h3 class="section-title"><i class="fas fa-ticket-alt"></i> Mes Coupons de Réduction</h3>
+                        <div class="coupons-grid">
+                            <div class="coupon-card">
+                                <div class="coupon-left">
+                                    <span class="coupon-value">-10%</span>
+                                </div>
+                                <div class="coupon-right">
+                                    <h4>Offre de Bienvenue</h4>
+                                    <p>Code : <span class="coupon-code">POLLOS10</span></p>
+                                    <small>Valable sur tout le menu</small>
+                                </div>
+                            </div>
+
+                            <div class="coupon-card">
+                                <div class="coupon-left">
+                                    <span class="coupon-value">-5€</span>
+                                </div>
+                                <div class="coupon-right">
+                                    <h4>Fidélité</h4>
+                                    <p>Code : <span class="coupon-code">GUSTAVO5</span></p>
+                                    <small>Dès 30€ d'achat</small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div> </div>
