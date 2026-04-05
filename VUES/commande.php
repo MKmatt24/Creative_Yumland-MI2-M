@@ -1,5 +1,12 @@
 <?php
 session_start();
+
+// Protection : Seul le restaurateur (ou admin) peut voir cette page
+if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'restaurateur' && $_SESSION['role'] !== 'admin')) {
+    // header('Location: accueil.php'); 
+    // exit();
+}
+
 $json_file = '../data/commande.json';
 $commandes = json_decode(file_get_contents($json_file), true) ?? [];
 
@@ -26,18 +33,15 @@ function filtrerCommandes($liste, $statuts_recherches) {
         .column { background: #151515; border-radius: 8px; min-width: 300px; flex: 1; display: flex; flex-direction: column; border-top: 4px solid #333; }
         .col-title { padding: 15px; text-align: center; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid #222; }
         
-        /* Couleurs par catégorie */
         .todo { border-color: #e74c3c; }      /* À Préparer */
         .cooking { border-color: #f1c40f; }   /* En Cuisine */
         .shipping { border-color: #3498db; }  /* En Livraison */
         .done { border-color: #2ecc71; }      /* Livrées */
 
-        /* Cartes */
         .card { background: #202020; margin: 10px; padding: 15px; border-radius: 6px; border: 1px solid #333; font-size: 0.9em; }
         .card h4 { margin: 0 0 10px 0; color: #ff6b35; }
         .items { font-size: 0.85em; color: #bbb; margin: 10px 0; padding-left: 15px; }
         
-        /* Formulaires & Boutons */
         select, .btn { width: 100%; padding: 8px; margin-top: 8px; border-radius: 4px; border: none; font-weight: bold; cursor: pointer; }
         select { background: #000; color: #fff; border: 1px solid #444; }
         .btn { background: #ff6b35; color: #000; text-transform: uppercase; font-size: 0.75em; }
@@ -46,9 +50,7 @@ function filtrerCommandes($liste, $statuts_recherches) {
 </head>
 <body>
 
-<h2 style="text-align:center; padding: 20px 0; margin:0; background:#000; border-bottom: 1px solid #ff6b35;">
-    🍗 Système de Suivi Logistique - Los Pollos Hermanos
-</h2>
+<?php include '../LIB/header.php'; ?>
 
 <div class="dashboard-wrapper">
 
@@ -58,7 +60,7 @@ function filtrerCommandes($liste, $statuts_recherches) {
             <div class="card">
                 <h4>#<?= $c['id'] ?? '???' ?> - <?= htmlspecialchars($c['client'] ?? 'Client Web') ?></h4>
                 <div class="items">
-                    <?php foreach ($c['articles'] as $a) echo "• {$a['quantite']}x {$a['nom']}<br>"; ?>
+                    <?php foreach (($c['articles'] ?? []) as $a) echo "• {$a['quantite']}x {$a['nom']}<br>"; ?>
                 </div>
                 <form action="../TRAITEMENTS/update_statut.php" method="POST">
                     <input type="hidden" name="id_commande" value="<?= $c['id'] ?>">
@@ -74,7 +76,7 @@ function filtrerCommandes($liste, $statuts_recherches) {
             <div class="card">
                 <h4>#<?= $c['id'] ?> - <?= htmlspecialchars($c['client'] ?? 'Client Web') ?></h4>
                 <div class="items">
-                    <?php foreach ($c['articles'] as $a) echo "• {$a['quantite']}x {$a['nom']}<br>"; ?>
+                    <?php foreach (($c['articles'] ?? []) as $a) echo "• {$a['quantite']}x {$a['nom']}<br>"; ?>
                 </div>
                 <form action="../TRAITEMENTS/update_statut.php" method="POST">
                     <input type="hidden" name="id_commande" value="<?= $c['id'] ?>">
@@ -105,17 +107,3 @@ function filtrerCommandes($liste, $statuts_recherches) {
     </section>
 
     <section class="column done">
-        <div class="col-title">🏁 Livrées / Terminées</div>
-        <?php foreach (filtrerCommandes($commandes, ['livree']) as $c): ?>
-            <div class="card" style="opacity: 0.6; border-left: 3px solid #2ecc71;">
-                <h4>#<?= $c['id'] ?></h4>
-                <p>✅ <?= $c['client'] ?? 'Anonyme' ?></p>
-                <small>Prix: <?= $c['prix_total'] ?? $c['total'] ?>€</small>
-            </div>
-        <?php endforeach; ?>
-    </section>
-
-</div>
-
-</body>
-</html>

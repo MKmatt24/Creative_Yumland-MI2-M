@@ -146,5 +146,21 @@
         "role": "client",
         "statut": "actif",
         "date_inscription": "2026-04-05"
+    },
+
+     {
+        "id": 10,
+        "nom": "Salamanca",
+        "prenom": "Lalo",
+        "email": "lalo@lospollos.fr",
+        "password": "$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC\/.og\/at2.uheWG\/igi",
+        "telephone": "0600112233",
+        "adresse": "Cuisine Centrale",
+        "code_interphone": "",
+        "code_postal": "87101",
+        "ville": "Albuquerque",
+        "role": "restaurateur",
+        "statut": "actif",
+        "date_inscription": "2026-04-05"
     }
 ]
