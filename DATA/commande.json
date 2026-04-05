@@ -14,7 +14,8 @@
         "adresse": "308 Negra Arroyo Lane",
         "date": "2026-03-24 12:30",
         "heure_retrait": "12:45",
-        "livreur_id": 10
+        "livreur_id": 10,
+        "gain_livreur": 7.7
     },
     {
         "id": 102,
@@ -35,7 +36,8 @@
         "adresse": "Moneo 42",
         "date": "2026-03-24 12:45",
         "heure_retrait": "13:15",
-        "livreur_id": 10
+        "livreur_id": 10,
+        "gain_livreur": 3.7
     },
     {
         "id": 103,
@@ -52,7 +54,7 @@
             }
         ],
         "prix_total": 17.5,
-        "statut": "livraison",
+        "statut": "preparation",
         "adresse": "Office 12, Lomas Blvd",
         "date": "2026-03-24 13:00",
         "heure_retrait": "13:10",
@@ -176,7 +178,7 @@
                 "quantite": 1
             }
         ],
-        "statut": "livraison",
+        "statut": "preparation",
         "livreur_id": null
     },
     {
@@ -195,7 +197,7 @@
                 "quantite": 1
             }
         ],
-        "statut": "livree",
+        "statut": "preparation",
         "livreur_id": null
     },
     {
@@ -214,7 +216,7 @@
                 "quantite": 1
             }
         ],
-        "statut": "livraison",
+        "statut": "preparation",
         "livreur_id": "Jesse"
     },
     {
@@ -233,7 +235,7 @@
                 "quantite": 1
             }
         ],
-        "statut": "livraison",
+        "statut": "preparation",
         "livreur_id": "L01"
     },
     {
