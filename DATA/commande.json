@@ -179,6 +179,7 @@
             }
         ],
         "statut": "preparation",
+        "adresse": "32 Ardz gane",
         "livreur_id": null
     },
     {
@@ -198,6 +199,7 @@
             }
         ],
         "statut": "preparation",
+        "adresse": "12 rue dessert",
         "livreur_id": null
     },
     {
@@ -217,6 +219,7 @@
             }
         ],
         "statut": "preparation",
+        "adresse": "3 avenue Raikage",
         "livreur_id": "Jesse"
     },
     {
@@ -236,6 +239,7 @@
             }
         ],
         "statut": "preparation",
+        "adresse": "221 archipel des Sabaody",
         "livreur_id": "L01"
     },
     {
