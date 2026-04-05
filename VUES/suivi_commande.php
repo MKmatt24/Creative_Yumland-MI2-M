@@ -1,11 +1,6 @@
 <?php
 session_start();
 
-// Protection : Seul un client peut suivre sa commande
-if (!isset($_SESSION['user'])) {
-    header('Location: connexion.php');
-    exit;
-}
 
 // 1. Chargement des données 
 $file = '../DATA/commande.json';

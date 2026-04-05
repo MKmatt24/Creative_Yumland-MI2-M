@@ -19,7 +19,7 @@
     {
         "id": 102,
         "client": "Jesse Pinkman",
-        "type": "\u00c0 emporter",
+        "type": "À emporter",
         "articles": [
             {
                 "nom": "Ailes Fuego",
@@ -80,7 +80,7 @@
                 "quantite": 15
             },
             {
-                "nom": "Menu Fuego Sp\u00e9cial",
+                "nom": "Menu Fuego Spécial",
                 "prix": 16,
                 "quantite": 4
             },
@@ -190,7 +190,7 @@
         "statut_logistique": "livree",
         "articles": [
             {
-                "nom": "Menu Fuego Sp\u00e9cial",
+                "nom": "Menu Fuego Spécial",
                 "prix": 16,
                 "quantite": 1
             }
@@ -246,12 +246,47 @@
         "statut_logistique": "preparation",
         "articles": [
             {
-                "nom": "Menu Fuego Sp\u00e9cial",
+                "nom": "Menu Fuego Spécial",
                 "prix": 16,
                 "quantite": 1
             }
         ],
         "statut": "preparation",
         "livreur_id": null
+    },
+    {
+        "id": "CMD012",
+        "id_transaction": "T1775409327",
+        "client": "Client Anonyme",
+        "prix_total": 89.2,
+        "date_commande": "2026-04-05 17:15:44",
+        "type_livraison": "immediate",
+        "horaire_souhaite": "ASAP",
+        "statut": "a_preparer",
+        "statut_logistique": "a_preparer",
+        "articles": [
+            {
+                "nom": "Menu Bucket Family",
+                "prix": 24.9,
+                "quantite": 3
+            },
+            {
+                "nom": "Menu Los Pollos Classic",
+                "prix": 14.5,
+                "quantite": 1
+            }
+        ]
+    },
+    {
+        "id": "CMD013",
+        "id_transaction": "T1775409327",
+        "client": "Client Anonyme",
+        "prix_total": 89.2,
+        "date_commande": "2026-04-05 17:16:26",
+        "type_livraison": "immediate",
+        "horaire_souhaite": "ASAP",
+        "statut": "a_preparer",
+        "statut_logistique": "a_preparer",
+        "articles": []
     }
 ]
