@@ -34,9 +34,19 @@ $mesCommandes = [];
 $nomComplet = $currentUser['prenom'] . ' ' . $currentUser['nom'];
 
 //Tri pour avoir uniquement les commandes de l'utilisateur
-foreach ($commandes as $cmd) {
-    if ($cmd['client'] == $nomComplet) {
-        $mesCommandes[] = $cmd;
+$mesCommandes = [];
+// On s'assure que le nom complet est bien calculé
+$nomComplet = $currentUser['prenom'] . ' ' . $currentUser['nom'];
+
+if ($commandes && is_array($commandes)) {
+    foreach ($commandes as $cmd) {
+        // On vérifie si la clé 'client' existe pour éviter une erreur
+        if (isset($cmd['client'])) {
+            // strcasecmp compare sans vérifier les majuscules/minuscules (plus sûr)
+            if (strcasecmp($cmd['client'], $nomComplet) == 0) {
+                $mesCommandes[] = $cmd;
+            }
+        }
     }
 }
 ?>
@@ -64,7 +74,7 @@ foreach ($commandes as $cmd) {
                     </div>
                     <div class="user-identity">
                         <h2><?= htmlspecialchars($currentUser['prenom'] . ' ' . $currentUser['nom']) ?></h2>
-                        <p class="member-date">Membre depuis <?= substr($currentUser['date_inscription'], 0, 4) ?></p>
+                        <p class="member-date">Membre depuis <?= substr($currentUser['date_inscription'] ?? '2024', 0, 4) ?></p>
                         
                         <div class="loyalty-card">
                             <h3>Los Pollos Club</h3>
