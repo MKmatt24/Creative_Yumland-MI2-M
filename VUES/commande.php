@@ -1,139 +1,121 @@
 <?php
 session_start();
+$json_file = '../data/commande.json';
+$commandes = json_decode(file_get_contents($json_file), true) ?? [];
 
-// 1. Chargement des données
-$commandes_json = file_get_contents('../data/commande.json');
-$commandes = json_decode($commandes_json, true);
-
-// Simulation du rôle
-$role_utilisateur = isset($_SESSION['user']['role']) ? $_SESSION['user']['role'] : 'restaurateur'; 
+// Fonction pour filtrer et harmoniser les statuts du JSON
+function filtrerCommandes($liste, $statuts_recherches) {
+    return array_filter($liste, function($c) use ($statuts_recherches) {
+        $s = $c['statut'] ?? ($c['statut_logistique'] ?? 'inconnu');
+        return in_array($s, $statuts_recherches);
+    });
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Restaurateur | Los Pollos Hermanos</title>
+    <title>Gestion des Commandes | DashBoard</title>
     <link rel="stylesheet" href="../CSS/commande.css">
     <style>
-        .order-card { border-left: 5px solid #e74c3c; margin-bottom: 20px; padding: 15px; background: #f9f9f9; border-radius: 8px; }
-        .order-card.prep { border-left-color: #f1c40f; }
-        .order-card.delivery { border-left-color: #2ecc71; }
-        .items-list { background: #fff; padding: 10px; border-radius: 5px; list-style: none; }
-        .items-list li { border-bottom: 1px dashed #ddd; padding: 5px 0; }
-        .order-meta { display: flex; justify-content: space-between; font-size: 0.9em; color: #666; margin-bottom: 10px; }
-        .badge-type { background: #34495e; color: white; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; }
+        body { background: #0a0a0a; color: #eee; font-family: sans-serif; margin: 0; }
+        .dashboard-wrapper { display: flex; gap: 15px; padding: 20px; overflow-x: auto; min-height: 90vh; }
+        
+        /* Colonnes */
+        .column { background: #151515; border-radius: 8px; min-width: 300px; flex: 1; display: flex; flex-direction: column; border-top: 4px solid #333; }
+        .col-title { padding: 15px; text-align: center; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid #222; }
+        
+        /* Couleurs par catégorie */
+        .todo { border-color: #e74c3c; }      /* À Préparer */
+        .cooking { border-color: #f1c40f; }   /* En Cuisine */
+        .shipping { border-color: #3498db; }  /* En Livraison */
+        .done { border-color: #2ecc71; }      /* Livrées */
+
+        /* Cartes */
+        .card { background: #202020; margin: 10px; padding: 15px; border-radius: 6px; border: 1px solid #333; font-size: 0.9em; }
+        .card h4 { margin: 0 0 10px 0; color: #ff6b35; }
+        .items { font-size: 0.85em; color: #bbb; margin: 10px 0; padding-left: 15px; }
+        
+        /* Formulaires & Boutons */
+        select, .btn { width: 100%; padding: 8px; margin-top: 8px; border-radius: 4px; border: none; font-weight: bold; cursor: pointer; }
+        select { background: #000; color: #fff; border: 1px solid #444; }
+        .btn { background: #ff6b35; color: #000; text-transform: uppercase; font-size: 0.75em; }
+        .btn:hover { background: #e65a2b; }
     </style>
 </head>
 <body>
 
-<header>
-    <nav>
-        <div class="logo">
-            <a href="accueil.php"><img src="../IMAGES/logo.png" alt="Logo" class="nav-logo"></a>
-        </div>
-        <ul>
-            <li><a href="accueil.php">Accueil</a></li>
-            <li><a href="menu.php">Menu</a></li>
-            <li><a href="profil.php">Mon Profil</a></li>
-        </ul>
-    </nav>
-</header>
+<h2 style="text-align:center; padding: 20px 0; margin:0; background:#000; border-bottom: 1px solid #ff6b35;">
+    🍗 Système de Suivi Logistique - Los Pollos Hermanos
+</h2>
 
-<main class="admin-container">
-    
-    <section class="order-section">
-        <h2 class="section-title">🍳 Commandes à préparer (Cuisine)</h2>
-        <div class="orders-grid">
-            <?php 
-            $count_prep = 0;
-            foreach ($commandes as $c): 
-                if ($c['statut'] === 'preparation'): 
-                    $count_prep++;
-            ?>
-                <div class="order-card prep">
-                    <div class="order-meta">
-                        <span>🕒 Reçue à : <?php echo $c['date'] ?? '12:00'; ?></span>
-                        <span class="badge-type"><?php echo $c['type'] ?? 'Livraison'; ?></span>
-                    </div>
+<div class="dashboard-wrapper">
 
-                    <div class="order-header">
-                        <span class="order-id">#<?php echo $c['id']; ?></span>
-                        <span class="badge">EN PRÉPARATION</span>
-                    </div>
-
-                    <h3>Client : <?php echo htmlspecialchars($c['client']); ?></h3>
-                    
-                    <ul class="items-list">
-                        <?php foreach ($c['articles'] as $art): ?>
-                            <li><strong><?php echo $art['quantite']; ?>x</strong> <?php echo htmlspecialchars($art['nom']); ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-
-                    <p><strong>Total à encaisser : <?php echo $c['prix_total']; ?>€</strong></p>
-                    
-                    <div style="margin: 15px 0; padding: 10px; background: #eee; border-radius: 4px;">
-                        <label><strong>Assigner un livreur :</strong></label>
-                        <select name="livreur_id" style="width: 100%; padding: 5px;">
-                            <option value="">-- Choisir un livreur disponible --</option>
-                            <option value="1">Livreur - Maxence (Libre)</option>
-                            <option value="2">Livreur - Skinny Pete (En route)</option>
-                        </select>
-                    </div>
-
-                    <form action="update_statut.php" method="POST">
-                        <input type="hidden" name="id_commande" value="<?php echo $c['id']; ?>">
-                        <input type="hidden" name="nouveau_statut" value="livraison">
-                        <button type="submit" class="btn-ready" style="background-color: #27ae60; color: white; border: none; padding: 12px; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold;">
-                            ✅ MARQUER COMME PRÊT
-                        </button>
-                    </form>
+    <section class="column todo">
+        <div class="col-title">📥 À Préparer</div>
+        <?php foreach (filtrerCommandes($commandes, ['a_preparer', 'paye']) as $c): ?>
+            <div class="card">
+                <h4>#<?= $c['id'] ?? '???' ?> - <?= htmlspecialchars($c['client'] ?? 'Client Web') ?></h4>
+                <div class="items">
+                    <?php foreach ($c['articles'] as $a) echo "• {$a['quantite']}x {$a['nom']}<br>"; ?>
                 </div>
-            <?php 
-                endif; 
-            endforeach; 
-
-            if ($count_prep === 0) echo "<p>Le calme avant la tempête... aucune commande en cuisine.</p>";
-            ?>
-        </div>
+                <form action="../TRAITEMENTS/update_statut.php" method="POST">
+                    <input type="hidden" name="id_commande" value="<?= $c['id'] ?>">
+                    <button type="submit" name="nouveau_statut" value="preparation" class="btn">Lancer la cuisine 🍳</button>
+                </form>
+            </div>
+        <?php endforeach; ?>
     </section>
 
-    <hr class="separator">
-
-    <section class="order-section">
-        <h2 class="section-title">🚚 Suivi des Livraisons en cours</h2>
-        <div class="orders-grid">
-            <?php 
-            $count_delivery = 0;
-            foreach ($commandes as $c): 
-                if ($c['statut'] === 'livraison'): 
-                    $count_delivery++;
-            ?>
-                <div class="order-card delivery">
-                    <div class="order-header">
-                        <span class="order-id">#<?php echo $c['id']; ?></span>
-                        <span class="badge" style="background:#2ecc71">SUR LA ROUTE</span>
-                    </div>
-                    <h3><?php echo htmlspecialchars($c['client']); ?></h3>
-                    <p>📍 <strong>Destination :</strong> <?php echo htmlspecialchars($c['adresse']); ?></p>
-                    <p>👤 <strong>Livreur :</strong> <?php echo !empty($c['livreur_id']) ? "ID #".$c['livreur_id'] : "En attente de prise en charge"; ?></p>
+    <section class="column cooking">
+        <div class="col-title">🍳 En Cuisine</div>
+        <?php foreach (filtrerCommandes($commandes, ['preparation']) as $c): ?>
+            <div class="card">
+                <h4>#<?= $c['id'] ?> - <?= htmlspecialchars($c['client'] ?? 'Client Web') ?></h4>
+                <div class="items">
+                    <?php foreach ($c['articles'] as $a) echo "• {$a['quantite']}x {$a['nom']}<br>"; ?>
                 </div>
-            <?php 
-                endif; 
-            endforeach; 
-            
-            if ($count_delivery === 0) echo "<p>Aucune commande n'est actuellement sur la route.</p>";
-            ?>
-        </div>
+                <form action="../TRAITEMENTS/update_statut.php" method="POST">
+                    <input type="hidden" name="id_commande" value="<?= $c['id'] ?>">
+                    <select name="id_livreur" required>
+                        <option value="">-- Assigner Livreur --</option>
+                        <option value="Jesse">Jesse Pinkman</option>
+                        <option value="Mike">Mike Ehrmantraut</option>
+                    </select>
+                    <button type="submit" name="nouveau_statut" value="livraison" class="btn">Prêt pour envoi 🚚</button>
+                </form>
+            </div>
+        <?php endforeach; ?>
     </section>
 
-</main>
+    <section class="column shipping">
+        <div class="col-title">🚚 En Livraison</div>
+        <?php foreach (filtrerCommandes($commandes, ['livraison', 'en_livraison']) as $c): ?>
+            <div class="card">
+                <h4>#<?= $c['id'] ?></h4>
+                <p>📍 <?= htmlspecialchars($c['adresse'] ?? 'À emporter') ?></p>
+                <p style="color: #3498db;">👤 Livreur : <?= $c['livreur_id'] ?? 'Inconnu' ?></p>
+                <form action="../TRAITEMENTS/update_statut.php" method="POST">
+                    <input type="hidden" name="id_commande" value="<?= $c['id'] ?>">
+                    <button type="submit" name="nouveau_statut" value="livree" class="btn" style="background:#3498db; color:white;">Confirmer Livraison 🏁</button>
+                </form>
+            </div>
+        <?php endforeach; ?>
+    </section>
 
-<footer>
-    <p>&copy; 2026 LOS POLLOS HERMANOS - TASTE THE FAMILY</p>
-</footer>
+    <section class="column done">
+        <div class="col-title">🏁 Livrées / Terminées</div>
+        <?php foreach (filtrerCommandes($commandes, ['livree']) as $c): ?>
+            <div class="card" style="opacity: 0.6; border-left: 3px solid #2ecc71;">
+                <h4>#<?= $c['id'] ?></h4>
+                <p>✅ <?= $c['client'] ?? 'Anonyme' ?></p>
+                <small>Prix: <?= $c['prix_total'] ?? $c['total'] ?>€</small>
+            </div>
+        <?php endforeach; ?>
+    </section>
+
+</div>
 
 </body>
 </html>
-

@@ -10,16 +10,16 @@
             }
         ],
         "prix_total": 19.99,
-        "statut": "livraison",
+        "statut": "livree",
         "adresse": "308 Negra Arroyo Lane",
         "date": "2026-03-24 12:30",
         "heure_retrait": "12:45",
-        "livreur_id": "2"
+        "livreur_id": null
     },
     {
         "id": 102,
         "client": "Jesse Pinkman",
-        "type": "À emporter",
+        "type": "\u00c0 emporter",
         "articles": [
             {
                 "nom": "Ailes Fuego",
@@ -52,11 +52,12 @@
             }
         ],
         "prix_total": 17.5,
-        "statut": "preparation",
+        "statut": "livree",
         "adresse": "Office 12, Lomas Blvd",
         "date": "2026-03-24 13:00",
         "heure_retrait": "13:10",
-        "livreur_id": ""
+        "livreur_id": null,
+        "statut_logistique": "livree"
     },
     {
         "id": "T1775395826",
@@ -79,7 +80,7 @@
                 "quantite": 15
             },
             {
-                "nom": "Menu Fuego Spécial",
+                "nom": "Menu Fuego Sp\u00e9cial",
                 "prix": 16,
                 "quantite": 4
             },
@@ -167,14 +168,16 @@
         "type_livraison": "immediate",
         "horaire_souhaite": "ASAP",
         "statut_paiement": "paye",
-        "statut_logistique": "a_preparer",
+        "statut_logistique": "livree",
         "articles": [
             {
                 "nom": "Menu Los Pollos Classic",
                 "prix": 14.5,
                 "quantite": 1
             }
-        ]
+        ],
+        "statut": "livree",
+        "livreur_id": null
     },
     {
         "id": "CMD008",
@@ -184,14 +187,16 @@
         "type_livraison": "programmee",
         "horaire_souhaite": "14:22",
         "statut_paiement": "paye",
-        "statut_logistique": "a_preparer",
+        "statut_logistique": "livree",
         "articles": [
             {
-                "nom": "Menu Fuego Spécial",
+                "nom": "Menu Fuego Sp\u00e9cial",
                 "prix": 16,
                 "quantite": 1
             }
-        ]
+        ],
+        "statut": "livree",
+        "livreur_id": null
     },
     {
         "id": "CMD009",
@@ -201,14 +206,16 @@
         "type_livraison": "immediate",
         "horaire_souhaite": "ASAP",
         "statut_paiement": "paye",
-        "statut_logistique": "a_preparer",
+        "statut_logistique": "en_livraison",
         "articles": [
             {
                 "nom": "Menu Bucket Family",
                 "prix": 24.9,
                 "quantite": 1
             }
-        ]
+        ],
+        "statut": "livraison",
+        "livreur_id": "Jesse"
     },
     {
         "id": "CMD010",
@@ -225,7 +232,9 @@
                 "prix": 24.9,
                 "quantite": 1
             }
-        ]
+        ],
+        "statut": "livraison",
+        "livreur_id": "L01"
     },
     {
         "id": "CMD011",
@@ -234,13 +243,15 @@
         "date_commande": "2026-04-05 13:52:59",
         "type_livraison": "immediate",
         "horaire_souhaite": "ASAP",
-        "statut_logistique": "a_preparer",
+        "statut_logistique": "preparation",
         "articles": [
             {
-                "nom": "Menu Fuego Spécial",
+                "nom": "Menu Fuego Sp\u00e9cial",
                 "prix": 16,
                 "quantite": 1
             }
-        ]
+        ],
+        "statut": "preparation",
+        "livreur_id": null
     }
 ]
