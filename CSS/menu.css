@@ -1,10 +1,12 @@
 /* === CONFIGURATION COULEURS === */
 :root {
-    --noir: #1a1a1a;
+    --noir: #0d0d0d;
+    --gris-carte: #1a1a1a;
+    --gris-bordure: #333;
     --orange: #ff6b35;
     --orange-hover: #e85d2a;
     --blanc: #fafafa;
-    --gris-carte: #242424;
+    --texte-gris: #aaaaaa;
 }
 
 /* === BASE === */
@@ -15,224 +17,215 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--noir);
     color: var(--blanc);
     line-height: 1.6;
+    overflow-x: hidden;
 }
 
 /* === HEADER & NAV === */
 header {
-    background-color: #1a1a1a;
-    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
+    background-color: rgba(13, 13, 13, 0.95);
+    border-bottom: 1px solid var(--gris-bordure);
     position: sticky;
     top: 0;
     z-index: 1000;
+    backdrop-filter: blur(5px);
 }
 
 nav {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 1rem 2rem;
+    padding: 0.8rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .nav-logo {
-    height: 100px; 
-    width: auto;
-    filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.3));
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    height: 60px;
+    transition: transform 0.3s ease;
 }
 
 .nav-logo:hover {
-    transform: scale(1.15) rotate(-3deg);
+    transform: scale(1.1) rotate(-3deg);
 }
 
 nav ul {
     list-style: none;
     display: flex;
-    gap: 2rem;
+    gap: 1.5rem;
+    align-items: center;
 }
 
 nav ul li a {
-    color: #fafafa;
+    color: var(--blanc);
     text-decoration: none;
+    font-size: 0.9rem;
     font-weight: 500;
-    padding: 0.5rem 1rem;
-    transition: 0.3s;
+    transition: color 0.3s;
 }
 
-nav ul li a:hover {
-    background-color: var(--orange);
-    color: var(--noir);
-    border-radius: 5px;
+nav ul li a:hover, nav ul li a.active {
+    color: var(--orange);
 }
 
 /* === HERO & RECHERCHE === */
 .menu-hero {
     text-align: center;
-    padding: 3rem 1rem;
+    padding: 4rem 1rem 2rem;
 }
 
 .menu-hero h2 {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
+    letter-spacing: 2px;
     color: var(--orange);
     text-transform: uppercase;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .search-bar-container input {
     width: 100%;
     max-width: 500px;
     background-color: var(--gris-carte);
-    border: 2px solid #333;
+    border: 1px solid var(--gris-bordure);
     border-radius: 30px;
-    padding: 12px 25px;
+    padding: 14px 25px;
     color: var(--blanc);
     outline: none;
-    transition: 0.3s;
     text-align: center;
+    transition: all 0.3s ease;
 }
 
 .search-bar-container input:focus {
     border-color: var(--orange);
-    box-shadow: 0 0 15px rgba(255, 107, 53, 0.2);
+    box-shadow: 0 0 15px rgba(255, 107, 53, 0.1);
 }
 
 /* === CATEGORIES === */
 .categories {
     display: flex;
     justify-content: center;
-    gap: 12px;
-    padding: 1rem;
-    position: sticky;
-    top: 100px;
-    background: var(--noir);
-    z-index: 900;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 25px;
 }
 
 .cat-btn {
     background: transparent;
-    border: 2px solid var(--orange);
-    color: var(--orange);
-    padding: 8px 18px;
-    border-radius: 25px;
+    border: 1px solid var(--gris-bordure);
+    color: var(--texte-gris);
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.8rem;
     font-weight: bold;
-    cursor: pointer;
     text-decoration: none;
     text-transform: uppercase;
-    font-size: 0.75rem;
     transition: 0.3s;
 }
 
-.cat-btn.active, .cat-btn:hover {
-    background: var(--orange);
-    color: var(--noir);
-}
-
-/* === SECTION NOS FORMULES (LES 3 MENUS) === */
-.menus-complets {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 2rem;
-}
-
-.special-menu {
-    background: #1e1e1e !important;
-    border: 2px solid #333 !important;
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    transition: 0.3s ease;
-}
-
-.special-menu:hover {
-    border-color: var(--orange) !important;
-    transform: translateY(-10px);
-    box-shadow: 0 10px 25px rgba(255, 107, 53, 0.15);
-}
-
-.composition-box {
-    margin: 1.5rem 0;
-    text-align: left;
-    flex-grow: 1;
-}
-
-.composition-box ul {
-    list-style: none;
-    padding: 0;
-}
-
-.composition-box li {
-    padding: 8px 0;
-    border-bottom: 1px dashed #444;
-    font-size: 0.95rem;
-}
-
-.composition-box li::before {
-    content: "✔️";
-    margin-right: 10px;
+.cat-btn:hover, .cat-btn.active {
+    border-color: var(--orange);
     color: var(--orange);
+    background: rgba(255, 107, 53, 0.05);
 }
 
-/* === GRILLE GENERALE & CARTES PLATS === */
+/* === GRILLE DE CONTENU === */
 .menu-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
 }
 
+.section-subtitle {
+    max-width: 1200px;
+    margin: 40px auto 10px;
+    padding: 0 2rem;
+    font-size: 1.4rem;
+    color: var(--orange);
+    text-transform: uppercase;
+}
+
+/* === CARTES (UNIFIÉES) === */
 .menu-card {
     background: var(--gris-carte);
-    border-radius: 15px;
-    overflow: hidden;
-    border: 1px solid #333;
+    border-radius: 12px;
+    border: 1px solid var(--gris-bordure);
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
-/* RECALIBRAGE DES IMAGES */
+.menu-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--orange);
+}
+
+/* Image pour les plats */
 .menu-card img {
     width: 100%;
-    height: 220px; /* Hauteur fixe pour l'alignement */
-    object-fit: cover; /* Recadrage intelligent sans déformer */
-    border-bottom: 1px solid #333;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid var(--gris-bordure);
 }
 
 .card-body {
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
+    flex-grow: 1; /* Permet d'aligner les bas de cartes */
 }
 
 .badge {
-    background: rgba(255, 107, 53, 0.1);
     color: var(--orange);
+    background: rgba(255, 107, 53, 0.1);
     font-size: 0.7rem;
     font-weight: bold;
     padding: 4px 10px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    display: inline-block;
+    border-radius: 4px;
+    align-self: flex-start;
+    margin-bottom: 12px;
 }
 
 .card-body h3 {
-    font-size: 1.25rem;
-    margin-bottom: 10px;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
     text-transform: uppercase;
+    color: var(--blanc);
 }
 
 .card-body p {
-    color: #aaa;
+    color: var(--texte-gris);
     font-size: 0.9rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 15px;
+}
+
+/* Zone de composition (spécifique aux menus) */
+.composition-box {
+    margin: 15px 0;
+    flex-grow: 1; /* Pousse le footer vers le bas */
+}
+
+.composition-box ul {
+    list-style: none;
+}
+
+.composition-box li {
+    padding: 6px 0;
+    font-size: 0.9rem;
+    color: #ddd;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.composition-box li::before {
+    content: "✔";
+    margin-right: 10px;
+    color: var(--orange);
 }
 
 /* FOOTER DES CARTES */
@@ -241,34 +234,37 @@ nav ul li a:hover {
     justify-content: space-between;
     align-items: center;
     margin-top: auto;
-    padding-top: 1rem;
-    border-top: 1px solid #333;
+    padding-top: 15px;
+    border-top: 1px solid var(--gris-bordure);
 }
 
 .price {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: 800;
+    color: var(--blanc);
 }
 
 .qty-input {
-    width: 50px;
-    background: #111;
-    border: 1px solid #444;
+    width: 45px;
+    background: #000;
+    border: 1px solid var(--gris-bordure);
     color: white;
     padding: 5px;
     border-radius: 5px;
     margin-right: 8px;
+    text-align: center;
 }
 
 .add-btn {
     background: var(--orange);
     color: var(--noir);
-    padding: 8px 20px;
-    border-radius: 25px;
+    padding: 8px 18px;
+    border-radius: 20px;
     border: none;
     font-weight: bold;
+    font-size: 0.85rem;
     cursor: pointer;
-    transition: 0.2s;
+    transition: 0.3s;
 }
 
 .add-btn:hover {
@@ -276,11 +272,11 @@ nav ul li a:hover {
     transform: scale(1.05);
 }
 
-/* === FOOTER === */
+/* === FOOTER PAGE === */
 footer {
     text-align: center;
-    padding: 3rem;
-    color: #555;
+    padding: 4rem 2rem;
+    color: #444;
     font-size: 0.8rem;
-    border-top: 1px solid #333;
+    border-top: 1px solid var(--gris-bordure);
 }

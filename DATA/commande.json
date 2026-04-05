@@ -1,47 +1,246 @@
 [
-  {
-    "id": 101,
-    "client": "Walter White",
-    "type": "Livraison",
-    "articles": [
-      { "nom": "Le Seau Albuquerque", "quantite": 1 }
-    ],
-    "prix_total": 19.99,
-    "statut": "livraison",
-    "adresse": "308 Negra Arroyo Lane",
-    "date": "2026-03-24 12:30",
-    "heure_retrait": "12:45",
-    "livreur_id": "2"
-  },
-  {
-    "id": 102,
-    "client": "Jesse Pinkman",
-    "type": "À emporter",
-    "articles": [
-      { "nom": "Ailes Fuego", "quantite": 2 },
-      { "nom": "Frites Maison", "quantite": 1 }
-    ],
-    "prix_total": 25.50,
-    "statut": "preparation",
-    "adresse": "Moneo 42",
-    "date": "2026-03-24 12:45",
-    "heure_retrait": "13:15",
-    "livreur_id": ""
-  },
-  {
-    "id": 103,
-    "client": "Saul Goodman",
-    "type": "Sur place",
-    "articles": [
-      { "nom": "Pollos Burger", "quantite": 1 },
-      { "nom": "Sopapillas", "quantite": 2 }
-    ],
-    "prix_total": 17.50,
-    "statut": "preparation",
-    "adresse": "Office 12, Lomas Blvd",
-    "date": "2026-03-24 13:00",
-    "heure_retrait": "13:10",
-    "livreur_id": ""
-  }
+    {
+        "id": 101,
+        "client": "Walter White",
+        "type": "Livraison",
+        "articles": [
+            {
+                "nom": "Le Seau Albuquerque",
+                "quantite": 1
+            }
+        ],
+        "prix_total": 19.99,
+        "statut": "livraison",
+        "adresse": "308 Negra Arroyo Lane",
+        "date": "2026-03-24 12:30",
+        "heure_retrait": "12:45",
+        "livreur_id": "2"
+    },
+    {
+        "id": 102,
+        "client": "Jesse Pinkman",
+        "type": "À emporter",
+        "articles": [
+            {
+                "nom": "Ailes Fuego",
+                "quantite": 2
+            },
+            {
+                "nom": "Frites Maison",
+                "quantite": 1
+            }
+        ],
+        "prix_total": 25.5,
+        "statut": "preparation",
+        "adresse": "Moneo 42",
+        "date": "2026-03-24 12:45",
+        "heure_retrait": "13:15",
+        "livreur_id": ""
+    },
+    {
+        "id": 103,
+        "client": "Saul Goodman",
+        "type": "Sur place",
+        "articles": [
+            {
+                "nom": "Pollos Burger",
+                "quantite": 1
+            },
+            {
+                "nom": "Sopapillas",
+                "quantite": 2
+            }
+        ],
+        "prix_total": 17.5,
+        "statut": "preparation",
+        "adresse": "Office 12, Lomas Blvd",
+        "date": "2026-03-24 13:00",
+        "heure_retrait": "13:10",
+        "livreur_id": ""
+    },
+    {
+        "id": "T1775395826",
+        "total": "1297.53",
+        "date": "05\/04\/2026 13:30",
+        "articles": [
+            {
+                "nom": "Menu Los Pollos Classic",
+                "prix": 14.5,
+                "quantite": 22
+            },
+            {
+                "nom": "Ailes Fuego",
+                "prix": 9,
+                "quantite": 1
+            },
+            {
+                "nom": "Menu Bucket Family",
+                "prix": 24.9,
+                "quantite": 15
+            },
+            {
+                "nom": "Menu Fuego Spécial",
+                "prix": 16,
+                "quantite": 4
+            },
+            {
+                "nom": "Albuquerque Bucket",
+                "prix": 19.99,
+                "quantite": 7
+            },
+            {
+                "nom": "Pollos Burger",
+                "prix": 8.5,
+                "quantite": 12
+            },
+            {
+                "nom": "Tacos Al Pastor",
+                "prix": 9.5,
+                "quantite": 2
+            },
+            {
+                "nom": "Red enchiladas",
+                "prix": 12,
+                "quantite": 1
+            },
+            {
+                "nom": "Ultimate Burrito",
+                "prix": 10.5,
+                "quantite": 3
+            },
+            {
+                "nom": "Fuego Wings",
+                "prix": 11,
+                "quantite": 8
+            },
+            {
+                "nom": "Rice Pollos bowl",
+                "prix": 9.9,
+                "quantite": 4
+            },
+            {
+                "nom": "Hermano Tenders",
+                "prix": 9,
+                "quantite": 10
+            },
+            {
+                "nom": "Butterscotch Pudding",
+                "prix": 4,
+                "quantite": 1
+            },
+            {
+                "nom": "Creamy Coleslaw",
+                "prix": 3,
+                "quantite": 2
+            }
+        ]
+    },
+    {
+        "id": "T1775395876",
+        "total": "14.50",
+        "date": "05\/04\/2026 13:31",
+        "articles": [
+            {
+                "nom": "Menu Los Pollos Classic",
+                "prix": 14.5,
+                "quantite": 1
+            }
+        ]
+    },
+    {
+        "id": "T1775396015",
+        "total": "14.50",
+        "date": "05\/04\/2026 13:33",
+        "articles": [
+            {
+                "nom": "Menu Los Pollos Classic",
+                "prix": 14.5,
+                "quantite": 1
+            }
+        ]
+    },
+    {
+        "id": "CMD007",
+        "id_transaction": "T1775396527",
+        "prix_total": 14.5,
+        "date_commande": "2026-04-05 13:42:21",
+        "type_livraison": "immediate",
+        "horaire_souhaite": "ASAP",
+        "statut_paiement": "paye",
+        "statut_logistique": "a_preparer",
+        "articles": [
+            {
+                "nom": "Menu Los Pollos Classic",
+                "prix": 14.5,
+                "quantite": 1
+            }
+        ]
+    },
+    {
+        "id": "CMD008",
+        "id_transaction": "T1775396641",
+        "prix_total": 16,
+        "date_commande": "2026-04-05 13:44:17",
+        "type_livraison": "programmee",
+        "horaire_souhaite": "14:22",
+        "statut_paiement": "paye",
+        "statut_logistique": "a_preparer",
+        "articles": [
+            {
+                "nom": "Menu Fuego Spécial",
+                "prix": 16,
+                "quantite": 1
+            }
+        ]
+    },
+    {
+        "id": "CMD009",
+        "id_transaction": "T1775396845",
+        "prix_total": 24.9,
+        "date_commande": "2026-04-05 13:47:41",
+        "type_livraison": "immediate",
+        "horaire_souhaite": "ASAP",
+        "statut_paiement": "paye",
+        "statut_logistique": "a_preparer",
+        "articles": [
+            {
+                "nom": "Menu Bucket Family",
+                "prix": 24.9,
+                "quantite": 1
+            }
+        ]
+    },
+    {
+        "id": "CMD010",
+        "id_transaction": "T1775396960",
+        "prix_total": 24.9,
+        "date_commande": "2026-04-05 13:49:36",
+        "type_livraison": "immediate",
+        "horaire_souhaite": "ASAP",
+        "statut_paiement": "paye",
+        "statut_logistique": "a_preparer",
+        "articles": [
+            {
+                "nom": "Menu Bucket Family",
+                "prix": 24.9,
+                "quantite": 1
+            }
+        ]
+    },
+    {
+        "id": "CMD011",
+        "id_transaction": "T1775397163",
+        "prix_total": 16,
+        "date_commande": "2026-04-05 13:52:59",
+        "type_livraison": "immediate",
+        "horaire_souhaite": "ASAP",
+        "statut_logistique": "a_preparer",
+        "articles": [
+            {
+                "nom": "Menu Fuego Spécial",
+                "prix": 16,
+                "quantite": 1
+            }
+        ]
+    }
 ]
-
