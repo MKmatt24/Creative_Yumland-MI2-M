@@ -69,7 +69,7 @@ if ($commandes && is_array($commandes)) {
                 
                 <div class="profil-header">
                     <div class="avatar-container">
-                        <img src="../IMAGES/avatar_jotaro.png" alt="Avatar">
+                        <img src="../IMAGES/avatar_anonyme.png" alt="Avatar">
                         <button class="edit-avatar-btn" aria-label="Changer la photo">📷</button>
                     </div>
                     <div class="user-identity">
