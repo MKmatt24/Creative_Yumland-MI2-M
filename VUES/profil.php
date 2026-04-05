@@ -1,6 +1,5 @@
-<?php include '../LIB/authentification.php'; ?>
+<?php include '../LIB/authentification.php';
 
-<?php
 // Récupération de tous les utilisateurs depuis le JSON
 $usersData = file_get_contents('../DATA/users.json');
 $users = json_decode($usersData, true);
@@ -162,7 +161,21 @@ if ($commandes && is_array($commandes)) {
                                             <span><?= htmlspecialchars($commande['date']) ?> • <?= number_format($commande['prix_total'], 2, ',', ' ') ?>€</span>
                                             <span style="display: block; color: #ff6b35; font-size: 0.75rem; margin-top: 5px;">Statut : <?= ucfirst($commande['statut']) ?></span>
                                         </div>
-                                        <button class="reorder-btn">Commander à nouveau</button>
+                                        
+                                        <div style="display: flex; flex-direction: column; gap: 5px;">
+                                            <button class="reorder-btn">Commander à nouveau</button>
+                                            
+                                            <!-- NOUVEAU BOUTON POUR NOTER -->
+                                            <?php 
+                                            // On s'assure de gérer "livrée" avec ou sans accent selon ce qui est dans le JSON
+                                            if (strtolower($commande['statut']) === 'livree' || strtolower($commande['statut']) === 'livrée'): 
+                                            ?>
+                                                <a href="notation.php?commande=<?= $commande['id'] ?>" class="reorder-btn" style="text-decoration: none; text-align: center; border-color: #2ecc71; color: #2ecc71;">
+                                                    Noter
+                                                </a>
+                                            <?php endif; ?>
+                                        </div>
+                                        
                                     </div>
                                 <?php endforeach; ?>
                             <?php endif; ?>

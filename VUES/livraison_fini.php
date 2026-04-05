@@ -1,6 +1,4 @@
-<?php include '../LIB/authentification.php'; ?>
-
-<?php
+<?php include '../LIB/authentification.php';
 
 $id_commande = $_GET['id'] ?? null;
 

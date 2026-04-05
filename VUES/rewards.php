@@ -1,6 +1,4 @@
-<?php include '../LIB/authentification.php'; ?>
-
-<?php
+<?php include '../LIB/authentification.php'; 
 
 $objectif_jour = 160.00;
 $solde_disponible = 0;
@@ -61,7 +59,7 @@ if ($pourcentage_objectif > 100) {$pourcentage_objectif = 100;}
 </head>
 <body>
 
-    <?php include '../LIB/header_livreur.php'; ?>
+    <?php include '../LIB/header.php'; ?>
 
     <main>
         <section class="dashboard-section">
@@ -134,7 +132,7 @@ if ($pourcentage_objectif > 100) {$pourcentage_objectif = 100;}
         </section>
     </main>
 
-    <?php include '../LIB/footer_livreur.php'; ?>
+    <?php include '../LIB/footer.php'; ?>
 
 </body>
 <script>

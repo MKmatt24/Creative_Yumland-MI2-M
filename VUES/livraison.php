@@ -1,6 +1,5 @@
-<?php include '../LIB/authentification.php'; ?>
+<?php include '../LIB/authentification.php';
 
-<?php
 //Récupération des data du fichier JSON
 $fichierCommandes = '../DATA/commande.json';
 $commandesData = file_get_contents($fichierCommandes);
@@ -12,12 +11,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['id_
     $nouveauStatut = ($_POST['action'] === 'terminer') ? 'livrée' : 'abandonnée';
 
 //Parcours des commandes pour modifier celle souhaité
-    foreach ($commandes as &$cmd) {
-        if ($cmd['id'] == $idCible) {
-            $cmd['statut'] = $nouveauStatut;
-            break;
+foreach ($commandes as &$cmd) {
+    if ($cmd['id'] == $idCible) {
+        $cmd['statut'] = $nouveauStatut;
+        
+//Si la commande est bien livrée, on calcule et on sauvegarde le gain
+        if ($nouveauStatut === 'livrée') {
+//On reprend le même calcul que dans livraisons_en_attente.php
+            $distanceKm = 1.5 + mt_rand(0, 6);
+            $gainEstime = 2.50 + ($distanceKm * 0.80);
+//On sauvegarde la clé gain_livreur
+            $cmd['gain_livreur'] = $gainEstime;
         }
+        break;
     }
+}
 
 //Sauvegarde du fichier JSON modifié et rafraichissement de la page pour vider le formulaire
     file_put_contents($fichierCommandes, json_encode($commandes, JSON_PRETTY_PRINT));
@@ -29,9 +37,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['id_
 $commandeEnCours = null;
 
 foreach ($commandes as $cmd) {
-    if ($cmd['statut'] == 'livraison' && $cmd['livreur_id'] == $_SESSION['user_id']) {
+    if (($cmd['statut'] ?? '') === 'livraison' && ($cmd['livreur_id'] ?? '') == $_SESSION['user_id']) {
         $commandeEnCours = $cmd;
         break;
+    }
+}
+
+$clientInfo = null;
+if ($commandeEnCours && isset($commandeEnCours['user_id'])) {
+    $usersData = json_decode(file_get_contents('../DATA/users.json'), true);
+    foreach ($usersData as $user) {
+        if ($user['id'] == $commandeEnCours['user_id']) {
+            $clientInfo = $user;
+            break;
+        }
     }
 }
 ?>
@@ -47,7 +66,7 @@ foreach ($commandes as $cmd) {
 </head>
 <body>
 
-    <?php include '../LIB/header_livreur.php'; ?>
+    <?php include '../LIB/header.php'; ?>
 
     <main>
         <?php if ($commandeEnCours): ?>
@@ -80,7 +99,7 @@ foreach ($commandes as $cmd) {
                         <div class="access-item">
                             <span class="icon">🔢</span>
                             <span class="label">Digicode</span>
-                            <span class="value"><?= htmlspecialchars($commandeEnCours['digicode'] ?? 'N/A') ?></span>
+                            <span class="value"><?= htmlspecialchars($clientInfo['code_interphone'] ?? 'N/A') ?></span>
                         </div>
                         <div class="access-item">
                             <span class="icon">🏢</span>
@@ -121,7 +140,7 @@ foreach ($commandes as $cmd) {
         <?php endif; ?>
     </main>
 
-    <?php include '../LIB/footer_livreur.php'; ?>
+    <?php include '../LIB/footer.php'; ?>
 
 </body>
 <script>

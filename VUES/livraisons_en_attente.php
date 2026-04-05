@@ -1,6 +1,5 @@
-<?php include '../LIB/authentification.php'; ?>
+<?php include '../LIB/authentification.php'; 
 
-<?php
 //Récupération des data du fichier JSON
 $fichierCommandes = '../DATA/commande.json';
 $commandesData = file_get_contents($fichierCommandes);
@@ -31,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['id_
 $offres = [];
 
 foreach ($commandes as $cmd) {
-    if ($cmd['statut'] === 'preparation') {
+    if (($cmd['statut'] ?? '') === 'preparation') {
         $offres[] = $cmd;
     }
 }
@@ -48,7 +47,7 @@ foreach ($commandes as $cmd) {
 </head>
 <body>
 
-    <?php include '../LIB/header_livreur.php'; ?>
+    <?php include '../LIB/header.php'; ?>
 
     <main>
         <section class="radar-section">
@@ -68,8 +67,8 @@ foreach ($commandes as $cmd) {
                 <?php else: ?>
 
                     <?php foreach ($offres as $offre): 
-                        //Distance inventé qui est basée sur l'ID de la commande pour que chaque course ait des km différents sans passer par un vrai algo de GPS
-                        $distanceKm = 1.5 + ($offre['id'] % 6);
+                        //Distance inventé qui est basée sur l'aléatoire pour que chaque course ait des km différents sans passer par un vrai algo de GPS
+                        $distanceKm = 1.5 + mt_rand(0, 6);
                         //Calcul du gain : 2.50€ de forfait + 0.80€ / km
                         $gainEstime = 2.50 + ($distanceKm * 0.80);
                         //Calcul d'un temps estimé (environ 4 min par km)
@@ -92,7 +91,7 @@ foreach ($commandes as $cmd) {
                                     <strong>Récupération :</strong> Los Pollos Hermanos
                                 </div>
                                 <div class="route-step dropoff">
-                                    <strong>Livraison :</strong> <?= htmlspecialchars($offre['adresse']) ?>
+                                    <strong>Livraison :</strong> <?= htmlspecialchars($offre['adresse'] ?? 'Adresse non renseignée') ?>
                                 </div>
                             </div>
 
@@ -112,7 +111,7 @@ foreach ($commandes as $cmd) {
         </section>
     </main>
 
-    <?php include '../LIB/footer_livreur.php'; ?>
+    <?php include '../LIB/footer.php'; ?>
     
 </body>
 <script>
