@@ -99,7 +99,7 @@ if ($date_filtre !== 'tous') {
                 <h1>Los Pollos Hermanos - Administration</h1>
             </div>
             <ul>
-                <li><a href="accueil.html">Accueil</a></li>
+                <li><a href="accueil.php">Accueil</a></li>
                 <li><a href="admin.php">Tableau de bord</a></li>
                 <li><a href="../TRAITEMENTS/deconnexion.php">Déconnexion</a></li>
             </ul>

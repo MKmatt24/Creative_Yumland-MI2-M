@@ -34,7 +34,7 @@ $success = $_GET['success'] ?? false;
         <nav>
             <div class="logo">
                 <div class="logo-box">
-                    <a href="accueil.html">
+                    <a href="accueil.php">
                         <img src="../IMAGES/logo.png" alt="Logo Los Pollos" class="nav-logo">
                     </a>
                 </div>
@@ -47,9 +47,9 @@ $success = $_GET['success'] ?? false;
             </button>
 
             <ul>
-                <li><a href="accueil.html">Accueil</a></li>
-                <li><a href="menu.html">Menu</a></li>
-                <li><a href="accueil.html#contact">Contact</a></li>
+                <li><a href="accueil.php">Accueil</a></li>
+                <li><a href="menu.php">Menu</a></li>
+                <li><a href="accueil.php#contact">Contact</a></li>
                 <li><a href="profil.php">Mon Profil</a></li>
             </ul>
         </nav>
