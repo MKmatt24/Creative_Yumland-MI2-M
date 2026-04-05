@@ -45,7 +45,7 @@
         "role": "client",
         "statut": "actif",
         "date_inscription": "2026-04-04",
-        "points_fidelite" : "0",
+        "points_fidelite": "0",
         "date_naissance": ""
     },
     {
@@ -62,7 +62,7 @@
         "role": "client",
         "statut": "actif",
         "date_inscription": "2026-04-04",
-        "points_fidelite" : "0",
+        "points_fidelite": "0",
         "date_naissance": ""
     },
     {
@@ -79,7 +79,7 @@
         "role": "client",
         "statut": "actif",
         "date_inscription": "2026-04-04",
-        "points_fidelite" : "0",
+        "points_fidelite": "0",
         "date_naissance": ""
     },
     {
@@ -96,7 +96,7 @@
         "role": "client",
         "statut": "actif",
         "date_inscription": "2026-04-04",
-        "points_fidelite" : "0",
+        "points_fidelite": "0",
         "date_naissance": ""
     },
     {
@@ -113,7 +113,22 @@
         "role": "client",
         "statut": "actif",
         "date_inscription": "2026-04-04",
-        "points_fidelite" : "0",
+        "points_fidelite": "0",
         "date_naissance": ""
+    },
+    {
+        "id": 8,
+        "nom": "mon",
+        "prenom": "max",
+        "email": "max.mon@gmail.com",
+        "password": "$2y$10$KSB01yWe26sNgIQIwcTbqecolBjOPZigJdJa\/GCoXO3kpIAEMzzhm",
+        "telephone": "0782223195",
+        "adresse": "rue du moncel",
+        "code_interphone": "",
+        "code_postal": "95000",
+        "ville": "Cergy",
+        "role": "client",
+        "statut": "actif",
+        "date_inscription": "2026-04-05"
     }
 ]
