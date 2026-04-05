@@ -15,7 +15,7 @@
         "date": "2026-03-24 12:30",
         "heure_retrait": "12:45",
         "livreur_id": 10,
-        "gain_livreur": 7.7
+        "gain_livreur": 5.300000000000001
     },
     {
         "id": 102,
@@ -36,8 +36,8 @@
         "adresse": "Moneo 42",
         "date": "2026-03-24 12:45",
         "heure_retrait": "13:15",
-        "livreur_id": 10,
-        "gain_livreur": 3.7
+        "livreur_id": 11,
+        "gain_livreur": 7.7
     },
     {
         "id": 103,
@@ -58,110 +58,10 @@
         "adresse": "Office 12, Lomas Blvd",
         "date": "2026-03-24 13:00",
         "heure_retrait": "13:10",
-        "livreur_id": null,
-        "statut_logistique": "livree"
+        "livreur_id": 11,
+        "statut_logistique": "preparation"
     },
-    {
-        "id": "T1775395826",
-        "total": "1297.53",
-        "date": "05\/04\/2026 13:30",
-        "articles": [
-            {
-                "nom": "Menu Los Pollos Classic",
-                "prix": 14.5,
-                "quantite": 22
-            },
-            {
-                "nom": "Ailes Fuego",
-                "prix": 9,
-                "quantite": 1
-            },
-            {
-                "nom": "Menu Bucket Family",
-                "prix": 24.9,
-                "quantite": 15
-            },
-            {
-                "nom": "Menu Fuego Sp\u00e9cial",
-                "prix": 16,
-                "quantite": 4
-            },
-            {
-                "nom": "Albuquerque Bucket",
-                "prix": 19.99,
-                "quantite": 7
-            },
-            {
-                "nom": "Pollos Burger",
-                "prix": 8.5,
-                "quantite": 12
-            },
-            {
-                "nom": "Tacos Al Pastor",
-                "prix": 9.5,
-                "quantite": 2
-            },
-            {
-                "nom": "Red enchiladas",
-                "prix": 12,
-                "quantite": 1
-            },
-            {
-                "nom": "Ultimate Burrito",
-                "prix": 10.5,
-                "quantite": 3
-            },
-            {
-                "nom": "Fuego Wings",
-                "prix": 11,
-                "quantite": 8
-            },
-            {
-                "nom": "Rice Pollos bowl",
-                "prix": 9.9,
-                "quantite": 4
-            },
-            {
-                "nom": "Hermano Tenders",
-                "prix": 9,
-                "quantite": 10
-            },
-            {
-                "nom": "Butterscotch Pudding",
-                "prix": 4,
-                "quantite": 1
-            },
-            {
-                "nom": "Creamy Coleslaw",
-                "prix": 3,
-                "quantite": 2
-            }
-        ]
-    },
-    {
-        "id": "T1775395876",
-        "total": "14.50",
-        "date": "05\/04\/2026 13:31",
-        "articles": [
-            {
-                "nom": "Menu Los Pollos Classic",
-                "prix": 14.5,
-                "quantite": 1
-            }
-        ]
-    },
-    {
-        "id": "T1775396015",
-        "total": "14.50",
-        "date": "05\/04\/2026 13:33",
-        "articles": [
-            {
-                "nom": "Menu Los Pollos Classic",
-                "prix": 14.5,
-                "quantite": 1
-            }
-        ]
-    },
+
     {
         "id": "CMD007",
         "id_transaction": "T1775396527",
@@ -178,9 +78,9 @@
                 "quantite": 1
             }
         ],
-        "statut": "preparation",
+        "statut": "abandonn\u00e9e",
         "adresse": "32 Ardz gane",
-        "livreur_id": null
+        "livreur_id": 11
     },
     {
         "id": "CMD008",
@@ -198,9 +98,9 @@
                 "quantite": 1
             }
         ],
-        "statut": "preparation",
+        "statut": "abandonn\u00e9e",
         "adresse": "12 rue dessert",
-        "livreur_id": null
+        "livreur_id": 11
     },
     {
         "id": "CMD009",
@@ -218,9 +118,10 @@
                 "quantite": 1
             }
         ],
-        "statut": "preparation",
+        "statut": "livraison",
         "adresse": "3 avenue Raikage",
-        "livreur_id": "Jesse"
+        "livreur_id": "Jesse",
+        "user_id": 3
     },
     {
         "id": "CMD010",
@@ -238,9 +139,10 @@
                 "quantite": 1
             }
         ],
-        "statut": "preparation",
+        "statut": "livraison",
         "adresse": "221 archipel des Sabaody",
-        "livreur_id": "L01"
+        "livreur_id": 11,
+        "user_id": 4
     },
     {
         "id": "CMD011",
@@ -257,7 +159,8 @@
                 "quantite": 1
             }
         ],
-        "statut": "livree",
-        "livreur_id": null
+        "statut": "livr\u00e9e",
+        "livreur_id": null,
+        "user_id": 5
     }
 ]
