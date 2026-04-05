@@ -1,5 +1,5 @@
+<?php include '../LIB/authentification.php'; ?>
 <?php
-session_start();
 
 // Vérifier que l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
@@ -30,30 +30,8 @@ $success = $_GET['success'] ?? false;
     <link rel="stylesheet" href="../CSS/notation.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">
-                <div class="logo-box">
-                    <a href="accueil.php">
-                        <img src="../IMAGES/logo.png" alt="Logo Los Pollos" class="nav-logo">
-                    </a>
-                </div>
-            </div>
-
-            <button class="menu-toggle" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-
-            <ul>
-                <li><a href="accueil.php">Accueil</a></li>
-                <li><a href="menu.php">Menu</a></li>
-                <li><a href="accueil.php#contact">Contact</a></li>
-                <li><a href="profil.php">Mon Profil</a></li>
-            </ul>
-        </nav>
-    </header>
+    
+    <?php include '../LIB/header.php'; ?>
 
     <main>
         <section class="notation-section">

@@ -1,5 +1,6 @@
+<?php include '../LIB/authentification.php'; ?>
+
 <?php
-session_start();
 
 // Vérifier que c'est un admin
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
