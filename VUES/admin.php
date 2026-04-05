@@ -94,18 +94,8 @@ if ($date_filtre !== 'tous') {
     <link rel="stylesheet" href="../CSS/admin.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="logo">
-                <h1>Los Pollos Hermanos - Administration</h1>
-            </div>
-            <ul>
-                <li><a href="accueil.php">Accueil</a></li>
-                <li><a href="admin.php">Tableau de bord</a></li>
-                <li><a href="../TRAITEMENTS/deconnexion.php">Déconnexion</a></li>
-            </ul>
-        </nav>
-    </header>
+    
+    <?php include '../LIB/header.php'; ?>
 
     <main>
         <section class="admin-section">

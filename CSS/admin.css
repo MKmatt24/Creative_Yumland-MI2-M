@@ -32,57 +32,71 @@ header {
 }
 
 nav {
-    max-width: 1400px;
+    max-width: 1400px; /* Plus large pour l'admin */
     margin: 0 auto;
-    padding: 1rem 2rem;
+    padding: 0.8rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.logo h1 {
-    color: var(--orange);
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.logo a {
-    text-decoration: none;
-    color: inherit;
-    transition: all 0.3s ease;
-}
-
-.logo a:hover h1 {
-    color: var(--orange-hover);
-}
-
-.logo a:visited {
-    color: inherit;
-}
-
-nav ul {
-    list-style: none;
+/* Style du Logo avec image */
+.logo-box {
     display: flex;
+    align-items: center;
+}
+
+.nav-logo {
+    height: 50px; /* Taille fixe pour éviter que ça ne saute */
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+.nav-logo:hover {
+    transform: scale(1.05);
+}
+
+/* Menu de navigation */
+nav ul {
+    display: flex;
+    list-style: none;
     gap: 2rem;
+    align-items: center;
 }
 
 nav ul li a {
-    color: var(--blanc);
     text-decoration: none;
-    font-size: 1rem;
+    color: var(--blanc);
     font-weight: 500;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
+    font-size: 1rem;
     transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
 }
 
 nav ul li a:hover {
+    color: var(--orange);
+    background-color: rgba(255, 107, 53, 0.1);
+}
+
+/* === BOUTON MENU BURGER (Mobile) === */
+.menu-toggle {
+    display: none; /* Caché par défaut sur PC */
+    flex-direction: column;
+    gap: 6px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    z-index: 1001;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 30px;
+    height: 3px;
     background-color: var(--orange);
-    color: var(--noir);
-    transform: translateY(-2px);
+    transition: all 0.3s ease;
 }
 
 /* === MAIN CONTENT === */
@@ -535,6 +549,27 @@ footer {
     .users-list,
     .admin-actions {
         padding: 1.5rem 1rem;
+    }
+
+    .menu-toggle {
+        display: flex; /* Apparaît sur mobile */
+    }
+
+    nav ul {
+        display: none; /* Caché par défaut sur mobile */
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--noir);
+        flex-direction: column;
+        padding: 2rem;
+        gap: 1.5rem;
+        border-bottom: 2px solid var(--orange);
+    }
+
+    nav ul.active {
+        display: flex; /* S'affiche quand on clique sur le bouton */
     }
 }
 

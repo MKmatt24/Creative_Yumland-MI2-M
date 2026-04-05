@@ -19,7 +19,7 @@
             <li><a href="livraison.php">Livraisons</a></li>
 
             <?php if (isset($_SESSION['user_id'])): ?>
-                <li><a href="profil.php">Mon Profil</a></li>
+                <li><a href="profil.php">Profil</a></li>
                 
                 <?php if ($_SESSION['role'] === 'admin'): ?>
                     <li><a href="admin.php" style="color: var(--orange);">Admin</a></li>
