@@ -162,5 +162,21 @@
         "role": "restaurateur",
         "statut": "actif",
         "date_inscription": "2026-04-05"
+    },
+
+    {
+        "id": 10,
+        "nom": "Marchand",
+        "prenom": "Maxence",
+        "email": "maxence@gmail.com",
+        "password": "$2y$12$MQncLOhnrI9MKDAf35ag2.rAae9gQXm9G0WwDOXVwCmZzDYcjNzri",
+        "telephone": "9786005948",
+        "adresse": "1 rue du basic",
+        "code_interphone": "20144",
+        "code_postal": "95000",
+        "ville": "Cergy",
+        "role": "livreur",
+        "statut": "actif",
+        "date_inscription": "2026-04-05"
     }
 ]
