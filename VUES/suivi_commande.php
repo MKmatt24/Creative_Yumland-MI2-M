@@ -92,9 +92,7 @@ $info_etape = $etapes[$status_actuel] ?? ['msg' => 'Traitement en cours...', 'pr
     <?php endif; ?>
 </main>
 
-<footer style="text-align: center; padding: 40px; color: #444; font-size: 0.8rem;">
-    <p>&copy; 2026 LOS POLLOS HERMANOS - ALBUQUERQUE</p>
-</footer>
+<?php include '../LIB/footer.php'; ?>
 
 </body>
 </html>

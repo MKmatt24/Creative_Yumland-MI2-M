@@ -47,12 +47,7 @@ if (isset($_SESSION['panier'])) {
 </head>
 <body>
 
-<?php 
-// Correction du chemin pour correspondre à ton arborescence (LIB/header.php)
-if (file_exists('../LIB/header.php')) {
-    include '../LIB/header.php';
-}
-?>
+<?php include '../LIB/header.php'; ?>
 
 <main>
     <section class="menu-hero">
@@ -157,9 +152,7 @@ if (file_exists('../LIB/header.php')) {
     </div>
 </main>
 
-<footer style="text-align: center; padding: 40px; color: #555;">
-    <p>&copy; 2026 Los Pollos Hermanos - Albuquerque. Tous droits réservés.</p>
-</footer>
+<?php include '../LIB/footer.php'; ?>
 
 </body>
 </html>
