@@ -28,21 +28,23 @@ if ($paiement_valide) {
 
     // Préparation des données de la commande
     $nouvelle_commande = [
-        "id"                => "CMD" . str_pad(count($commandesData) + 1, 3, "0", STR_PAD_LEFT),
-        "id_transaction"    => $transaction,
-        "client"            => ($_SESSION['user']['prenom'] ?? 'Client') . " " . ($_SESSION['user']['nom'] ?? 'Anonyme'),
-        "prix_total"        => (float)$montant,
-        "date_commande"     => date('Y-m-d H:i:s'),
-        
-        // Planification récupérée depuis la session (panier.php)
-        "type_livraison"    => $_SESSION['planification']['type'] ?? 'immediate',
-        "horaire_souhaite"  => $_SESSION['planification']['horaire'] ?? 'ASAP',
-        
-        // Statut CRITIQUE pour l'affichage restaurateur
-        "statut"            => "a_preparer", 
-        "statut_logistique" => "a_preparer", 
-        "articles"          => $_SESSION['panier'] ?? []
-    ];
+    "id"                => "CMD" . str_pad(count($commandesData) + 1, 3, "0", STR_PAD_LEFT),
+    "id_transaction"    => $transaction,
+    "client"            => ($_SESSION['prenom'] ?? 'Client') . " " . ($_SESSION['nom'] ?? 'Anonyme'),
+    "user_id"           => $_SESSION['user_id'] ?? null,
+    
+    "prix_total"        => (float)$montant,
+    "date_commande"     => date('Y-m-d H:i:s'),
+    
+    // Planification récupérée depuis la session (panier.php)
+    "type_livraison"    => $_SESSION['planification']['type'] ?? 'immediate',
+    "horaire_souhaite"  => $_SESSION['planification']['horaire'] ?? 'ASAP',
+    
+    // Statut pour l'affichage restaurateur
+    "statut_paiement"   => "paye",
+    "statut_logistique" => "a_preparer",
+    "articles"          => $_SESSION['panier'] ?? []
+];
 
     // Sauvegarde au format JSON
     $commandesData[] = $nouvelle_commande;
