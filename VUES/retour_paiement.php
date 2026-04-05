@@ -10,49 +10,54 @@ $statut       = $_GET['status'] ?? $_GET['statut'] ?? "";
 $control_rx   = $_GET['control'] ?? "";
 
 // 2. VÉRIFICATION DE LA SIGNATURE (MD5)
-$api_key = trim(getAPIKey($vendeur));
+
+// A. On prépare la chaîne avec les données reçues de la banque
 $hash_string = $api_key . "#" . $transaction . "#" . $montant . "#" . $vendeur . "#" . $statut . "#";
+
+// B. On calcule le hash localement pour comparaison
 $control_calcule = md5($hash_string);
 
-// Le paiement est valide si la signature correspond et que le statut est 'accepted' ou 'ok'
-$paiement_valide = ($control_rx === $control_calcule && ($statut === "accepted" || $statut === "ok"));
+// C. (L'AJOUT) On normalise le statut pour ne pas rater une validation à cause d'une minuscule
+$statut_check = strtoupper($statut);
+
+// D. On vérifie si TOUT est bon : la signature ET le code de succès
+$paiement_valide = (
+    $control_rx === $control_calcule && 
+    ($statut_check === "V" || $statut_check === "OK" || $statut_check === "ACCEPTED")
+);
 
 /**
  * 3. TRAITEMENT ET SAUVEGARDE DE LA COMMANDE
  */
 if ($paiement_valide) {
     $file = '../DATA/commande.json';
-    // Chargement sécurisé des commandes existantes
     $commandesData = file_exists($file) ? json_decode(file_get_contents($file), true) : [];
-    if (!is_array($commandesData)) $commandesData = [];
 
-    // Préparation des données de la commande
+    // On prépare la nouvelle commande
     $nouvelle_commande = [
-    "id"                => "CMD" . str_pad(count($commandesData) + 1, 3, "0", STR_PAD_LEFT),
-    "id_transaction"    => $transaction,
-    "client"            => ($_SESSION['prenom'] ?? 'Client') . " " . ($_SESSION['nom'] ?? 'Anonyme'),
-    "user_id"           => $_SESSION['user_id'] ?? null,
-    
-    "prix_total"        => (float)$montant,
-    "date_commande"     => date('Y-m-d H:i:s'),
-    
-    // Planification récupérée depuis la session (panier.php)
-    "type_livraison"    => $_SESSION['planification']['type'] ?? 'immediate',
-    "horaire_souhaite"  => $_SESSION['planification']['horaire'] ?? 'ASAP',
-    
-    // Statut pour l'affichage restaurateur
-    "statut_paiement"   => "paye",
-    "statut_logistique" => "a_preparer",
-    "articles"          => $_SESSION['panier'] ?? []
-];
+        "id" => $transaction,
+        "date" => date('d/m/Y H:i'),
+        "client" => $_SESSION['prenom'] . " " . $_SESSION['nom'],
+        // CRUCIAL : On enregistre le montant envoyé par la banque (le montant réduit)
+        "prix_total" => (float)$montant, 
+        "statut" => "en préparation",
+        "articles" => $_SESSION['panier'],
+        "type" => $_SESSION['planification']['type'] ?? 'direct',
+        "horaire" => $_SESSION['planification']['horaire'] ?? 'ASAP'
+    ];
 
-    // Sauvegarde au format JSON
+    // On ajoute le coupon dans l'historique de la commande (optionnel mais recommandé)
+    if (isset($_SESSION['coupon'])) {
+        $nouvelle_commande['coupon_utilise'] = $_SESSION['coupon']['valeur'];
+    }
+
     $commandesData[] = $nouvelle_commande;
-    file_put_contents($file, json_encode($commandesData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-    
-    // Nettoyage de la session après succès pour éviter les doublons
-    unset($_SESSION['panier']);
-    unset($_SESSION['planification']);
+    file_put_contents($file, json_encode($commandesData, JSON_PRETTY_PRINT));
+
+    // --- NETTOYAGE APRÈS ACHAT ---
+    unset($_SESSION['panier']);       // Vide le panier
+    unset($_SESSION['coupon']);       // SUPPRIME LE COUPON ICI
+    unset($_SESSION['planification']); // Vide les infos de livraison
 }
 ?>
 <!DOCTYPE html>

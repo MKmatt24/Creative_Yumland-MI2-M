@@ -1,0 +1,4 @@
+{
+    "POLLOS10": {"type": "pourcentage", "valeur": 10, "description": "10% sur votre commande"},
+    "GUSTAVO5": {"type": "fixe", "valeur": 5, "description": "5€ de réduction immédiate"}
+}

@@ -17,6 +17,18 @@ if (!empty($panier)) {
     }
 }
 $montant_formatte = number_format($total, 2, '.', '');
+
+// 3. Réduction si coupon
+$reduction = 0;
+if (isset($_SESSION['coupon'])) {
+    if ($_SESSION['coupon']['type'] === 'pourcentage') {
+        $reduction = $total * ($_SESSION['coupon']['valeur'] / 100);
+    } else {
+        $reduction = $_SESSION['coupon']['valeur'];
+    }
+}
+$total_final = max(0, $total - $reduction); // Le total ne peut pas être négatif
+$montant_formatte = number_format($total_final, 2, '.', '');
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -78,6 +90,16 @@ $montant_formatte = number_format($total, 2, '.', '');
                     <p style="font-size: 0.8rem; color: #888; margin-top: 5px;">Note : Prévoyez un délai pour la préparation par nos équipes.</p>
                 </div>
             </div>
+
+            <form action="../TRAITEMENTS/appliquer_coupon.php" method="POST" style="margin: 20px 0; display: flex; gap: 10px;">
+                <input type="text" name="code_coupon" placeholder="Code promo" style="padding: 10px; flex-grow: 1;">
+                <button type="submit" class="btn-secondary" style="background: #444; color: white; border: none; padding: 10px 20px; cursor: pointer;">Appliquer</button>
+            </form>
+
+            <?php if(isset($_SESSION['coupon'])): ?>
+                <p style="color: #2ecc71;">Coupon appliqué : -<?= $_SESSION['coupon']['valeur'] ?><?= $_SESSION['coupon']['type'] == 'pourcentage' ? '%' : '€' ?> 
+                <a href="../TRAITEMENTS/supprimer_coupon.php" style="color: #e74c3c; font-size: 0.8rem;">(Retirer)</a></p>
+            <?php endif; ?>
 
             <div style="text-align: center;">
                 <button type="submit" class="btn-primary" style="width: 100%; padding: 20px; font-size: 1.2rem; background: #ff6b35; border: none; cursor: pointer; font-weight: bold; border-radius: 5px; color: white;">

@@ -181,6 +181,14 @@ if ($commandes && is_array($commandes)) {
                             <?php endif; ?>
                         </div>
                     </div>
+                    <div class="user-stats-card">
+                        <h3>Mes Coupons de réduction</h3>
+                        <p>Utilisez ces codes lors de votre paiement :</p>
+                        <ul>
+                            <li><strong>POLLOS10</strong> : -10% sur tout le menu</li>
+                            <li><strong>GUSTAVO5</strong> : -5€ sur votre commande</li>
+                        </ul>
+                    </div>
 
                 </div> </div>
         </section>
