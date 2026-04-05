@@ -2,6 +2,7 @@
     {
         "id": 101,
         "client": "Walter White",
+        "user_id": 3,
         "type": "Livraison",
         "articles": [
             {
@@ -14,12 +15,13 @@
         "adresse": "308 Negra Arroyo Lane",
         "date": "2026-03-24 12:30",
         "heure_retrait": "12:45",
-        "livreur_id": 10,
+        "livreur_id": 11,
         "gain_livreur": 5.300000000000001
     },
     {
         "id": 102,
         "client": "Jesse Pinkman",
+        "user_id": 4,
         "type": "\u00c0 emporter",
         "articles": [
             {
@@ -42,6 +44,7 @@
     {
         "id": 103,
         "client": "Saul Goodman",
+        "user_id": 5,
         "type": "Sur place",
         "articles": [
             {
@@ -61,7 +64,6 @@
         "livreur_id": 11,
         "statut_logistique": "preparation"
     },
-
     {
         "id": "CMD007",
         "id_transaction": "T1775396527",
