@@ -130,5 +130,20 @@
         "role": "admin",
         "statut": "actif",
         "date_inscription": "2026-04-05"
-    }  
+    },
+    {
+        "id": 9,
+        "nom": "Matt\u00e9o",
+        "prenom": "Knopes",
+        "email": "matteo@gmail.com",
+        "password": "$2y$12$8\/32hxOktaosBIrgXkvvKeHE7XpcvreR3Z.RlYLa9cZgtGv\/fBmHe",
+        "telephone": "0769092304",
+        "adresse": "5 avenue Paul Thoureau",
+        "code_interphone": "Pr\u00e9 Catelan 2",
+        "code_postal": "95290",
+        "ville": "L'Isle-Adam",
+        "role": "client",
+        "statut": "actif",
+        "date_inscription": "2026-04-05"
+    }
 ]

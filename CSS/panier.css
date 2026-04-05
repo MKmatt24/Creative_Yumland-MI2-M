@@ -1,0 +1,113 @@
+/* CSS/panier.css */
+
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.panier-container {
+    max-width: 900px;
+    margin: 50px auto;
+    background: #111;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #333;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.panier-title {
+    color: #ff6b35;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #ff6b35;
+    padding-bottom: 10px;
+}
+
+.panier-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+.panier-table th {
+    text-align: left;
+    padding: 15px;
+    background-color: #222;
+    color: #ff6b35;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.panier-table td {
+    padding: 15px;
+    border-bottom: 1px solid #222;
+}
+
+.panier-table tr:hover {
+    background-color: #1a1a1a;
+}
+
+.total-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: #1a1a1a;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.total-label {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.total-amount {
+    font-size: 1.8rem;
+    color: #ff6b35;
+    font-weight: 800;
+}
+
+.btn-pay {
+    display: block;
+    width: 100%;
+    background-color: #ff6b35;
+    color: white;
+    border: none;
+    padding: 18px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s;
+    margin-top: 30px;
+    text-transform: uppercase;
+}
+
+.btn-pay:hover {
+    background-color: #e55a2b;
+    transform: translateY(-2px);
+}
+
+.empty-msg {
+    text-align: center;
+    padding: 50px;
+    color: #888;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #ff6b35;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
