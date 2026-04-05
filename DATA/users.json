@@ -127,8 +127,8 @@
         "code_interphone": "",
         "code_postal": "95000",
         "ville": "Cergy",
-        "role": "client",
+        "role": "admin",
         "statut": "actif",
         "date_inscription": "2026-04-05"
-    }
+    }  
 ]
