@@ -15,7 +15,7 @@
 
 body {
     font-family: 'Arial', 'Helvetica', sans-serif;
-    background: linear-gradient(135deg, --noir 0%, #2d2d2d 100%);
+    background: linear-gradient(135deg, var(--noir) 0%, #2d2d2d 100%);
     color: var(--blanc);
     min-height: 100vh;
     display: flex;
@@ -121,7 +121,7 @@ main {
 .admin-stats,
 .users-list,
 .admin-actions {
-    background: linear-gradient(145deg, #2d2d2d 0%, --noir 100%);
+    background: linear-gradient(145deg, #2d2d2d 0%, var(--noir) 100%);
     border-radius: 15px;
     padding: 2rem;
     border: 2px solid rgba(255, 107, 53, 0.2);
@@ -221,13 +221,13 @@ main {
 }
 
 .filter-group button[type="submit"] {
-    background: linear-gradient(135deg, --orange 0%, --orange-hover 100%);
+    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-hover) 100%);
     color: var(--blanc);
     box-shadow: 0 4px 10px rgba(255, 107, 53, 0.3);
 }
 
 .filter-group button[type="submit"]:hover {
-    background: linear-gradient(135deg, --orange-hover 0%, #d14d1f 100%);
+    background: linear-gradient(135deg, var(--orange-hover) 0%, #d14d1f 100%);
     transform: translateY(-2px);
 }
 
@@ -416,7 +416,7 @@ tbody td:last-child a:nth-child(3):hover {
 
 .actions-container a {
     padding: 0.8rem 1.5rem;
-    background: linear-gradient(135deg, --orange 0%, --orange-hover 100%);
+    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-hover) 100%);
     color: var(--blanc);
     text-decoration: none;
     border-radius: 8px;
@@ -427,7 +427,7 @@ tbody td:last-child a:nth-child(3):hover {
 }
 
 .actions-container a:hover {
-    background: linear-gradient(135deg, --orange-hover 0%, #d14d1f 100%);
+    background: linear-gradient(135deg, var(--orange-hover) 0%, #d14d1f 100%);
     transform: translateY(-2px);
     box-shadow: 0 6px 15px rgba(255, 107, 53, 0.35);
 }

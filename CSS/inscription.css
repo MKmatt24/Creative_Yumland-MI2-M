@@ -15,7 +15,7 @@
 
 body {
     font-family: 'Arial', 'Helvetica', sans-serif;
-    background: linear-gradient(135deg, --noir 0%, #2d2d2d 100%);
+    background: linear-gradient(135deg, var(--noir) 0%, #2d2d2d 100%);
     color: var(--blanc);
     min-height: 100vh;
     display: flex;
@@ -93,7 +93,7 @@ main {
 }
 
 .inscription-container {
-    background: linear-gradient(145deg, #2d2d2d 0%, --noir 100%);
+    background: linear-gradient(145deg, #2d2d2d 0%, var(--noir) 100%);
     border-radius: 20px;
     padding: 3rem;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
@@ -198,7 +198,7 @@ form {
 button[type="submit"] {
     width: 100%;
     padding: 1.2rem;
-    background: linear-gradient(135deg, --orange 0%, --orange-hover 100%);
+    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-hover) 100%);
     color: var(--blanc);
     border: none;
     border-radius: 10px;
@@ -212,7 +212,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background: linear-gradient(135deg, --orange-hover 0%, #d14d1f 100%);
+    background: linear-gradient(135deg, var(--orange-hover) 0%, #d14d1f 100%);
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
 }
