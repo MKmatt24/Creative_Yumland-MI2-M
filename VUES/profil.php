@@ -1,18 +1,29 @@
 <?php include '../LIB/authentification.php'; ?>
 
 <?php
-//Récupération de tous les utilisateurs depuis le JSON
+// Récupération de tous les utilisateurs depuis le JSON
 $usersData = file_get_contents('../DATA/users.json');
 $users = json_decode($usersData, true);
 
 $currentUser = null;
 
-//Recherche de l'utilisateur connecté
+// Déterminer quel ID on veut afficher
+// On utilise l'ID de l'URL ($_GET) s'il existe, sinon on prend celui de la session
+$idAAfficher = $_GET['id'] ?? $_SESSION['user_id'];
+
+
+// 2. Recherche de l'utilisateur correspondant à cet ID
 foreach ($users as $user) {
-    if ($user['id'] == $_SESSION['user_id']) {
+    if ($user['id'] == $idAAfficher) {
         $currentUser = $user;
         break;
     }
+}
+
+// Optionnel : Sécurité
+if (!$currentUser) {
+    echo "Utilisateur introuvable.";
+    exit;
 }
 
 //Récupération de toutes les commandes
