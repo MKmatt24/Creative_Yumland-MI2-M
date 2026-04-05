@@ -25,6 +25,8 @@ $incontournables = $accueil_data['incontournables'];
 </head>
 <body>
 
+    <?php include '../LIB/header.php'; ?>
+
     <header>
         <div class="header-container">
             <div class="logo-box">
@@ -137,9 +139,7 @@ $incontournables = $accueil_data['incontournables'];
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2026 LOS POLLOS HERMANOS - TASTE THE FAMILY</p>
-    </footer>
+    <?php include '../LIB/footer.php'; ?>
 
 </body>
 </html>
