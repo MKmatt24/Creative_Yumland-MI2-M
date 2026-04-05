@@ -19,6 +19,10 @@
             <li><a href="livraison.php">Livraisons</a></li>
 
             <?php if (isset($_SESSION['user_id'])): ?>
+                <?php if($_SESSION['role'] === 'restaurateur'): ?>
+                    <li><a href="commande.php">Commandes</a></li>
+                <?php endif; ?>
+                
                 <li><a href="profil.php">Profil</a></li>
                 
                 <?php if ($_SESSION['role'] === 'admin'): ?>
