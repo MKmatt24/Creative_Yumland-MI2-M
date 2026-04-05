@@ -1,11 +1,6 @@
-<?php
-session_start();
+<?php include '../LIB/authentification.php'; ?>
 
-//Vérification si l'utilisateur est connecté
-if (!isset($_SESSION['user_id'])) {
-    header('Location: connexion.php');
-    exit();
-}
+<?php
 
 $id_commande = $_GET['id'] ?? null;
 

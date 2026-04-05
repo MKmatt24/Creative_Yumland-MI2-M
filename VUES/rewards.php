@@ -1,15 +1,12 @@
-<?php
-session_start();
+<?php include '../LIB/authentification.php'; ?>
 
-//Vérification si l'utilisateur est connecté
-if (!isset($_SESSION['user_id'])) {
-    header('Location: connexion.php');
-    exit();
-}
+<?php
 
 $objectif_jour = 160.00;
 $solde_disponible = 0;
 $historique_commandes = [];
+
+require_once '../LIB/fonctions.php';
 
 //Récupération des data du fichier JSON
 $fichierCommandes = '../DATA/commande.json';
@@ -51,20 +48,6 @@ if (is_array($commandes)) {
 //Calcul du pourcentage pour la barre de progression
 $pourcentage_objectif = ($objectif_jour > 0) ? ($solde_disponible / $objectif_jour) * 100 : 0;
 if ($pourcentage_objectif > 100) {$pourcentage_objectif = 100;}
-
-//Affichage "Aujourd'hui" ou "Hier" pour un meilleur rendu sinon on mets la date normale
-function formatHeureAffichage($date_jour, $heure) {
-    $aujourdhui = date('Y-m-d');
-    $hier = date('Y-m-d', strtotime('-1 day'));
-    
-    if ($date_jour === $aujourdhui) {
-        return "Aujourd'hui, " . $heure;
-    } elseif ($date_jour === $hier) {
-        return "Hier, " . $heure;
-    } else {
-        return date('d/m', strtotime($date_jour)) . ", " . $heure;
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -78,31 +61,7 @@ function formatHeureAffichage($date_jour, $heure) {
 </head>
 <body>
 
-    <header>
-        <nav>
-            <div class="logo">
-                <div class="logo-box">
-                    <a href="accueil.php">
-                    <img src="../IMAGES/logo.png" alt="Logo Los Pollos" class="nav-logo">
-                    </a>
-                </div>
-            </div>
-            <button class="menu-toggle" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul>
-                <li><a href="accueil.php">Accueil</a></li>
-                <li><a href="menu.php">Menu</a></li>
-                <li><a href="accueil.php#contact">Contact</a></li>
-                <li><a href="Livraisons_en_attente.php">Livraisons en attente</a></li>
-                <li><a href="profil.php">Mon Profil</a></li>
-                <li><a href="Rewards.php">Mes Rémunérations</a></li>
-                <li><a href="../TRAITEMENTS/deconnexion.php">Déconnexion</a></li>
-            </ul>
-        </nav>
-    </header>
+    <?php include '../LIB/header_livreur.php'; ?>
 
     <main>
         <section class="dashboard-section">
@@ -175,17 +134,7 @@ function formatHeureAffichage($date_jour, $heure) {
         </section>
     </main>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Aide au Livreur</h3>
-                <p>Un problème ? Contactez le support :<br>01 06 26 60 66</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 Los Pollos Hermanos. Espace Livreur.</p>
-        </div>
-    </footer>
+    <?php include '../LIB/footer_livreur.php'; ?>
 
 </body>
 <script>

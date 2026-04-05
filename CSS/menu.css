@@ -1,4 +1,4 @@
-   /* === CONFIGURATION COULEURS === */
+/* === CONFIGURATION COULEURS === */
 :root {
     --noir: #1a1a1a;
     --orange: #ff6b35;
@@ -21,7 +21,7 @@ body {
     line-height: 1.6;
 }
 
-/* === HEADER === */
+/* === HEADER & NAV === */
 header {
     background-color: #1a1a1a;
     box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
@@ -36,12 +36,6 @@ nav {
     padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-}
-
-.logo-box {
-    flex: 1;
-    display: flex;
     align-items: center;
 }
 
@@ -65,42 +59,56 @@ nav ul {
 nav ul li a {
     color: #fafafa;
     text-decoration: none;
-    font-size: 1rem;
     font-weight: 500;
     padding: 0.5rem 1rem;
-    border-radius: 5px;
-    transition: all 0.3s ease;
+    transition: 0.3s;
 }
 
 nav ul li a:hover {
-    background-color: #ff6b35;
-    color: #1a1a1a;
-    transform: translateY(-2px);
+    background-color: var(--orange);
+    color: var(--noir);
+    border-radius: 5px;
 }
 
-/* === HERO SECTION === */
+/* === HERO & RECHERCHE === */
 .menu-hero {
     text-align: center;
     padding: 3rem 1rem;
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6));
 }
 
 .menu-hero h2 {
     font-size: 2.5rem;
     color: var(--orange);
     text-transform: uppercase;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
 }
 
-/* === CATEGORIES (PEPE CHICKEN STYLE) === */
+.search-bar-container input {
+    width: 100%;
+    max-width: 500px;
+    background-color: var(--gris-carte);
+    border: 2px solid #333;
+    border-radius: 30px;
+    padding: 12px 25px;
+    color: var(--blanc);
+    outline: none;
+    transition: 0.3s;
+    text-align: center;
+}
+
+.search-bar-container input:focus {
+    border-color: var(--orange);
+    box-shadow: 0 0 15px rgba(255, 107, 53, 0.2);
+}
+
+/* === CATEGORIES === */
 .categories {
     display: flex;
     justify-content: center;
     gap: 12px;
     padding: 1rem;
-    flex-wrap: wrap;
     position: sticky;
-    top: 70px;
+    top: 100px;
     background: var(--noir);
     z-index: 900;
 }
@@ -113,9 +121,10 @@ nav ul li a:hover {
     border-radius: 25px;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.3s;
+    text-decoration: none;
     text-transform: uppercase;
     font-size: 0.75rem;
+    transition: 0.3s;
 }
 
 .cat-btn.active, .cat-btn:hover {
@@ -123,148 +132,155 @@ nav ul li a:hover {
     color: var(--noir);
 }
 
-/* === GRID & CARDS === */
+/* === SECTION NOS FORMULES (LES 3 MENUS) === */
+.menus-complets {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+}
+
+.special-menu {
+    background: #1e1e1e !important;
+    border: 2px solid #333 !important;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: 0.3s ease;
+}
+
+.special-menu:hover {
+    border-color: var(--orange) !important;
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(255, 107, 53, 0.15);
+}
+
+.composition-box {
+    margin: 1.5rem 0;
+    text-align: left;
+    flex-grow: 1;
+}
+
+.composition-box ul {
+    list-style: none;
+    padding: 0;
+}
+
+.composition-box li {
+    padding: 8px 0;
+    border-bottom: 1px dashed #444;
+    font-size: 0.95rem;
+}
+
+.composition-box li::before {
+    content: "✔️";
+    margin-right: 10px;
+    color: var(--orange);
+}
+
+/* === GRILLE GENERALE & CARTES PLATS === */
 .menu-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
 }
 
 .menu-card {
     background: var(--gris-carte);
     border-radius: 15px;
     overflow: hidden;
-    transition: transform 0.3s ease, border-color 0.3s;
     border: 1px solid #333;
-}
-
-.menu-card:hover {
-    transform: translateY(-8px);
-    border-color: var(--orange);
-}
-
-.card-image {
-    width: 100%;
-    height: 100;
-    background: #111; 
     display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden; 
+    flex-direction: column;
+}
+
+/* RECALIBRAGE DES IMAGES */
+.menu-card img {
+    width: 100%;
+    height: 220px; /* Hauteur fixe pour l'alignement */
+    object-fit: cover; /* Recadrage intelligent sans déformer */
     border-bottom: 1px solid #333;
 }
 
-.card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;  
-    transition: transform 0.3s ease;
-}
-
 .card-body {
-    padding: 1.2rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .badge {
     background: rgba(255, 107, 53, 0.1);
     color: var(--orange);
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     font-weight: bold;
-    padding: 3px 8px;
-    border-radius: 4px;
-    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 5px;
     margin-bottom: 10px;
     display: inline-block;
 }
 
 .card-body h3 {
-    font-size: 1.2rem;
-    margin-bottom: 8px;
+    font-size: 1.25rem;
+    margin-bottom: 10px;
     text-transform: uppercase;
 }
 
 .card-body p {
-    font-size: 0.85rem;
-    color: #999;
-    margin-bottom: 1.2rem;
-    height: 40px;
-    overflow: hidden;
+    color: #aaa;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
 }
 
+/* FOOTER DES CARTES */
 .card-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid #333;
 }
 
 .price {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     font-weight: 800;
-    color: var(--blanc);
+}
+
+.qty-input {
+    width: 50px;
+    background: #111;
+    border: 1px solid #444;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-right: 8px;
 }
 
 .add-btn {
     background: var(--orange);
     color: var(--noir);
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
+    padding: 8px 20px;
+    border-radius: 25px;
     border: none;
-    font-size: 1.2rem;
     font-weight: bold;
     cursor: pointer;
     transition: 0.2s;
 }
 
 .add-btn:hover {
-    transform: scale(1.1);
     background: var(--orange-hover);
-}
-
-/* === BARRE DE RECHERCHE === */
-.search-bar-container {
-    max-width: 500px;
-    margin: 1.5rem auto 0 auto; /* Centré sous le texte du Hero */
-    padding: 0 1rem;
-}
-
-#menu-search {
-    width: 100%;
-    background-color: var(--gris-carte); /* Fond sombre comme les cartes */
-    border: 2px solid #333; /* Bordure discrète par défaut */
-    border-radius: 30px; /* Look arrondi moderne */
-    padding: 12px 25px;
-    color: var(--blanc);
-    font-size: 1rem;
-    font-family: inherit;
-    outline: none;
-    transition: all 0.3s ease;
-    text-align: center;
-}
-
-#menu-search::placeholder {
-    color: #666; /* Couleur du texte d'aide */
-}
-
-#menu-search:focus {
-    border-color: var(--orange); /* La bordure devient orange quand on clique */
-    box-shadow: 0 0 15px rgba(255, 107, 53, 0.2); /* Petit halo lumineux */
-    background-color: #2a2a2a; /* Légère éclaircie au focus */
-}
-
-/* Optionnel : Ajustement du Hero pour laisser de la place */
-.menu-hero {
-    padding-bottom: 2rem;
+    transform: scale(1.05);
 }
 
 /* === FOOTER === */
 footer {
     text-align: center;
-    padding: 2rem;
-    border-top: 1px solid #333;
-    color: #666;
+    padding: 3rem;
+    color: #555;
     font-size: 0.8rem;
+    border-top: 1px solid #333;
 }
