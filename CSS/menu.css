@@ -52,6 +52,63 @@ nav {
     transform: scale(1.1) rotate(-3deg);
 }
 
+/*Menu sur téléphone*/
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1001;
+}
+
+.menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background-color: var(--orange);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+/*Animation du menu en X*/
+
+.menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5.65px, 5.65px);
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5.65px, -5.65px);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+nav ul li a {
+    color: var(--blanc);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+nav ul li a:hover {
+    background-color: var(--orange);
+    color: var(--noir);
+    transform: translateY(-2px);
+}
+
 nav ul {
     list-style: none;
     display: flex;
