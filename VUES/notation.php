@@ -1,5 +1,6 @@
 <?php include '../LIB/authentification.php'; ?>
 <?php
+    session_start();
 
 // Vérifier que l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
