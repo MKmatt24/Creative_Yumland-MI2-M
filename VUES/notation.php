@@ -42,7 +42,7 @@ $success = $_GET['success'] ?? false;
 
                 <!-- Message de succès -->
                 <?php if ($success): ?>
-                    <div style="background-color: rgba(68, 255, 68, 0.2); border: 2px solid #44ff44; color: #44ff44; padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem; text-align: center;">
+                    <div class="success-message">
                         ✅ Merci pour votre avis ! Votre notation a été enregistrée avec succès.
                     </div>
                 <?php endif; ?>

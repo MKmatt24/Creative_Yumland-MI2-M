@@ -131,7 +131,6 @@
         "statut": "actif",
         "date_inscription": "2026-04-05"
     },
-    
     {
         "id": 9,
         "nom": "Knopes",
@@ -147,8 +146,7 @@
         "statut": "actif",
         "date_inscription": "2026-04-05"
     },
-
-     {
+    {
         "id": 10,
         "nom": "Salamanca",
         "prenom": "Lalo",
@@ -163,7 +161,6 @@
         "statut": "actif",
         "date_inscription": "2026-04-05"
     },
-
     {
         "id": 10,
         "nom": "Marchand",

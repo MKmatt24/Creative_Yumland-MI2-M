@@ -59,13 +59,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p>Connectez-vous pour accéder à votre compte</p>
                 
                 <?php if (!empty($error)): ?>
-                    <div style="background-color: rgba(255, 68, 68, 0.2); border: 2px solid #ff4444; color: #ff6b35; padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem; text-align: center;">
+                    <div class="error-message">
                         <?= htmlspecialchars($error) ?>
                     </div>
                 <?php endif; ?>
 
                 <?php if (isset($_GET['success'])): ?>
-                    <div style="background-color: rgba(68, 255, 68, 0.2); border: 2px solid #44ff44; color: #44ff44; padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem; text-align: center;">
+                    <div class="success-message">
                         Inscription réussie ! Vous pouvez maintenant vous connecter.
                     </div>
                 <?php endif; ?>

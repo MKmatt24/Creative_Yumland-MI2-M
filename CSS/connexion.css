@@ -90,6 +90,26 @@ nav {
     transform: rotate(-45deg) translate(5.65px, -5.65px);
 }
 
+.error-message {
+    background-color: rgba(255, 68, 68, 0.2); 
+    border: 2px solid #ff4444; 
+    color: #ff6b35; 
+    padding: 1rem; 
+    border-radius: 10px; 
+    margin-bottom: 1.5rem; 
+    text-align: center;
+}
+
+.success-message {
+    background-color: rgba(68, 255, 68, 0.2); 
+    border: 2px solid #44ff44; 
+    color: #44ff44; 
+    padding: 1rem; 
+    border-radius: 10px; 
+    margin-bottom: 1.5rem; 
+    text-align: center;
+}
+
 nav ul {
     list-style: none;
     display: flex;

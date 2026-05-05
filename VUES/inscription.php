@@ -38,13 +38,13 @@
                 <h2>Créer un compte</h2>
 
                 <?php if ($error_message): ?>
-                    <div style="background-color: #ff4444; color: white; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                    <div class="error-message">
                         <?= htmlspecialchars($error_message) ?>
                     </div>
                 <?php endif; ?>
 
                 <?php if ($success_message): ?>
-                    <div style="background-color: #44ff44; color: #1a1a1a; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                    <div class="success-message">
                         <?= htmlspecialchars($success_message) ?>
                     </div>
                 <?php endif; ?>
