@@ -7,7 +7,8 @@
       "prix": 19.99,
       "cat": "Poulet",
       "image": "../IMAGES/albuquerque_bucket.jpg",
-      "infos": { "calories": 1200, "allergènes": ["Gluten"] }
+      "infos": { "calories": 1200, "allergènes": ["Gluten"] },
+      "ingredients": ["Poulet secret", "Sauce BBQ", "Sauce Miel-Moutarde"]
     },
     {
       "id": 2,
@@ -16,7 +17,9 @@
       "prix": 8.50,
       "cat": "Burgers",
       "image": "../IMAGES/pollos_burger.jpg",
-      "infos": { "calories": 650, "allergènes": ["Gluten", "Lactose"] }
+      "infos": { "calories": 650, "allergènes": ["Gluten", "Lactose"] },
+      "ingredients": ["Filet de poulet", "Cheddar", "Laitue", "Tomate", "Sauce Pollos"],
+      "substitutions": { "Cheddar": ["Emmental", "Sans fromage"], "Laitue": ["Salade roquette", "Sans salade"] }
     },
     {
       "id": 3,
@@ -25,7 +28,8 @@
       "prix": 11.00,
       "cat": "Poulet",
       "image": "../IMAGES/fuego_wings.jpg",
-      "infos": { "calories": 450, "allergènes": [] }
+      "infos": { "calories": 450, "allergènes": [] },
+      "ingredients": ["Ailes de poulet", "Sauce Fuego", "Graines de sésame"]
     },
     {
       "id": 4,
@@ -43,7 +47,9 @@
       "prix": 7.50,
       "cat": "Spécialités",
       "image": "../IMAGES/burrito_breakfast.jpg",
-      "infos": { "calories": 720, "allergènes": ["Lactose", "Oeufs"] }
+      "infos": { "calories": 720, "allergènes": ["Lactose", "Oeufs"] },
+      "ingredients": ["Tortilla", "Oeufs", "Chorizo", "Pommes de terre", "Fromage"],
+      "substitutions": { "Chorizo": ["Bacon", "Poulet"], "Fromage": ["Sauce salsa"] }
     },
     {
       "id": 6,
@@ -151,6 +157,10 @@
       "nom": "Menu Los Pollos Classic",
       "description": "Le burger iconique accompagné de nos frites maison et d'un dessert au choix.",
       "prix": 14.50,
+      "min_personnes": 1,
+      "creneau": "Toute la journée",
+      "heure_debut": "00:00",
+      "heure_fin": "23:59",
       "liste_plats": ["Pollos Burger", "Fries", "Sopapillas"]
     },
     {
@@ -158,6 +168,10 @@
       "nom": "Menu Bucket Family",
       "description": "L'Albuquerque Bucket pour partager, servi avec Coleslaw et riz.",
       "prix": 24.90,
+      "min_personnes": 3,
+      "creneau": "Uniquement le soir (18h-23h)",
+      "heure_debut": "18:00",
+      "heure_fin": "23:00",
       "liste_plats": ["Albuquerque Bucket", "Creamy Coleslaw", "Rice Pollos bowl"]
     },
     {
@@ -165,8 +179,11 @@
       "nom": "Menu Fuego Spécial",
       "description": "Pour les amateurs de piquant : Ailes Fuego et Burrito Breakfast.",
       "prix": 16.00,
+      "min_personnes": 1,
+      "creneau": "Menu Midi (11h30-14h30)",
+      "heure_debut": "11:30",
+      "heure_fin": "14:30",
       "liste_plats": ["Fuego Wings", "Burrito Breakfast", "Fries"]
     }
   ]
 }
-
