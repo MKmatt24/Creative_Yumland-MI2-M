@@ -11,7 +11,8 @@ $control_rx   = $_GET['control'] ?? "";
 
 // 2. VÉRIFICATION DE LA SIGNATURE (MD5)
 
-// A. On prépare la chaîne avec les données reçues de la banque
+// A. On récupère la clé API et on prépare la chaîne (Ordre : Clé#Trans#Montant#Vendeur#Statut#)
+$api_key = trim(getAPIKey($vendeur));
 $hash_string = $api_key . "#" . $transaction . "#" . $montant . "#" . $vendeur . "#" . $statut . "#";
 
 // B. On calcule le hash localement pour comparaison
@@ -33,31 +34,48 @@ if ($paiement_valide) {
     $file = '../DATA/commande.json';
     $commandesData = file_exists($file) ? json_decode(file_get_contents($file), true) : [];
 
-    // On prépare la nouvelle commande
-    $nouvelle_commande = [
-        "id" => $transaction,
-        "date" => date('d/m/Y H:i'),
-        "client" => $_SESSION['prenom'] . " " . $_SESSION['nom'],
-        // CRUCIAL : On enregistre le montant envoyé par la banque (le montant réduit)
-        "prix_total" => (float)$montant, 
-        "statut" => "en préparation",
-        "articles" => $_SESSION['panier'],
-        "type" => $_SESSION['planification']['type'] ?? 'direct',
-        "horaire" => $_SESSION['planification']['horaire'] ?? 'ASAP'
-    ];
+    if (isset($_SESSION['modification_id'])) {
+        // Cas d'une modification : on met à jour la commande existante
+        foreach ($commandesData as &$c) {
+            if ($c['id'] == $_SESSION['modification_id']) {
+                $c['articles'] = $_SESSION['panier'];
+                // Nouveau total = Ancien total payé + complément
+                $c['prix_total'] = $_SESSION['modification_total_initial'] + (float)$montant;
+                $c['date_modification'] = date('d/m/Y H:i');
+                $c['statut'] = "a_preparer"; // Repasse en file d'attente
+                break;
+            }
+        }
+    } else {
+        // On prépare la nouvelle commande
+        $nouvelle_commande = [
+            "id" => $transaction,
+            "date" => date('d/m/Y H:i'),
+            "client" => $_SESSION['prenom'] . " " . $_SESSION['nom'],
+            "prix_total" => (float)$montant, 
+            "statut" => "a_preparer",
+            "articles" => $_SESSION['panier'],
+            "type" => $_SESSION['planification']['type'] ?? 'direct',
+            "horaire" => $_SESSION['planification']['horaire'] ?? 'ASAP'
+        ];
 
-    // On ajoute le coupon dans l'historique de la commande (optionnel mais recommandé)
-    if (isset($_SESSION['coupon'])) {
-        $nouvelle_commande['coupon_utilise'] = $_SESSION['coupon']['valeur'];
+        if (isset($_SESSION['coupon'])) {
+            $nouvelle_commande['coupon_utilise'] = $_SESSION['coupon']['valeur'];
+        }
+
+        $commandesData[] = $nouvelle_commande;
     }
 
-    $commandesData[] = $nouvelle_commande;
     file_put_contents($file, json_encode($commandesData, JSON_PRETTY_PRINT));
 
     // --- NETTOYAGE APRÈS ACHAT ---
     unset($_SESSION['panier']);       // Vide le panier
     unset($_SESSION['coupon']);       // SUPPRIME LE COUPON ICI
     unset($_SESSION['planification']); // Vide les infos de livraison
+    unset($_SESSION['modification_id']);
+    unset($_SESSION['modification_total_initial']);
+    unset($_SESSION['paiement_complementaire']);
+    unset($_SESSION['difference_prix']);
 }
 ?>
 <!DOCTYPE html>
@@ -68,42 +86,40 @@ if ($paiement_valide) {
     <link rel="stylesheet" href="../CSS/accueil.css">
     <link rel="stylesheet" href="../CSS/menu.css">
 </head>
-<body style="background-color: #0a0a0a; color: white; font-family: sans-serif;">
+<body class="page-dark">
 
 <?php include '../LIB/header.php'; ?>
 
-<main style="min-height: 70vh; display: flex; align-items: center; justify-content: center;">
-    <div style="max-width: 600px; width: 90%; padding: 40px; text-align: center; border: 1px solid #333; border-radius: 15px; background: #111; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+<main class="feedback-container">
+    <div class="feedback-card">
         
         <?php if ($paiement_valide): ?>
-            <div style="font-size: 4rem; margin-bottom: 10px;">🍗</div>
-            <h2 style="color: #4CAF50; font-size: 2rem; margin-bottom: 20px;">✓ PAIEMENT RÉUSSI</h2>
-            <p style="color: #ccc; margin-bottom: 10px;">Merci pour votre confiance. L'excellence est en préparation.</p>
-            <p>Référence transaction : <strong style="color: #ff6b35;"><?= htmlspecialchars($transaction) ?></strong></p>
+            <div class="feedback-icon">🍗</div>
+            <h2 class="text-success">✓ PAIEMENT RÉUSSI</h2>
+            <p class="mb-10">Merci pour votre confiance. L'excellence est en préparation.</p>
+            <p>Référence transaction : <strong class="text-orange"><?= htmlspecialchars($transaction) ?></strong></p>
             
-            <div style="margin-top: 40px; display: flex; flex-direction: column; gap: 15px;">
-                <a href="suivi_commande.php" style="background: #ff6b35; color: white; padding: 15px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; font-size: 1.1rem;">
+            <div class="feedback-actions">
+                <a href="suivi_commande.php" class="btn-full">
                     SUIVRE MA COMMANDE EN DIRECT
                 </a>
 
-                <a href="accueil.php" style="color: #888; text-decoration: none; font-size: 0.9rem; margin-top: 10px;">
+                <a href="accueil.php" class="btn-secondary-full">
                     Retourner à l'accueil
                 </a>
             </div>
 
         <?php else: ?>
-            <div style="font-size: 4rem; margin-bottom: 10px;">⚠️</div>
-            <h2 style="color: #ff6b35; font-size: 2rem; margin-bottom: 20px;">ÉCHEC DU PAIEMENT</h2>
-            <p style="color: #ccc; margin-bottom: 25px;">La transaction a été refusée ou la signature est invalide.</p>
-            <a href="panier.php" style="background: #ff6b35; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">RÉESSAYER LE PAIEMENT</a>
+            <div class="feedback-icon">⚠️</div>
+            <h2 class="text-orange">ÉCHEC DU PAIEMENT</h2>
+            <p class="mb-25">La transaction a été refusée ou la signature est invalide.</p>
+            <a href="panier.php" class="btn-full">RÉESSAYER LE PAIEMENT</a>
         <?php endif; ?>
 
     </div>
 </main>
 
-<footer style="text-align: center; padding: 40px 20px; color: #555; font-size: 0.9rem;">
-    <p>&copy; 2026 Los Pollos Hermanos - Albuquerque. Tasty is the word.</p>
-</footer>
+<?php include '../LIB/footer.php'; ?>
 
 </body>
 </html>
