@@ -1,5 +1,6 @@
 /* === CONFIGURATION & VARIABLES === */
 :root {
+    --noir: #1a1a1a;
     --orange: #ff6b35;
     --noir-profond: #0a0a0a;
     --gris-sombre: #151515;
@@ -17,36 +18,60 @@ body {
 
 /* === HEADER LARGE === */
 header {
-    background-color: rgba(10, 10, 10, 0.98) !important;
-    border-bottom: 2px solid var(--orange);
+    background-color: var(--noir) !important;
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2) !important;
     position: sticky;
     top: 0;
     z-index: 1000;
-    padding: 20px 0 !important;
 }
 
 header nav {
-    max-width: 1400px;
+    max-width: 1200px !important;
     margin: 0 auto;
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
-    padding: 0 40px !important;
+    padding: 1rem 2rem !important;
 }
 
-.nav-logo { height: 75px !important; width: auto !important; }
+.logo-box {
+    flex: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+}
 
-header ul { display: flex !important; list-style: none !important; gap: 30px !important; }
+.nav-logo { 
+    height: 100px !important; 
+    width: auto !important; 
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+.menu-toggle { display: none !important; }
+
+.nav-logo:hover {
+    transform: scale(1.15) rotate(-3deg) !important;
+}
+
+header ul { display: flex !important; list-style: none !important; gap: 2rem !important; }
 
 header a {
     color: var(--blanc) !important;
     text-decoration: none !important;
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 1rem;
-    transition: 0.3s;
+    transition: all 0.3s ease !important;
 }
-header a:hover { color: var(--orange) !important; }
+
+header ul a {
+    font-weight: 500 !important;
+    font-size: 1rem;
+    padding: 0.5rem 1rem !important;
+    border-radius: 5px !important;
+}
+
+header ul a:hover { 
+    background-color: var(--orange) !important;
+    color: var(--noir) !important; 
+    transform: translateY(-2px) !important;
+}
 
 /* === HERO : TITRE & RECHERCHE === */
 .main-title-screen {
@@ -142,7 +167,7 @@ header a:hover { color: var(--orange) !important; }
 .main-footer {
     background-color: #050505;
     padding: 60px 5% 30px 5%;
-    border-top: 2px solid var(--orange);
+    border-top: 3px solid var(--orange);
 }
 
 .footer-grid {
