@@ -50,11 +50,17 @@ if (isset($_SESSION['panier'])) {
 <?php include '../LIB/header.php'; ?>
 
 <main>
+    <?php if (isset($_SESSION['modification_id'])): ?>
+        <div class="modification-banner">
+            ⚠️ MODE MODIFICATION : Vous modifiez votre commande #<?= $_SESSION['modification_id'] ?>
+        </div>
+    <?php endif; ?>
+
     <section class="menu-hero">
         <div class="hero-header-flex">
             <h2>NOS MENUS LÉGENDAIRES</h2>
             <a href="panier.php" class="btn-cart-float">
-                🛒 MON PANIER (<?= $cart_count ?>)
+                🛒 MON PANIER (<span id="cart-count-val"><?= $cart_count ?></span>)
             </a>
         </div>
         
@@ -82,11 +88,11 @@ if (isset($_SESSION['panier'])) {
     <div class="menu-container">
         <?php foreach ($menus_a_afficher as $m): ?>
             <?php 
-                // Logique de disponibilité horaire (ex: Menu Midi 11h30-14h30)
-                $heure_actuelle = date('H:i');
+                // Logique de disponibilité (ex: Menu Midi)
+                $now = date('H:i');
                 $debut = $m['heure_debut'] ?? '00:00';
                 $fin = $m['heure_fin'] ?? '23:59';
-                $est_disponible = ($heure_actuelle >= $debut && $heure_actuelle <= $fin);
+                $dispo = ($now >= $debut && $now <= $fin);
             ?>
             <div class="menu-card">
                 <div class="card-body">
@@ -114,12 +120,14 @@ if (isset($_SESSION['panier'])) {
                     <div class="card-footer">
                         <span class="price"><?= number_format(($m['prix'] ?? 0), 2) ?>€</span>
                         <form action="../TRAITEMENTS/ajouter_panier.php" method="POST" class="add-form">
-                            <input type="hidden" name="nom" value="<?= htmlspecialchars($m['nom']) ?>">
-                            <input type="hidden" name="prix" value="<?= $m['prix'] ?>">
-                            <input type="number" name="quantite" value="<?= $m['min_personnes'] ?? 1 ?>" min="<?= $m['min_personnes'] ?? 1 ?>" class="qty-input">
-                            <button type="submit" class="add-btn" <?= !$est_disponible ? 'disabled' : '' ?>>
-                                <?= $est_disponible ? 'AJOUTER' : 'INDISPONIBLE' ?>
-                            </button>
+                            <div class="qty-group">
+                                <input type="hidden" name="nom" value="<?= htmlspecialchars($m['nom']) ?>">
+                                <input type="hidden" name="prix" value="<?= $m['prix'] ?>">
+                                <input type="number" name="quantite" value="<?= $m['min_personnes'] ?? 1 ?>" min="<?= $m['min_personnes'] ?? 1 ?>" class="qty-input">
+                                <button type="submit" class="add-btn" <?= !$dispo ? 'disabled' : '' ?>>
+                                    <?= $dispo ? 'AJOUTER' : 'INDISPONIBLE' ?>
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -139,15 +147,44 @@ if (isset($_SESSION['panier'])) {
                         <h3><?= htmlspecialchars($p['nom'] ?? 'Nom non défini') ?></h3>
                         <p><?= htmlspecialchars($p['desc'] ?? '') ?></p>
                         
-                        <div class="card-footer">
-                            <span class="price"><?= number_format(($p['prix'] ?? 0), 2) ?>€</span>
-                            <form action="../TRAITEMENTS/ajouter_panier.php" method="POST" class="add-form">
-                                <input type="hidden" name="nom" value="<?= htmlspecialchars($p['nom']) ?>">
-                                <input type="hidden" name="prix" value="<?= $p['prix'] ?>">
-                                <input type="number" name="quantite" value="1" min="1" class="qty-input">
-                                <button type="submit" class="add-btn">AJOUTER</button>
-                            </form>
-                        </div>
+                        <form action="../TRAITEMENTS/ajouter_panier.php" method="POST" class="add-form">
+                            <?php if (!empty($p['ingredients']) || !empty($p['substitutions'])): ?>
+                            <div class="customization-area">
+                                <p class="comp-title">Personnaliser le plat :</p>
+                                <div class="ingredients-checks">
+                                    <?php foreach (($p['ingredients'] ?? []) as $ing): ?>
+                                        <label class="check-item">
+                                            <input type="checkbox" name="ingredients[]" value="<?= htmlspecialchars($ing) ?>" checked>
+                                            <span><?= htmlspecialchars($ing) ?></span>
+                                        </label>
+                                    <?php endforeach; ?>
+                                </div>
+                                
+                                <?php if (isset($p['substitutions'])): ?>
+                                    <div class="subs-area">
+                                        <?php foreach ($p['substitutions'] as $original => $options): ?>
+                                            <select name="sub_<?= md5($original) ?>" class="sub-select">
+                                                <option value="<?= htmlspecialchars($original) ?>">Garder <?= htmlspecialchars($original) ?></option>
+                                                <?php foreach ($options as $opt): ?>
+                                                    <option value="<?= htmlspecialchars($opt) ?>">Remplacer <?= htmlspecialchars($original) ?> par <?= htmlspecialchars($opt) ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        <?php endforeach; ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                            <?php endif; ?>
+
+                            <div class="card-footer">
+                                <span class="price"><?= number_format(($p['prix'] ?? 0), 2) ?>€</span>
+                                <div class="qty-group">
+                                    <input type="hidden" name="nom" value="<?= htmlspecialchars($p['nom']) ?>">
+                                    <input type="hidden" name="prix" value="<?= $p['prix'] ?>">
+                                    <input type="number" name="quantite" value="1" min="1" class="qty-input">
+                                    <button type="submit" class="add-btn">AJOUTER</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -158,6 +195,38 @@ if (isset($_SESSION['panier'])) {
 </main>
 
 <?php include '../LIB/footer.php'; ?>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // On récupère tous les formulaires d'ajout au panier
+    const addForms = document.querySelectorAll('.add-form');
+    const cartCountSpan = document.getElementById('cart-count-val');
+
+    addForms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Empêche le rechargement de la page
+
+            const formData = new FormData(this);
+
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Mise à jour fluide du compteur
+                    cartCountSpan.textContent = data.new_count;
+                }
+            })
+            .catch(error => console.error('Erreur:', error));
+        });
+    });
+});
+</script>
 
 </body>
 </html>
