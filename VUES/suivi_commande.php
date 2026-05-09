@@ -7,7 +7,7 @@ $file = '../DATA/commande.json';
 $all_commandes = file_exists($file) ? json_decode(file_get_contents($file), true) : [];
 
 // 2. Récupération de la dernière commande DE CE CLIENT PRÉCIS
-$nom_complet = ($_SESSION['user']['prenom'] ?? '') . " " . ($_SESSION['user']['nom'] ?? '');
+$nom_complet = ($_SESSION['prenom'] ?? '') . " " . ($_SESSION['nom'] ?? '');
 $mes_commandes = array_filter($all_commandes, function($c) use ($nom_complet) {
     return ($c['client'] ?? '') === $nom_complet;
 });
@@ -38,39 +38,45 @@ $info_etape = $etapes[$status_actuel] ?? ['msg' => 'Traitement en cours...', 'pr
     <link rel="stylesheet" href="../CSS/menu.css">
     <meta http-equiv="refresh" content="20">
 </head>
-<body style="background: #0a0a0a; color: white;">
+<body class="page-dark">
 
 <?php include '../LIB/header.php'; ?>
 
-<main style="padding: 60px 20px; max-width: 600px; margin: 0 auto; text-align: center; min-height: 80vh;">
+<main class="container-tracking">
     <?php if ($ma_commande): ?>
-        <h2 style="color: #ff6b35; text-transform: uppercase; letter-spacing: 2px;">Suivi de votre commande</h2>
-        <p style="color: #888; margin-bottom: 30px;">Référence : <strong><?= htmlspecialchars($ma_commande['id']) ?></strong></p>
+        <h2 class="text-orange">Suivi de votre commande</h2>
+        <p class="mb-30">Référence : <strong><?= htmlspecialchars($ma_commande['id']) ?></strong></p>
 
-        <div style="width: 100%; background: #222; height: 12px; border-radius: 10px; margin: 20px 0; overflow: hidden; border: 1px solid #333;">
-            <div style="width: <?= $info_etape['progress'] ?>; background: #ff6b35; height: 100%; transition: width 0.8s ease-in-out; box-shadow: 0 0 15px rgba(255, 107, 53, 0.5);"></div>
+        <div class="progress-container">
+            <div class="progress-bar-fill" style="width: <?= $info_etape['progress'] ?>;"></div>
         </div>
         
-        <div style="padding: 30px; border: 1px solid #ff6b35; background: #111; border-radius: 15px; margin-top: 20px;">
-            <h3 style="color: #ff6b35; font-size: 1.6rem; margin: 0;"><?= $info_etape['msg'] ?></h3>
+        <?php if ($status_actuel === 'paye' || $status_actuel === 'a_preparer'): ?>
+            <div style="margin-bottom: 20px;">
+                <a href="../TRAITEMENTS/preparer_modification.php?id=<?= urlencode($ma_commande['id']) ?>" class="btn-secondary-full" style="width: auto; padding: 10px 20px;">✍️ MODIFIER MA COMMANDE</a>
+            </div>
+        <?php endif; ?>
+
+        <div class="status-box">
+            <h3><?= $info_etape['msg'] ?></h3>
             
-            <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;">
+            <hr class="separator">
             
-            <p style="font-size: 1rem; line-height: 1.6;">
+            <p>
                 Mode : <strong><?= ($ma_commande['type_livraison'] ?? 'immediate') === 'immediate' ? 'ASAP (Le plus vite possible)' : 'Livraison programmée' ?></strong><br>
-                Heure souhaitée : <span style="color: #ff6b35; font-weight: bold;"><?= htmlspecialchars($ma_commande['horaire_souhaite'] ?? 'Dès que possible') ?></span>
+                Heure souhaitée : <span class="text-orange"><strong><?= htmlspecialchars($ma_commande['horaire_souhaite'] ?? 'Dès que possible') ?></strong></span>
             </p>
 
             <?php if (!empty($ma_commande['livreur_id'])): ?>
-                <p style="color: #3498db; font-weight: bold; margin-top: 10px;">
+                <p class="mt-10" style="color: #3498db; font-weight: bold;">
                     👤 Votre livreur : <?= htmlspecialchars($ma_commande['livreur_id']) ?>
                 </p>
             <?php endif; ?>
         </div>
 
-        <div style="margin-top: 40px; text-align: left; background: #000; padding: 20px; border-radius: 10px;">
-            <p style="color: #ff6b35; font-weight: bold; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 10px;">Récapitulatif :</p>
-            <ul style="list-style: none; padding: 0; font-size: 0.9rem; color: #ccc;">
+        <div class="recap-box">
+            <p class="text-orange mb-10">Récapitulatif :</p>
+            <ul class="comp-list">
                 <?php foreach (($ma_commande['articles'] ?? []) as $art): ?>
                     <li style="padding: 5px 0; border-bottom: 1px solid #111;">
                         <span style="color: white;"><?= htmlspecialchars($art['nom']) ?></span> 
