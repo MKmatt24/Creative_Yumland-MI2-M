@@ -6,27 +6,32 @@ $vendeur = "TEST";
 $api_key = trim(getAPIKey($vendeur)); // Nettoyage de la clé
 $transaction = "T" . time();
 
-// 1. Calcul du total brut (somme des articles)
-$total = 0;
-if (isset($_SESSION['panier'])) {
-    foreach ($_SESSION['panier'] as $item) {
-        $total += ($item['prix'] * $item['quantite']);
+if (isset($_SESSION['paiement_complementaire']) && $_SESSION['paiement_complementaire'] === true) {
+    // Cas d'une modification de commande : on ne paie que le surplus
+    $total_apres_reduction = $_SESSION['difference_prix'];
+} else {
+    // 1. Calcul du total brut (somme des articles) pour une nouvelle commande
+    $total = 0;
+    if (isset($_SESSION['panier'])) {
+        foreach ($_SESSION['panier'] as $item) {
+            $total += ($item['prix'] * $item['quantite']);
+        }
     }
-}
 
-// 2. Application du coupon si présent en session
-$reduction = 0;
-if (isset($_SESSION['coupon'])) {
-    $c = $_SESSION['coupon'];
-    if ($c['type'] === 'pourcentage') {
-        $reduction = $total * ($c['valeur'] / 100);
-    } else {
-        $reduction = $c['valeur'];
+    // 2. Application du coupon si présent en session
+    $reduction = 0;
+    if (isset($_SESSION['coupon'])) {
+        $c = $_SESSION['coupon'];
+        if ($c['type'] === 'pourcentage') {
+            $reduction = $total * ($c['valeur'] / 100);
+        } else {
+            $reduction = $c['valeur'];
+        }
     }
-}
 
-// 3. Montant final à payer (ne peut pas être inférieur à 0)
-$total_apres_reduction = max(0, $total - $reduction);
+    // 3. Montant final à payer (ne peut pas être inférieur à 0)
+    $total_apres_reduction = max(0, $total - $reduction);
+}
 
 // 4. Formatage pour la banque (2 décimales, point comme séparateur)
 $montant = number_format($total_apres_reduction, 2, '.', '');
