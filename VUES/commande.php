@@ -7,7 +7,7 @@ if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'restaurateur' && $_SESS
     exit();
 }
 
-$json_file = '../data/commande.json';
+$json_file = '../DATA/commande.json';
 $commandes = json_decode(file_get_contents($json_file), true) ?? [];
 
 // Fonction pour filtrer et harmoniser les statuts du JSON
@@ -60,7 +60,7 @@ function filtrerCommandes($liste, $statuts_recherches) {
     <section class="kanban-column column-cooking">
         <h2 class="section-title">🍳 En Cuisine</h2>
         <div class="orders-grid">
-        <?php foreach (filtrerCommandes($commandes, ['preparation']) as $c): ?>
+        <?php foreach (filtrerCommandes($commandes, ['preparation', 'en préparation']) as $c): ?>
             <div class="order-card">
                 <div class="order-header">
                     <span class="order-id">#<?= $c['id'] ?></span>

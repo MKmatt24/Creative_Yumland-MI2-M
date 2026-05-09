@@ -36,7 +36,7 @@ if (isset($_SESSION['paiement_complementaire']) && $_SESSION['paiement_complemen
 // 4. Formatage pour la banque (2 décimales, point comme séparateur)
 $montant = number_format($total_apres_reduction, 2, '.', '');
 
-$url_retour = "http://localhost:8000/VUES/retour_paiement.php";
+$url_retour = "http://localhost:8000/Creative_Yumland-MI2-M/VUES/retour_paiement.php";
 
 // LE CALCUL CRUCIAL (MD5 + #)
 $sep = "#";

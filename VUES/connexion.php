@@ -25,6 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Redirection selon le rôle
             if ($user['role'] === 'admin') {
                 header('Location: admin.php');
+            } elseif ($user['role'] === 'restaurateur') {
+                header('Location: commande.php');
             } else {
                 header('Location: profil.php');
             }
