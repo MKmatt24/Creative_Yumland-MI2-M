@@ -164,17 +164,6 @@
       "liste_plats": ["Pollos Burger", "Fries", "Sopapillas"]
     },
     {
-      "id": 102,
-      "nom": "Menu Bucket Family",
-      "description": "L'Albuquerque Bucket pour partager, servi avec Coleslaw et riz.",
-      "prix": 24.90,
-      "min_personnes": 3,
-      "creneau": "Uniquement le soir (18h-23h)",
-      "heure_debut": "18:00",
-      "heure_fin": "23:00",
-      "liste_plats": ["Albuquerque Bucket", "Creamy Coleslaw", "Rice Pollos bowl"]
-    },
-    {
       "id": 103,
       "nom": "Menu Fuego Spécial",
       "description": "Pour les amateurs de piquant : Ailes Fuego et Burrito Breakfast.",
@@ -184,6 +173,17 @@
       "heure_debut": "11:30",
       "heure_fin": "14:30",
       "liste_plats": ["Fuego Wings", "Burrito Breakfast", "Fries"]
+    },
+    {
+      "id": 102,
+      "nom": "Menu Bucket Family",
+      "description": "L'Albuquerque Bucket pour partager, servi avec Coleslaw et riz.",
+      "prix": 24.90,
+      "min_personnes": 3,
+      "creneau": "Menu soir (18h00-23h00)",
+      "heure_debut": "18:00",
+      "heure_fin": "23:00",
+      "liste_plats": ["Albuquerque Bucket", "Creamy Coleslaw", "Rice Pollos bowl"]
     }
   ]
 }
