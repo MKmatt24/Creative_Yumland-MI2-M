@@ -8,7 +8,9 @@
       "cat": "Poulet",
       "image": "../IMAGES/albuquerque_bucket.jpg",
       "infos": { "calories": 1200, "allergènes": ["Gluten"] },
-      "ingredients": ["Poulet secret", "Sauce BBQ", "Sauce Miel-Moutarde"]
+      "ingredients": ["Poulet secret", "Sauce BBQ", "Sauce Miel-Moutarde"],
+      "tags": ["salé", "épicé", "halal", "coup de coeur"],
+      "ventes": 150
     },
     {
       "id": 2,
@@ -19,7 +21,9 @@
       "image": "../IMAGES/pollos_burger.jpg",
       "infos": { "calories": 650, "allergènes": ["Gluten", "Lactose"] },
       "ingredients": ["Filet de poulet", "Cheddar", "Laitue", "Tomate", "Sauce Pollos"],
-      "substitutions": { "Cheddar": ["Emmental", "Sans fromage"], "Laitue": ["Salade roquette", "Sans salade"] }
+      "substitutions": { "Cheddar": ["Emmental", "Sans fromage"], "Laitue": ["Salade roquette", "Sans salade"] },
+      "tags": ["salé", "halal", "coup de coeur"],
+      "ventes": 320
     },
     {
       "id": 3,
@@ -29,7 +33,9 @@
       "cat": "Poulet",
       "image": "../IMAGES/fuego_wings.jpg",
       "infos": { "calories": 450, "allergènes": [] },
-      "ingredients": ["Ailes de poulet", "Sauce Fuego", "Graines de sésame"]
+      "ingredients": ["Ailes de poulet", "Sauce Fuego", "Graines de sésame"],
+      "tags": ["épicé", "halal", "coup de coeur"],
+      "ventes": 280
     },
     {
       "id": 4,
@@ -38,7 +44,9 @@
       "prix": 9.00,
       "cat": "Poulet",
       "image": "../IMAGES/hermano_tenders.jpg",
-      "infos": { "calories": 500, "allergènes": ["Gluten"] }
+      "infos": { "calories": 500, "allergènes": ["Gluten"] },
+      "tags": ["salé", "halal"],
+      "ventes": 110
     },
     {
       "id": 5,
@@ -49,7 +57,9 @@
       "image": "../IMAGES/burrito_breakfast.jpg",
       "infos": { "calories": 720, "allergènes": ["Lactose", "Oeufs"] },
       "ingredients": ["Tortilla", "Oeufs", "Chorizo", "Pommes de terre", "Fromage"],
-      "substitutions": { "Chorizo": ["Bacon", "Poulet"], "Fromage": ["Sauce salsa"] }
+      "substitutions": { "Chorizo": ["Bacon", "Poulet"], "Fromage": ["Sauce salsa"] },
+      "tags": ["salé", "halal"],
+      "ventes": 95
     },
     {
       "id": 6,
@@ -58,7 +68,9 @@
       "prix": 9.50,
       "cat": "Spécialités",
       "image": "../IMAGES/tacos_al_pastor.jpg",
-      "infos": { "calories": 580, "allergènes": [] }
+      "infos": { "calories": 580, "allergènes": [] },
+      "tags": ["épicé", "halal"],
+      "ventes": 190
     },
     {
       "id": 7,
@@ -67,7 +79,9 @@
       "prix": 10.50,
       "cat": "Spécialités",
       "image": "../IMAGES/ultimate_burrito.jpg",
-      "infos": { "calories": 850, "allergènes": ["Gluten"] }
+      "infos": { "calories": 850, "allergènes": ["Gluten"] },
+      "tags": ["salé", "halal"],
+      "ventes": 140
     },
     {
       "id": 8,
@@ -76,7 +90,9 @@
       "prix": 6.50,
       "cat": "Spécialités",
       "image": "../IMAGES/quesadilla_xl.jpg",
-      "infos": { "calories": 600, "allergènes": ["Lactose", "Gluten"] }
+      "infos": { "calories": 600, "allergènes": ["Lactose", "Gluten"] },
+      "tags": ["végétarien"],
+      "ventes": 210
     },
     {
       "id": 9,
@@ -85,7 +101,9 @@
       "prix": 12.00,
       "cat": "Spécialités",
       "image": "../IMAGES/red_enchiladas.jpg",
-      "infos": { "calories": 780, "allergènes": ["Lactose"] }
+      "infos": { "calories": 780, "allergènes": ["Lactose"] },
+      "tags": ["épicé", "végétarien"],
+      "ventes": 80
     },
     {
       "id": 10,
@@ -94,7 +112,9 @@
       "prix": 9.90,
       "cat": "Accompagnements",
       "image": "../IMAGES/rice_pollos_bowl.jpg",
-      "infos": { "calories": 540, "allergènes": [] }
+      "infos": { "calories": 540, "allergènes": [] },
+      "tags": ["sans gluten", "halal"],
+      "ventes": 165
     },
     {
       "id": 11,
@@ -103,7 +123,9 @@
       "prix": 8.00,
       "cat": "Accompagnements",
       "image": "../IMAGES/nachos_de_la_loma.jpg",
-      "infos": { "calories": 900, "allergènes": ["Lactose"] }
+      "infos": { "calories": 900, "allergènes": ["Lactose"] },
+      "tags": ["salé", "végétarien"],
+      "ventes": 230
     },
     {
       "id": 12,
@@ -112,7 +134,9 @@
       "prix": 7.90,
       "cat": "Burgers",
       "image": "../IMAGES/spicy_wrap.jpg",
-      "infos": { "calories": 520, "allergènes": ["Gluten", "Oeufs"] }
+      "infos": { "calories": 520, "allergènes": ["Gluten", "Oeufs"] },
+      "tags": ["épicé", "halal", "coup de coeur"],
+      "ventes": 310
     },
     {
       "id": 13,
@@ -121,7 +145,9 @@
       "prix": 3.50,
       "cat": "Accompagnements",
       "image": "../IMAGES/fries.jpg",
-      "infos": { "calories": 400, "allergènes": [] }
+      "infos": { "calories": 400, "allergènes": [] },
+      "tags": ["vegan", "sans gluten", "coup de coeur"],
+      "ventes": 500
     },
     {
       "id": 14,
@@ -130,7 +156,9 @@
       "prix": 3.00,
       "cat": "Accompagnements",
       "image": "../IMAGES/creamy_coleslaw.jpg",
-      "infos": { "calories": 250, "allergènes": ["Oeufs"] }
+      "infos": { "calories": 250, "allergènes": ["Oeufs"] },
+      "tags": ["végétarien"],
+      "ventes": 120
     },
     {
       "id": 15,
@@ -139,7 +167,9 @@
       "prix": 4.50,
       "cat": "Desserts",
       "image": "../IMAGES/sopapillas.jpg",
-      "infos": { "calories": 350, "allergènes": ["Gluten"] }
+      "infos": { "calories": 350, "allergènes": ["Gluten"] },
+      "tags": ["sucré", "coup de coeur"],
+      "ventes": 410
     },
     {
       "id": 16,
@@ -148,7 +178,9 @@
       "prix": 4.00,
       "cat": "Desserts",
       "image": "../IMAGES/butterscotch_pudding.jpg",
-      "infos": { "calories": 300, "allergènes": ["Lactose"] }
+      "infos": { "calories": 300, "allergènes": ["Lactose"] },
+      "tags": ["sucré", "végétarien"],
+      "ventes": 180
     }
   ],
   "menus": [

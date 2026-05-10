@@ -34,7 +34,7 @@ function filtrerCommandes($liste, $statuts_recherches) {
 <div class="kanban-board admin-container">
 
     <section class="kanban-column column-todo">
-        <h2 class="section-title">📥 À Préparer</h2>
+        <h2 class="section-title">📥 Payée</h2>
         <div class="orders-grid">
         <?php foreach (filtrerCommandes($commandes, ['a_preparer', 'paye']) as $c): ?>
             <div class="order-card">
@@ -58,7 +58,7 @@ function filtrerCommandes($liste, $statuts_recherches) {
     </section>
 
     <section class="kanban-column column-cooking">
-        <h2 class="section-title">🍳 En Cuisine</h2>
+        <h2 class="section-title">🍳 En Préparation</h2>
         <div class="orders-grid">
         <?php foreach (filtrerCommandes($commandes, ['preparation', 'en préparation']) as $c): ?>
             <div class="order-card">

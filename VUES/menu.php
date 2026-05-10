@@ -8,21 +8,10 @@ $data = file_exists($json_path) ? json_decode(file_get_contents($json_path), tru
 $plats = $data['plats'] ?? [];
 $menus = $data['menus'] ?? [];
 
-// 2. Gestion des filtres (Recherche + Catégories)
+ // 2. Préparation des variables initiales
 $search = $_GET['search'] ?? '';
-$cat_filter = $_GET['categorie'] ?? 'Tous';
-
-// Filtrage des plats à la carte
-$plats_a_afficher = array_filter($plats, function($p) use ($cat_filter, $search) {
-    $matchCat = ($cat_filter === 'Tous' || (isset($p['cat']) && $p['cat'] === $cat_filter));
-    $matchSearch = empty($search) || stripos(($p['nom'] ?? ''), $search) !== false;
-    return $matchCat && $matchSearch;
-});
-
-// Filtrage des menus (formules)
-$menus_a_afficher = array_filter($menus, function($m) use ($search) {
-    return empty($search) || stripos(($m['nom'] ?? ''), $search) !== false;
-});
+$cat_filter = 'Tous';
+$menus_a_afficher = $menus;
 
 // Extraction des catégories pour les boutons
 $categories = array_unique(array_column($plats, 'cat'));
@@ -65,21 +54,44 @@ if (isset($_SESSION['panier'])) {
         </div>
         
         <div class="search-bar-container">
-            <form method="GET" action="menu.php">
-                <input type="hidden" name="categorie" value="<?= htmlspecialchars($cat_filter) ?>">
-                <input type="text" name="search" placeholder="Rechercher un plaisir coupable..." value="<?= htmlspecialchars($search) ?>">
-            </form>
+            <input type="text" id="ajax-search" placeholder="Rechercher un plaisir coupable..." value="<?= htmlspecialchars($search) ?>">
         </div>
 
-        <div class="categories">
-            <a href="menu.php?categorie=Tous&search=<?= urlencode($search) ?>" 
-               class="cat-btn <?= $cat_filter === 'Tous' ? 'active' : '' ?>">Tous</a>
+        <div class="categories" id="cat-filters">
+            <button class="cat-btn active" data-cat="Tous">Tous</button>
             <?php foreach ($categories as $cat): ?>
-                <a href="menu.php?categorie=<?= urlencode($cat) ?>&search=<?= urlencode($search) ?>" 
-                   class="cat-btn <?= $cat_filter === $cat ? 'active' : '' ?>">
-                    <?= htmlspecialchars($cat) ?>
-                </a>
+                <button class="cat-btn" data-cat="<?= htmlspecialchars($cat) ?>"><?= htmlspecialchars($cat) ?></button>
             <?php endforeach; ?>
+        </div>
+    </section>
+
+    <section class="container container-menu-layout">
+        <div class="filter-sidebar">
+            <div class="checkbox-filters">
+                <div style="width: 100%"><p class="filter-group-header">Régimes & Préférences</p></div>
+                <label><input type="checkbox" class="diet-filter" value="vegetarien"> Végétarien</label>
+                <label><input type="checkbox" class="diet-filter" value="vegan"> Vegan</label>
+                <label><input type="checkbox" class="diet-filter" value="halal"> Halal</label>
+                <label><input type="checkbox" class="diet-filter" value="sans_gluten"> Sans Gluten</label>
+                
+                <div style="width: 100%"><p class="filter-group-header">Saveurs</p></div>
+                <label><input type="checkbox" class="taste-filter" value="salé"> Salé</label>
+                <label><input type="checkbox" class="taste-filter" value="sucré"> Sucré</label>
+                <label><input type="checkbox" class="taste-filter" value="épicé"> Épicé</label>
+            </div>
+        </div>
+
+        <div class="sort-container">
+            <h3 class="section-subtitle m-0">Carte des Plats</h3>
+            <div>
+                <label for="sort-select" style="font-size: 0.8rem; color: #888;">Trier par :</label>
+                <select id="sort-select" class="sort-select">
+                    <option value="default">Pertinence</option>
+                    <option value="prix-asc">Prix croissant</option>
+                    <option value="prix-desc">Prix décroissant</option>
+                    <option value="ventes">Les plus commandés</option>
+                </select>
+            </div>
         </div>
     </section>
 
@@ -136,95 +148,124 @@ if (isset($_SESSION['panier'])) {
     </div>
     <?php endif; ?>
 
-    <h3 class="section-subtitle"><?= ($cat_filter === 'Tous') ? 'À la Carte' : htmlspecialchars($cat_filter) ?></h3>
-    <div class="menu-container">
-        <?php if (!empty($plats_a_afficher)): ?>
-            <?php foreach ($plats_a_afficher as $p): ?>
-                <div class="menu-card">
-                    <img src="<?= htmlspecialchars($p['image'] ?? '../IMAGES/default.png') ?>" alt="<?= htmlspecialchars($p['nom'] ?? 'Plat') ?>">
-                    <div class="card-body">
-                        <span class="badge"><?= htmlspecialchars($p['cat'] ?? 'Divers') ?></span>
-                        <h3><?= htmlspecialchars($p['nom'] ?? 'Nom non défini') ?></h3>
-                        <p><?= htmlspecialchars($p['desc'] ?? '') ?></p>
-                        
-                        <form action="../TRAITEMENTS/ajouter_panier.php" method="POST" class="add-form">
-                            <?php if (!empty($p['ingredients']) || !empty($p['substitutions'])): ?>
-                            <div class="customization-area">
-                                <p class="comp-title">Personnaliser le plat :</p>
-                                <div class="ingredients-checks">
-                                    <?php foreach (($p['ingredients'] ?? []) as $ing): ?>
-                                        <label class="check-item">
-                                            <input type="checkbox" name="ingredients[]" value="<?= htmlspecialchars($ing) ?>" checked>
-                                            <span><?= htmlspecialchars($ing) ?></span>
-                                        </label>
-                                    <?php endforeach; ?>
-                                </div>
-                                
-                                <?php if (isset($p['substitutions'])): ?>
-                                    <div class="subs-area">
-                                        <?php foreach ($p['substitutions'] as $original => $options): ?>
-                                            <select name="sub_<?= md5($original) ?>" class="sub-select">
-                                                <option value="<?= htmlspecialchars($original) ?>">Garder <?= htmlspecialchars($original) ?></option>
-                                                <?php foreach ($options as $opt): ?>
-                                                    <option value="<?= htmlspecialchars($opt) ?>">Remplacer <?= htmlspecialchars($original) ?> par <?= htmlspecialchars($opt) ?></option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        <?php endforeach; ?>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-                            <?php endif; ?>
-
-                            <div class="card-footer">
-                                <span class="price"><?= number_format(($p['prix'] ?? 0), 2) ?>€</span>
-                                <div class="qty-group">
-                                    <input type="hidden" name="nom" value="<?= htmlspecialchars($p['nom']) ?>">
-                                    <input type="hidden" name="prix" value="<?= $p['prix'] ?>">
-                                    <input type="number" name="quantite" value="1" min="1" class="qty-input">
-                                    <button type="submit" class="add-btn">AJOUTER</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <p class="no-results">Aucun plat ne correspond à votre recherche.</p>
-        <?php endif; ?>
+    <div id="plats-container" class="menu-container">
+        <!-- Rempli en JS -->
     </div>
 </main>
 
 <?php include '../LIB/footer.php'; ?>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // On récupère tous les formulaires d'ajout au panier
-    const addForms = document.querySelectorAll('.add-form');
-    const cartCountSpan = document.getElementById('cart-count-val');
+let currentPlats = [];
+const container = document.getElementById('plats-container');
+const searchInput = document.getElementById('ajax-search');
+const sortSelect = document.getElementById('sort-select');
+const catButtons = document.querySelectorAll('#cat-filters .cat-btn');
 
-    addForms.forEach(form => {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault(); // Empêche le rechargement de la page
+async function fetchPlats() {
+    container.classList.add('loading');
+    
+    const activeCat = document.querySelector('#cat-filters .cat-btn.active').dataset.cat;
+    const diets = Array.from(document.querySelectorAll('.diet-filter:checked')).map(el => el.value).join(',');
+    const tastes = Array.from(document.querySelectorAll('.taste-filter:checked')).map(el => el.value).join(',');
+    
+    const url = `../TRAITEMENTS/filtrer_menu.php?search=${encodeURIComponent(searchInput.value)}&categorie=${encodeURIComponent(activeCat)}&diet=${diets}&taste=${tastes}`;
+    
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        currentPlats = data.plats;
+        applySortAndRender();
+    } catch (error) {
+        console.error("Erreur lors du filtrage :", error);
+    } finally {
+        container.classList.remove('loading');
+    }
+}
 
+function applySortAndRender() {
+    const sortVal = sortSelect.value;
+    let sorted = [...currentPlats];
+
+    if (sortVal === 'prix-asc') sorted.sort((a, b) => a.prix - b.prix);
+    else if (sortVal === 'prix-desc') sorted.sort((a, b) => b.prix - a.prix);
+    else if (sortVal === 'ventes') {
+        // On ne garde que les coups de coeur et on les trie par nombre de ventes
+        sorted = sorted.filter(p => (p.tags || []).includes('coup de coeur'));
+        sorted.sort((a, b) => b.ventes - a.ventes);
+    }
+
+    renderPlats(sorted);
+}
+
+function renderPlats(plats) {
+    if (plats.length === 0) {
+        container.innerHTML = '<p class="no-results">Aucun plat ne correspond à vos critères.</p>';
+        return;
+    }
+
+    container.innerHTML = plats.map(p => `
+        <div class="menu-card">
+            <img src="${p.image || '../IMAGES/default.png'}" alt="${p.nom}">
+            <div class="card-body">
+                <div class="flex-card-header">
+                    <span class="badge">${p.cat}</span>
+                    <div class="tags-container">
+                        ${(p.tags || []).map(t => `<span class="tag-pill ${t === 'coup de coeur' ? 'coup-de-coeur' : ''}">${t === 'coup de coeur' ? '❤️ ' : ''}${t}</span>`).join('')}
+                    </div>
+                </div>
+                <h3>${p.nom}</h3>
+                <p>${p.desc}</p>
+                
+                <form action="../TRAITEMENTS/ajouter_panier.php" method="POST" class="add-form">
+                    <div class="card-footer">
+                        <span class="price">${parseFloat(p.prix).toFixed(2)}€</span>
+                        <div class="qty-group">
+                            <input type="hidden" name="nom" value="${p.nom}">
+                            <input type="hidden" name="prix" value="${p.prix}">
+                            <input type="number" name="quantite" value="1" min="1" class="qty-input">
+                            <button type="submit" class="add-btn">AJOUTER</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    `).join('');
+    
+    // Réattacher les événements pour le panier
+    attachCartEvents();
+}
+
+function attachCartEvents() {
+    document.querySelectorAll('.add-form').forEach(form => {
+        form.onsubmit = function(e) {
+            e.preventDefault();
             const formData = new FormData(this);
-
-            fetch(this.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Mise à jour fluide du compteur
-                    cartCountSpan.textContent = data.new_count;
-                }
-            })
-            .catch(error => console.error('Erreur:', error));
-        });
+            fetch(this.action, { method: 'POST', body: formData })
+                .then(res => res.json())
+                .then(data => {
+                    if(data.success) document.getElementById('cart-count-val').textContent = data.new_count;
+                });
+        };
     });
+}
+
+// Event Listeners
+searchInput.addEventListener('input', fetchPlats);
+sortSelect.addEventListener('change', applySortAndRender);
+document.querySelectorAll('.diet-filter, .taste-filter').forEach(el => el.addEventListener('change', fetchPlats));
+catButtons.forEach(btn => {
+    btn.addEventListener('click', function() {
+        catButtons.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        fetchPlats();
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Premier chargement automatique des plats
+    fetchPlats();
+    attachCartEvents();
 });
 </script>
 

@@ -470,6 +470,73 @@ nav ul li a:hover, nav ul li a.active {
 .comp-list { list-style: none; padding: 0; color: #ccc; font-size: 0.85rem; }
 .add-form { display: block; }
 
+/* === STYLES FILTRAGE, TRI ET TAGS === */
+.filter-sidebar { background: #111; padding: 20px; border-radius: 10px; margin-bottom: 30px; border: 1px solid #333; }
+.filter-group-header { color: var(--orange); font-size: 0.9rem; margin: 15px 0 10px; font-weight: bold; text-transform: uppercase; }
+.checkbox-filters { display: flex; flex-wrap: wrap; gap: 10px; }
+.checkbox-filters label { cursor: pointer; font-size: 0.85rem; background: #222; padding: 5px 12px; border-radius: 20px; border: 1px solid #444; transition: 0.3s; }
+.checkbox-filters input { display: none; }
+.checkbox-filters label:has(input:checked) { border-color: var(--orange); color: var(--orange); background: rgba(255, 107, 53, 0.1); }
+.sort-container { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
+.sort-select { background: #000; color: white; border: 1px solid #333; padding: 8px 15px; border-radius: 5px; outline: none; cursor: pointer; }
+#plats-container { min-height: 200px; transition: opacity 0.3s; }
+.loading { opacity: 0.5; pointer-events: none; }
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: flex-end;
+    max-width: 65%;
+}
+
+.tag-pill { font-size: 0.65rem; background: rgba(255,255,255,0.05); padding: 2px 8px; border-radius: 10px; margin-right: 5px; color: #888; border: 1px solid #333; }
+
+/* Design amélioré pour le Coup de cœur */
+.tag-pill.coup-de-coeur {
+    background: rgba(255, 184, 53, 0.2);
+    color: #ffb835;
+    border: 1px solid #ffb835;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(255, 184, 53, 0.2);
+    order: -1; /* Le place toujours en premier dans la liste des tags */
+    animation: heartbeat 2s infinite;
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* === ANIMATIONS === */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* === UTILITAIRES DE MISE EN PAGE === */
+.container-menu-layout {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.flex-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.modification-info-box {
+    background: rgba(255, 107, 53, 0.1);
+    border: 1px solid var(--orange);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
 /* Styles Panier */
 .summary-box { background: #111; border: 1px solid #333; border-radius: 10px; padding: 20px; margin-bottom: 30px; }
 .item-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; padding: 12px 0; }

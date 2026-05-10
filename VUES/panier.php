@@ -37,12 +37,6 @@ $montant_formatte = number_format($total_final, 2, '.', '');
     <title>Mon Panier | Los Pollos Hermanos</title>
     <link rel="stylesheet" href="../CSS/accueil.css">
     <link rel="stylesheet" href="../CSS/menu.css">
-    <style>
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
 </head>
 <body class="page-dark">
 
@@ -52,7 +46,7 @@ $montant_formatte = number_format($total_final, 2, '.', '');
     <h2 class="section-title">VOTRE PANIER</h2>
 
     <?php if (isset($_SESSION['modification_id'])): ?>
-        <div style="background: rgba(255, 107, 53, 0.1); border: 1px solid var(--orange); padding: 15px; border-radius: 10px; margin-bottom: 20px; text-align: center;">
+        <div class="modification-info-box">
             <p><strong>Mode Modification :</strong> Vous modifiez la commande #<?= $_SESSION['modification_id'] ?></p>
         </div>
     <?php endif; ?>
