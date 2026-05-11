@@ -94,11 +94,12 @@ if (isset($_SESSION['panier'])) {
         </div>
     </section>
 
-    <?php if ($cat_filter === 'Tous' && empty($search)): ?>
+    <?php if ($cat_filter === 'Tous'): ?>
+    <div id="static-menus-section">
     <!-- PREMIÈRE CATÉGORIE : NOS MENUS & FORMULES -->
     <h3 class="section-subtitle">Nos Menus & Formules</h3>
     <div class="menu-container" style="margin-bottom: 40px;">
-        <!-- Le Menu Mystère (Inclus dans la catégorie Menus) -->
+        <!-- Le Menu Mystère -->
         <div class="menu-card mystery-card">
             <div class="mystery-icon-container">?</div>
             <div class="card-body">
@@ -167,10 +168,11 @@ if (isset($_SESSION['panier'])) {
         <?php endforeach; ?>
     </div>
     <hr class="separator" style="max-width: 1200px; margin: 40px auto;">
+    </div>
     <?php endif; ?>
 
     <!-- SECONDE CATÉGORIE : PLATS À LA CARTE -->
-    <h3 class="section-subtitle">Nos Plats à la carte</h3>
+    <h3 class="section-subtitle" id="plats-title">Nos Plats à la carte</h3>
     <div id="plats-container" class="menu-container">
         <!-- Rempli en JS -->
     </div>
@@ -180,6 +182,7 @@ if (isset($_SESSION['panier'])) {
 
 <script>
 let currentPlats = [];
+let currentMenus = [];
 const container = document.getElementById('plats-container');
 const searchInput = document.getElementById('ajax-search');
 const sortSelect = document.getElementById('sort-select');
@@ -198,6 +201,7 @@ async function fetchPlats() {
         const response = await fetch(url);
         const data = await response.json();
         currentPlats = data.plats;
+        currentMenus = data.menus || [];
         applySortAndRender();
     } catch (error) {
         console.error("Erreur lors du filtrage :", error);
@@ -209,40 +213,125 @@ async function fetchPlats() {
 function applySortAndRender() {
     const sortVal = sortSelect.value;
     let sorted = [...currentPlats];
+    let sortedMenus = [...currentMenus];
 
-    if (sortVal === 'prix-asc') sorted.sort((a, b) => a.prix - b.prix);
-    else if (sortVal === 'prix-desc') sorted.sort((a, b) => b.prix - a.prix);
+    if (sortVal === 'prix-asc') {
+        sorted.sort((a, b) => a.prix - b.prix);
+        sortedMenus.sort((a, b) => a.prix - b.prix);
+    }
+    else if (sortVal === 'prix-desc') {
+        sorted.sort((a, b) => b.prix - a.prix);
+        sortedMenus.sort((a, b) => b.prix - a.prix);
+    }
     else if (sortVal === 'ventes') {
         // On ne garde que les coups de coeur et on les trie par nombre de ventes
         sorted = sorted.filter(p => (p.tags || []).includes('coup de coeur'));
         sorted.sort((a, b) => b.ventes - a.ventes);
     }
 
-    renderPlats(sorted);
+    renderResults(sorted, sortedMenus);
 }
 
-function renderPlats(plats) {
-    if (plats.length === 0) {
-        container.innerHTML = '<p class="no-results">Aucun plat ne correspond à vos critères.</p>';
+function renderResults(plats, menus) {
+    const searchVal = searchInput.value.trim();
+    const activeCat = document.querySelector('#cat-filters .cat-btn.active').dataset.cat;
+    const staticMenus = document.getElementById('static-menus-section');
+    const platsTitle = document.getElementById('plats-title');
+
+    // Gestion de la visibilité des sections statiques (Menus et Titre Plats)
+    if (staticMenus) {
+        staticMenus.style.display = (searchVal === '' && activeCat === 'Tous') ? 'block' : 'none';
+    }
+    if (platsTitle) {
+        platsTitle.style.display = (searchVal === '' && activeCat === 'Tous') ? 'block' : 'none';
+    }
+
+    if (plats.length === 0 && menus.length === 0) {
+        container.innerHTML = '<p class="no-results">Désolé, Gustavo n\'a rien trouvé pour cette recherche.</p>';
         return;
     }
 
-    container.innerHTML = plats.map(p => `
+    let html = '';
+
+    // Affichage des menus correspondants si on est en recherche ou filtrage
+    if (searchVal !== '' || activeCat !== 'Tous') {
+        if (menus.length > 0) {
+            html += '<h3 class="section-subtitle" style="grid-column: 1/-1; margin-left:0; padding-left:0;">Menus & Formules</h3>';
+            html += menus.map(m => {
+                if (m.is_mystery_menu) {
+                    return `
+                    <div class="menu-card mystery-card">
+                        <div class="mystery-icon-container">?</div>
+                        <div class="card-body">
+                            <span class="badge">SURPRISE</span>
+                            <h3>${m.nom}</h3>
+                            <p>${m.description || ''}</p>
+                            
+                            <div class="card-footer">
+                                <span class="price">${parseFloat(m.prix).toFixed(2)}€</span>
+                                <form action="../TRAITEMENTS/ajouter_panier.php" method="POST" class="add-form">
+                                    <input type="hidden" name="nom" value="${m.nom}">
+                                    <input type="hidden" name="prix" value="${m.prix}">
+                                    <button type="submit" class="add-btn" style="border-radius: 8px;">TENTER MA CHANCE</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>`;
+                } else {
+                    const now = new Date();
+                    const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+                    const dispo = (timeStr >= (m.heure_debut || '00:00') && timeStr <= (m.heure_fin || '23:59'));
+                    
+                    return `
+                    <div class="menu-card">
+                        <div class="card-body">
+                            <div class="badge-container">
+                                <span class="badge">Formule</span>
+                                ${m.creneau ? `<span class="badge badge-yellow">🕒 ${m.creneau}</span>` : ''}
+                            </div>
+                            <h3>${m.nom}</h3>
+                            <p>${m.description || ''}</p>
+                            <div class="composition-box">
+                                <ul class="comp-list">${(m.liste_plats || []).map(item => `<li>✓ ${item}</li>`).join('')}</ul>
+                            </div>
+                            <div class="card-footer">
+                                <span class="price">${parseFloat(m.prix).toFixed(2)}€</span>
+                                <form action="../TRAITEMENTS/ajouter_panier.php" method="POST" class="add-form">
+                                    <div class="qty-group">
+                                        <input type="hidden" name="nom" value="${m.nom}">
+                                        <input type="hidden" name="prix" value="${m.prix}">
+                                        <input type="number" name="quantite" value="1" min="1" class="qty-input">
+                                        <button type="submit" class="add-btn" ${!dispo ? 'disabled' : ''}>${dispo ? 'AJOUTER' : 'INDISPONIBLE'}</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>`;
+                }
+            }).join('');
+            
+            if (plats.length > 0) {
+                html += '<h3 class="section-subtitle" style="grid-column: 1/-1; margin-left:0; padding-left:0; margin-top:40px;">Plats à la carte trouvés</h3>';
+            }
+        }
+    }
+
+    container.innerHTML = html + plats.map(p => `
         <div class="menu-card">
-            <img src="${p.image || '../IMAGES/default.png'}" alt="${p.nom}">
+            <img src="${p.image || '../IMAGES/default.png'}" alt="${p.nom || 'Plat'}">
             <div class="card-body">
                 <div class="flex-card-header">
-                    <span class="badge">${p.cat}</span>
+                    <span class="badge">${p.cat || 'Plat'}</span>
                     <div class="tags-container">
                         ${(p.tags || []).map(t => `<span class="tag-pill ${t === 'coup de coeur' ? 'coup-de-coeur' : ''}">${t === 'coup de coeur' ? '❤️ ' : ''}${t}</span>`).join('')}
                     </div>
                 </div>
-                <h3>${p.nom}</h3>
-                <p>${p.desc}</p>
+                <h3>${p.nom || 'Sans nom'}</h3>
+                <p>${p.desc || ''}</p>
                 
                 <form action="../TRAITEMENTS/ajouter_panier.php" method="POST" class="add-form">
                     <div class="card-footer">
-                        <span class="price">${parseFloat(p.prix).toFixed(2)}€</span>
+                        <span class="price">${parseFloat(p.prix || 0).toFixed(2)}€</span>
                         <div class="qty-group">
                             <input type="hidden" name="nom" value="${p.nom}">
                             <input type="hidden" name="prix" value="${p.prix}">
