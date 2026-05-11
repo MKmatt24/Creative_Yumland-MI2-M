@@ -82,7 +82,6 @@ if (isset($_SESSION['panier'])) {
         </div>
 
         <div class="sort-container">
-            <h3 class="section-subtitle m-0">Carte des Plats</h3>
             <div>
                 <label for="sort-select" style="font-size: 0.8rem; color: #888;">Trier par :</label>
                 <select id="sort-select" class="sort-select">
@@ -95,9 +94,30 @@ if (isset($_SESSION['panier'])) {
         </div>
     </section>
 
-    <?php if ($cat_filter === 'Tous' && !empty($menus_a_afficher)): ?>
-    <h3 class="section-subtitle">Nos Formules</h3>
-    <div class="menu-container">
+    <?php if ($cat_filter === 'Tous' && empty($search)): ?>
+    <!-- PREMIÈRE CATÉGORIE : NOS MENUS & FORMULES -->
+    <h3 class="section-subtitle">Nos Menus & Formules</h3>
+    <div class="menu-container" style="margin-bottom: 40px;">
+        <!-- Le Menu Mystère (Inclus dans la catégorie Menus) -->
+        <div class="menu-card mystery-card">
+            <div class="mystery-icon-container">?</div>
+            <div class="card-body">
+                <span class="badge">SURPRISE</span>
+                <h3>Le Menu Mystère</h3>
+                <p>Faites confiance à l'instinct de Gustavo. Un plat, un accompagnement et un dessert choisis au hasard pour vous.</p>
+                
+                <div class="card-footer">
+                    <span class="price">12,50€</span>
+                    <form action="../TRAITEMENTS/ajouter_panier.php" method="POST" class="add-form">
+                        <input type="hidden" name="nom" value="Menu Mystère">
+                        <input type="hidden" name="prix" value="12.50">
+                        <button type="submit" class="add-btn" style="border-radius: 8px;">TENTER MA CHANCE</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Les Formules classiques -->
         <?php foreach ($menus_a_afficher as $m): ?>
             <?php 
                 // Logique de disponibilité (ex: Menu Midi)
@@ -146,8 +166,11 @@ if (isset($_SESSION['panier'])) {
             </div>
         <?php endforeach; ?>
     </div>
+    <hr class="separator" style="max-width: 1200px; margin: 40px auto;">
     <?php endif; ?>
 
+    <!-- SECONDE CATÉGORIE : PLATS À LA CARTE -->
+    <h3 class="section-subtitle">Nos Plats à la carte</h3>
     <div id="plats-container" class="menu-container">
         <!-- Rempli en JS -->
     </div>
@@ -241,7 +264,11 @@ function attachCartEvents() {
         form.onsubmit = function(e) {
             e.preventDefault();
             const formData = new FormData(this);
-            fetch(this.action, { method: 'POST', body: formData })
+            fetch(this.action, { 
+                method: 'POST', 
+                body: formData,
+                headers: { 'X-Requested-With': 'XMLHttpRequest' } 
+            })
                 .then(res => res.json())
                 .then(data => {
                     if(data.success) document.getElementById('cart-count-val').textContent = data.new_count;

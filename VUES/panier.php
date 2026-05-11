@@ -53,8 +53,10 @@ $montant_formatte = number_format($total_final, 2, '.', '');
 
     <?php if (empty($panier)): ?>
         <div class="empty-cart">
-            <p>Votre panier est vide.</p>
-            <a href="menu.php" class="btn-primary mt-20">VOIR LE MENU</a>
+            <div class="empty-cart-icon">🍗</div>
+            <h3>Votre panier est vide</h3>
+            <p>On dirait que Gustavo attend votre commande. Ne le faites pas patienter, l'excellence n'attend pas !</p>
+            <a href="menu.php" class="btn-primary">DÉCOUVRIR LA CARTE</a>
         </div>
     <?php else: ?>
         
@@ -62,8 +64,25 @@ $montant_formatte = number_format($total_final, 2, '.', '');
             <?php foreach ($panier as $item): ?>
                 <div class="item-row">
                     <div class="item-info">
-                        <span><?= htmlspecialchars($item['nom'] ?? 'Produit') ?> (x<?= $item['quantite'] ?? 1 ?>)</span>
-                        <span class="text-orange"><?= number_format(($item['prix'] ?? 0) * ($item['quantite'] ?? 1), 2) ?> €</span>
+                        <div class="cart-img-wrapper">
+                            <img src="<?= htmlspecialchars($item['image'] ?? '../IMAGES/default.png') ?>" alt="<?= htmlspecialchars($item['nom']) ?>" class="cart-item-img">
+                        </div>
+                        <div class="item-details">
+                            <div class="item-main-info">
+                                <span><?= htmlspecialchars($item['nom'] ?? 'Produit') ?> (x<?= $item['quantite'] ?? 1 ?>)</span>
+                                <span class="text-orange"><?= number_format(($item['prix'] ?? 0) * ($item['quantite'] ?? 1), 2) ?> €</span>
+                            </div>
+                        <?php if (($item['nom'] ?? '') === 'Menu Mystère' && isset($item['modifications']['composition_aleatoire'])): ?>
+                            <div class="mystery-details">
+                                <p>Composition aléatoire :</p>
+                                <ul>
+                                    <?php foreach ($item['modifications']['composition_aleatoire'] as $type_plat => $plat_choisi): ?>
+                                        <li>- <?= htmlspecialchars($type_plat) ?> : <?= htmlspecialchars($plat_choisi) ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        <?php endif; ?>
+                        </div>
                     </div>
                     <form action="../TRAITEMENTS/supprimer_panier.php" method="POST" style="margin: 0;">
                         <input type="hidden" name="nom_produit" value="<?= htmlspecialchars($item['nom']) ?>">
