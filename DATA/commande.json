@@ -267,7 +267,7 @@
         "date": "09\/05\/2026 16:54",
         "client": "Matt\u00e9o KNOPES",
         "prix_total": 39.49,
-        "statut": "a_preparer",
+        "statut": "preparation",
         "articles": [
             {
                 "nom": "Pollos Burger",
@@ -286,7 +286,9 @@
             }
         ],
         "type": "immediate",
-        "horaire": "ASAP"
+        "horaire": "ASAP",
+        "statut_logistique": "preparation",
+        "livreur_id": null
     },
     {
         "id": "T1778345741",
