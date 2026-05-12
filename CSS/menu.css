@@ -244,6 +244,7 @@ nav ul li a:hover, nav ul li a.active {
     width: 100%;
     height: 200px;
     object-fit: cover;
+    object-position: center; /* Assure que le centre de l'image est toujours visible */
     border-bottom: 1px solid var(--bordure);
 }
 
@@ -453,6 +454,7 @@ nav ul li a:hover, nav ul li a.active {
 }
 .check-item input:checked + span::before { content: '✓'; }
 
+/* Style pour les éléments décochés (Enlever) */
 .check-item input:not(:checked) + span {
     border-color: #e74c3c;
     color: #e74c3c;
@@ -461,6 +463,22 @@ nav ul li a:hover, nav ul li a.active {
     opacity: 0.6;
 }
 .check-item input:not(:checked) + span::before { content: '✕'; }
+
+/* Style spécifique pour les Extras (Ajouter) */
+.extras-area {
+    border-top: 1px solid #333;
+    padding-top: 20px;
+    margin-top: 10px;
+}
+
+.check-extra input:not(:checked) + span {
+    border-color: #555;
+    color: #888;
+    background: transparent;
+    text-decoration: none;
+    opacity: 1;
+}
+.check-extra input:not(:checked) + span::before { content: '+'; }
 
 .subs-area { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
 .sub-select {
@@ -490,6 +508,14 @@ nav ul li a:hover, nav ul li a.active {
     display: flex;
     align-items: center;
     gap: 10px;
+    
+    /* Rendre le bouton flottant et positionné en haut à droite, juste à côté du titre */
+    position: fixed;
+    top: 155px; /* Ajusté pour être en ligne avec le titre h2 du menu-hero */
+    right: 20px; /* Aligné à droite de la page */
+    z-index: 998; /* Un peu moins que le header pour ne pas le masquer */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); /* Ombre pour la profondeur */
+    
 }
 .btn-cart-float:hover { background: var(--orange); color: var(--noir); }
 
@@ -742,3 +768,80 @@ footer {
     font-size: 0.8rem;
     border-top: 3px solid var(--orange);
 }
+
+/* === MODALE DE PERSONNALISATION (POP-UP) === */
+.modal {
+    display: none; /* Caché par défaut */
+    position: fixed;
+    z-index: 2000;
+    left: 0; top: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    align-items: center; justify-content: center;
+    padding: 20px;
+}
+
+.modal-content {
+    background-color: var(--noir);
+    border: 2px solid var(--orange);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 550px;
+    padding: 30px;
+    position: relative;
+    box-shadow: 0 0 30px rgba(255, 107, 53, 0.3);
+    animation: modalAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+@keyframes modalAppear {
+    from { opacity: 0; transform: scale(0.8) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px; right: 20px;
+    font-size: 2rem; color: #888;
+    cursor: pointer; transition: 0.3s;
+}
+
+.close-modal:hover { color: var(--orange); transform: rotate(90deg); }
+
+.modal-header-plat { display: flex; gap: 20px; align-items: center; margin-bottom: 20px; }
+.modal-img { width: 120px; height: 120px; object-fit: cover; object-position: center; border-radius: 15px; border: 1px solid var(--orange); }
+.modal-titles h3 { font-size: 1.8rem; color: var(--blanc); margin: 0; text-transform: uppercase; }
+.modal-desc { color: var(--texte-gris); margin-bottom: 25px; line-height: 1.4; font-size: 0.95rem; }
+
+.menu-card { cursor: pointer; }
+
+/* NOTIFICATION AJOUT PANIER */
+.cart-notification {
+    position: fixed;
+    top: 20px; /* Positionné en haut */
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px); /* Caché en haut par défaut */
+    z-index: 1600; /* Au-dessus du bouton du panier */
+    background-color: var(--orange);
+    color: var(--noir);
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease-out;
+    pointer-events: none; /* Empêche de bloquer les clics quand caché */
+    max-width: 90%; /* Pour les petits écrans */
+    white-space: nowrap; /* Empêche le texte de se casser sur plusieurs lignes */
+    overflow: hidden; /* Cache l'excès de texte si nowrap est trop long */
+    text-overflow: ellipsis; /* Affiche "..." si le texte est trop long */
+}
+
+.cart-notification.show {
+    transform: translateX(-50%) translateY(0); /* Visible */
+    opacity: 1;
+    pointer-events: auto; /* Permet les clics quand visible */
+}
+.menu-card { cursor: pointer; }
