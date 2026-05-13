@@ -1,15 +1,33 @@
-/* MODE CLAIR */
 :root {
     --noir: #ffffff;
-    --noir-profond: #f8f9fa;
-    --gris-sombre: #f1f3f5;
+    --gris-sombre: #f5f5f5;
+    --orange: #d35400;
+    --orange-hover: #a04000;
     --blanc: #1a1a1a;
-    --gris-texte: #212529;
-    --texte-gris: #495057;
-    --bordure: #dee2e6;
+    --bordure: #dddddd;
+    --texte-gris: #444444;
 }
 
-/* Ajustements spécifiques */
-header { background-color: #ffffff !important; }
-.search-form { background: #f1f3f5 !important; }
-.menu-card { background-color: #ffffff !important; box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important; }
+body {
+    background-color: var(--noir);
+    color: var(--blanc);
+}
+
+header {
+    background-color: #f8f8f8;
+    border-bottom: 2px solid var(--orange);
+}
+
+.menu-card, .status-box, .admin-filters, .admin-stats, .users-list, .admin-actions, .summary-box {
+    background-color: #ffffff !important;
+    border-color: #cccccc !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important;
+}
+
+.card-body h3, .section-subtitle, .admin-container h2 {
+    color: var(--blanc) !important;
+}
+
+.hero-main-title {
+    color: var(--orange) !important;
+}
