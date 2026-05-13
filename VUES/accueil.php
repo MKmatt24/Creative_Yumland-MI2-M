@@ -22,6 +22,7 @@ $coups_de_coeur = array_filter($plats, function($p) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Los Pollos Hermanos | Albuquerque</title>
+    <link rel="shortcut icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../CSS/accueil.css">
@@ -30,6 +31,48 @@ $coups_de_coeur = array_filter($plats, function($p) {
 <body>
 
     <?php include '../LIB/header.php'; ?>
+
+    <!-- Interface de changement de thème -->
+    <div class="theme-switcher-panel">
+        <button onclick="applyTheme('default')" class="theme-btn" title="Mode Sombre (Défaut)" style="background:#1a1a1a"></button>
+        <button onclick="applyTheme('light')" class="theme-btn" title="Mode Clair" style="background:#fafafa"></button>
+        <button onclick="applyTheme('contrast')" class="theme-btn" title="Mode Contrasté" style="background:#ffff00"></button>
+        <button onclick="applyTheme('accessible')" class="theme-btn" title="Mode Malvoyant" style="background:#ff6b35; color:#000; font-size:10px; font-weight:bold;">A+</button> 
+    </div>
+
+    <script>
+    function applyTheme(name) {
+        let themeLink = document.getElementById('dynamic-theme-css');
+        const body = document.body;
+
+        // Toujours retirer la classe accessible en premier pour assurer un état propre
+        body.classList.remove('theme-accessible');
+
+        if (name === 'default') {
+            if (themeLink) themeLink.remove();
+            localStorage.removeItem('site-theme');
+            return;
+        }
+
+        if (!themeLink) {
+            themeLink = document.createElement('link');
+            themeLink.id = 'dynamic-theme-css';
+            themeLink.rel = 'stylesheet';
+            document.head.appendChild(themeLink);
+        }
+
+        if (name === 'accessible') {
+            body.classList.add('theme-accessible');
+            // Nous chargeons toujours accessible.css, mais ses règles ciblent maintenant body.theme-accessible
+            themeLink.href = `../CSS/accessible.css`;
+        } else {
+            themeLink.href = `../CSS/${name}.css`;
+        }
+        localStorage.setItem('site-theme', name);
+    }
+    // Chargement auto au démarrage
+    if(localStorage.getItem('site-theme')) applyTheme(localStorage.getItem('site-theme'));
+    </script>
 
     <main>
         <section id="top" class="main-title-screen">
@@ -68,7 +111,7 @@ $coups_de_coeur = array_filter($plats, function($p) {
         <!-- SECTION : Nos Coups de Coeur -->
         <?php if (!empty($coups_de_coeur)): ?>
         <section class="container container-menu-layout" style="padding-top: 50px;">
-            <h3 class="section-subtitle">Nos Coups de Coeur ❤️</h3>
+            <h3 class="section-subtitle">Vos Coups de Coeur ❤️</h3>
             <div class="menu-container">
                 <?php foreach ($coups_de_coeur as $p): ?>
                     <div class="menu-card">

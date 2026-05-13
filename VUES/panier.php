@@ -29,12 +29,18 @@ if (isset($_SESSION['coupon'])) {
 }
 $total_final = max(0, $total - $reduction); // Le total ne peut pas être négatif
 $montant_formatte = number_format($total_final, 2, '.', '');
+
+// Chargement des données de référence pour comparer les ingrédients
+$menu_data = json_decode(file_get_contents('../DATA/menu.json'), true);
+$plats_ref = $menu_data['plats'] ?? [];
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Mon Panier | Los Pollos Hermanos</title>
+    <link rel="shortcut icon" type="image/png" href="../IMAGES/logo.png">
+    <link rel="icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="stylesheet" href="../CSS/accueil.css">
     <link rel="stylesheet" href="../CSS/menu.css">
 </head>
@@ -72,6 +78,29 @@ $montant_formatte = number_format($total_final, 2, '.', '');
                                 <span><?= htmlspecialchars($item['nom'] ?? 'Produit') ?> (x<?= $item['quantite'] ?? 1 ?>)</span>
                                 <span class="text-orange"><?= number_format(($item['prix'] ?? 0) * ($item['quantite'] ?? 1), 2) ?> €</span>
                             </div>
+
+                        <?php 
+                        $mods = $item['modifications'] ?? [];
+                        $retraits = [];
+                        $ajouts = [];
+                        
+                        // On cherche le plat original dans le JSON pour identifier les différences
+                        foreach ($plats_ref as $p) {
+                            if ($p['nom'] === ($item['nom'] ?? '')) {
+                                $ing_choisis = $mods['ingredients'] ?? [];
+                                // Si l'ingrédient original n'est pas dans la session, il a été retiré
+                                foreach ($p['ingredients'] ?? [] as $ing_orig) {
+                                    if (!in_array($ing_orig, $ing_choisis)) $retraits[] = $ing_orig;
+                                }
+                                // Les ajouts en session commencent par "+ " (voir ajouter_panier.php)
+                                foreach ($ing_choisis as $ing) {
+                                    if (strpos($ing, '+ ') === 0) $ajouts[] = str_replace('+ ', '', $ing);
+                                }
+                                break;
+                            }
+                        }
+                        ?>
+
                         <?php if (($item['nom'] ?? '') === 'Menu Mystère' && isset($item['modifications']['composition_aleatoire'])): ?>
                             <div class="mystery-details">
                                 <p>Composition aléatoire :</p>
@@ -80,6 +109,15 @@ $montant_formatte = number_format($total_final, 2, '.', '');
                                         <li>- <?= htmlspecialchars($type_plat) ?> : <?= htmlspecialchars($plat_choisi) ?></li>
                                     <?php endforeach; ?>
                                 </ul>
+                            </div>
+                        <?php elseif (!empty($retraits) || !empty($ajouts)): ?>
+                            <div class="mystery-details">
+                                <?php if (!empty($retraits)): ?>
+                                    <p><span style="color: #e74c3c;">Retiré :</span> <?= implode(', ', array_map('htmlspecialchars', $retraits)) ?></p>
+                                <?php endif; ?>
+                                <?php if (!empty($ajouts)): ?>
+                                    <p><span style="color: #2ecc71;">Ajouté :</span> <?= implode(', ', array_map('htmlspecialchars', $ajouts)) ?></p>
+                                <?php endif; ?>
                             </div>
                         <?php endif; ?>
                         </div>

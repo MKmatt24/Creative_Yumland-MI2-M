@@ -85,8 +85,16 @@ header ul a:hover {
 
 .title-wrap { text-align: center; width: 100%; display: flex; flex-direction: column; align-items: center; }
 
-.huge-title { font-size: clamp(4rem, 15vw, 8.5rem); color: var(--orange); font-weight: 900; line-height: 0.85; }
-.huge-title .outline { color: transparent; -webkit-text-stroke: 2px var(--orange); }
+.huge-title { 
+    font-size: clamp(4rem, 15vw, 8.5rem); 
+    color: var(--orange); 
+    font-weight: 900; 
+    line-height: 0.9; 
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 6px 6px 0px var(--noir), 12px 12px 30px rgba(0, 0, 0, 0.8);
+}
+.huge-title .outline { color: transparent; -webkit-text-stroke: 3px var(--orange); }
 
 .search-container { margin-top: 50px; width: 90%; max-width: 800px; }
 

@@ -27,7 +27,8 @@ $success = $_GET['success'] ?? false;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notation - Los Pollos Hermanos</title>
-    <link rel="icon" type="image/png" href="../Images/logo.svg">
+    <link rel="shortcut icon" type="image/png" href="../IMAGES/logo.png">
+    <link rel="icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="stylesheet" href="../CSS/notation.css">
 </head>
 <body>

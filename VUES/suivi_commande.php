@@ -34,6 +34,8 @@ $info_etape = $etapes[$status_actuel] ?? ['msg' => 'Traitement en cours...', 'pr
 <head>
     <meta charset="UTF-8">
     <title>Suivi | Los Pollos Hermanos</title>
+    <link rel="shortcut icon" type="image/png" href="../IMAGES/logo.png">
+    <link rel="icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="stylesheet" href="../CSS/accueil.css">
     <link rel="stylesheet" href="../CSS/menu.css">
     <meta http-equiv="refresh" content="20">

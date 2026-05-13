@@ -1,0 +1,15 @@
+/* MODE CLAIR */
+:root {
+    --noir: #ffffff;
+    --noir-profond: #f8f9fa;
+    --gris-sombre: #f1f3f5;
+    --blanc: #1a1a1a;
+    --gris-texte: #212529;
+    --texte-gris: #495057;
+    --bordure: #dee2e6;
+}
+
+/* Ajustements spécifiques */
+header { background-color: #ffffff !important; }
+.search-form { background: #f1f3f5 !important; }
+.menu-card { background-color: #ffffff !important; box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important; }

@@ -83,6 +83,8 @@ if ($paiement_valide) {
 <head>
     <meta charset="UTF-8">
     <title>Confirmation | Los Pollos Hermanos</title>
+    <link rel="shortcut icon" type="image/png" href="../IMAGES/logo.png">
+    <link rel="icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="stylesheet" href="../CSS/accueil.css">
     <link rel="stylesheet" href="../CSS/menu.css">
 </head>

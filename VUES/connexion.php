@@ -47,7 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion | Los Pollos Hermanos</title>
-    <link rel="icon" type="image/png" href="../Images/logo.svg">
+    <link rel="shortcut icon" type="image/png" href="../IMAGES/logo.png">
+    <link rel="icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="stylesheet" href="../CSS/connexion.css">
 </head>
 <body>
