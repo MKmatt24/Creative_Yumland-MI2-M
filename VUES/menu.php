@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+// Définition du fuseau horaire pour correspondre à l'heure locale
+date_default_timezone_set('Europe/Paris');
+
 // 1. Chargement des données JSON avec sécurité
 $json_path = '../DATA/menu.json';
 $data = file_exists($json_path) ? json_decode(file_get_contents($json_path), true) : [];
@@ -127,7 +130,11 @@ if (isset($_SESSION['panier'])) {
                 $now = date('H:i');
                 $debut = $m['heure_debut'] ?? '00:00';
                 $fin = $m['heure_fin'] ?? '23:59';
-                $dispo = ($now >= $debut && $now <= $fin);
+                
+                // Logique gérant les plages normales et celles traversant minuit
+                $dispo = ($debut <= $fin) 
+                    ? ($now >= $debut && $now <= $fin) 
+                    : ($now >= $debut || $now <= $fin);
             ?>
             <div class="menu-card">
                 <div class="card-body">
@@ -299,7 +306,12 @@ function renderResults(plats, menus) {
                 } else {
                     const now = new Date();
                     const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
-                    const dispo = (timeStr >= (m.heure_debut || '00:00') && timeStr <= (m.heure_fin || '23:59'));
+                    const hDebut = m.heure_debut || '00:00';
+                    const hFin = m.heure_fin || '23:59';
+                    
+                    const dispo = (hDebut <= hFin) 
+                        ? (timeStr >= hDebut && timeStr <= hFin) 
+                        : (timeStr >= hDebut || timeStr <= hFin);
                     
                     return `
                     <div class="menu-card">
