@@ -3,11 +3,11 @@ session_start();
 
 // Protection : Seul le restaurateur (ou admin) peut voir cette page
 if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'restaurateur' && $_SESSION['role'] !== 'admin')) {
-    // header('Location: accueil.php'); 
-    // exit();
+    header('Location: accueil.php'); 
+    exit();
 }
 
-$json_file = '../data/commande.json';
+$json_file = '../DATA/commande.json';
 $commandes = json_decode(file_get_contents($json_file), true) ?? [];
 
 // Fonction pour filtrer et harmoniser les statuts du JSON
@@ -24,86 +24,112 @@ function filtrerCommandes($liste, $statuts_recherches) {
 <head>
     <meta charset="UTF-8">
     <title>Gestion des Commandes | DashBoard</title>
+    <link rel="shortcut icon" type="image/png" href="../IMAGES/logo.png">
+    <link rel="icon" type="image/png" href="../IMAGES/logo.png">
+    <link rel="stylesheet" href="../CSS/accueil.css">
     <link rel="stylesheet" href="../CSS/commande.css">
-    <style>
-        body { background: #0a0a0a; color: #eee; font-family: sans-serif; margin: 0; }
-        .dashboard-wrapper { display: flex; gap: 15px; padding: 20px; overflow-x: auto; min-height: 90vh; }
-        
-        /* Colonnes */
-        .column { background: #151515; border-radius: 8px; min-width: 300px; flex: 1; display: flex; flex-direction: column; border-top: 4px solid #333; }
-        .col-title { padding: 15px; text-align: center; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid #222; }
-        
-        .todo { border-color: #e74c3c; }      /* À Préparer */
-        .cooking { border-color: #f1c40f; }   /* En Cuisine */
-        .shipping { border-color: #3498db; }  /* En Livraison */
-        .done { border-color: #2ecc71; }      /* Livrées */
-
-        .card { background: #202020; margin: 10px; padding: 15px; border-radius: 6px; border: 1px solid #333; font-size: 0.9em; }
-        .card h4 { margin: 0 0 10px 0; color: #ff6b35; }
-        .items { font-size: 0.85em; color: #bbb; margin: 10px 0; padding-left: 15px; }
-        
-        select, .btn { width: 100%; padding: 8px; margin-top: 8px; border-radius: 4px; border: none; font-weight: bold; cursor: pointer; }
-        select { background: #000; color: #fff; border: 1px solid #444; }
-        .btn { background: #ff6b35; color: #000; text-transform: uppercase; font-size: 0.75em; }
-        .btn:hover { background: #e65a2b; }
-    </style>
 </head>
 <body>
 
 <?php include '../LIB/header.php'; ?>
 
-<div class="dashboard-wrapper">
+<div class="kanban-board admin-container">
 
-    <section class="column todo">
-        <div class="col-title">📥 À Préparer</div>
+    <section class="kanban-column column-todo">
+        <h2 class="section-title">📥 Payée</h2>
+        <div class="orders-grid">
         <?php foreach (filtrerCommandes($commandes, ['a_preparer', 'paye']) as $c): ?>
-            <div class="card">
-                <h4>#<?= $c['id'] ?? '???' ?> - <?= htmlspecialchars($c['client'] ?? 'Client Web') ?></h4>
-                <div class="items">
+            <div class="order-card">
+                <div class="order-header">
+                    <span class="order-id">#<?= $c['id'] ?? '???' ?></span>
+                    <span class="order-time"><?= $c['date'] ?? '' ?></span>
+                </div>
+                <div class="order-content">
+                    <h4><?= htmlspecialchars($c['client'] ?? 'Client Web') ?></h4>
+                    <ul class="items-list">
                     <?php foreach (($c['articles'] ?? []) as $a) echo "• {$a['quantite']}x {$a['nom']}<br>"; ?>
+                    </ul>
                 </div>
                 <form action="../TRAITEMENTS/update_statut.php" method="POST">
                     <input type="hidden" name="id_commande" value="<?= $c['id'] ?>">
-                    <button type="submit" name="nouveau_statut" value="preparation" class="btn">Lancer la cuisine 🍳</button>
+                    <button type="submit" name="nouveau_statut" value="preparation" class="btn-status">Lancer la cuisine 🍳</button>
                 </form>
             </div>
         <?php endforeach; ?>
+        </div>
     </section>
 
-    <section class="column cooking">
-        <div class="col-title">🍳 En Cuisine</div>
-        <?php foreach (filtrerCommandes($commandes, ['preparation']) as $c): ?>
-            <div class="card">
-                <h4>#<?= $c['id'] ?> - <?= htmlspecialchars($c['client'] ?? 'Client Web') ?></h4>
-                <div class="items">
+    <section class="kanban-column column-cooking">
+        <h2 class="section-title">🍳 En Préparation</h2>
+        <div class="orders-grid">
+        <?php foreach (filtrerCommandes($commandes, ['preparation', 'en préparation']) as $c): ?>
+            <div class="order-card">
+                <div class="order-header">
+                    <span class="order-id">#<?= $c['id'] ?></span>
+                </div>
+                <div class="order-content">
+                    <h4><?= htmlspecialchars($c['client'] ?? 'Client Web') ?></h4>
+                    <ul class="items-list">
                     <?php foreach (($c['articles'] ?? []) as $a) echo "• {$a['quantite']}x {$a['nom']}<br>"; ?>
+                    </ul>
                 </div>
                 <form action="../TRAITEMENTS/update_statut.php" method="POST">
                     <input type="hidden" name="id_commande" value="<?= $c['id'] ?>">
-                    <select name="id_livreur" required>
+                    <select name="id_livreur" class="select-livreur" required>
                         <option value="">-- Assigner Livreur --</option>
                         <option value="Jesse">Jesse Pinkman</option>
                         <option value="Mike">Mike Ehrmantraut</option>
                     </select>
-                    <button type="submit" name="nouveau_statut" value="livraison" class="btn">Prêt pour envoi 🚚</button>
+                    <button type="submit" name="nouveau_statut" value="livraison" class="btn-status">Prêt pour envoi 🚚</button>
                 </form>
             </div>
         <?php endforeach; ?>
+        </div>
     </section>
 
-    <section class="column shipping">
-        <div class="col-title">🚚 En Livraison</div>
+    <section class="kanban-column column-delivery">
+        <h2 class="section-title">🚚 En Livraison</h2>
+        <div class="orders-grid">
         <?php foreach (filtrerCommandes($commandes, ['livraison', 'en_livraison']) as $c): ?>
-            <div class="card">
-                <h4>#<?= $c['id'] ?></h4>
-                <p>📍 <?= htmlspecialchars($c['adresse'] ?? 'À emporter') ?></p>
-                <p style="color: #3498db;">👤 Livreur : <?= $c['livreur_id'] ?? 'Inconnu' ?></p>
+            <div class="order-card">
+                <div class="order-header">
+                    <span class="order-id">#<?= $c['id'] ?></span>
+                </div>
+                <div class="order-content">
+                    <p>📍 <?= htmlspecialchars($c['adresse'] ?? 'À emporter') ?></p>
+                    <p style="color: #3498db !important; font-weight: bold;">👤 Livreur : <?= $c['livreur_id'] ?? 'Inconnu' ?></p>
+                </div>
                 <form action="../TRAITEMENTS/update_statut.php" method="POST">
                     <input type="hidden" name="id_commande" value="<?= $c['id'] ?>">
-                    <button type="submit" name="nouveau_statut" value="livree" class="btn" style="background:#3498db; color:white;">Confirmer Livraison 🏁</button>
+                    <button type="submit" name="nouveau_statut" value="livree" class="btn-status" style="background-color: #3498db;">Confirmer Livraison 🏁</button>
                 </form>
             </div>
         <?php endforeach; ?>
+        </div>
     </section>
 
-    <section class="column done">
+    <section class="kanban-column column-done">
+        <h2 class="section-title">🏁 Livrées</h2>
+        <div class="orders-grid">
+        <?php foreach (filtrerCommandes($commandes, ['livree']) as $c): ?>
+            <div class="order-card">
+                <div class="order-header">
+                    <span class="order-id">#<?= $c['id'] ?></span>
+                </div>
+                <div class="order-content">
+                    <h4><?= htmlspecialchars($c['client'] ?? 'Client Web') ?></h4>
+                    <ul class="items-list">
+                    <?php foreach (($c['articles'] ?? []) as $a) echo "• {$a['quantite']}x {$a['nom']}<br>"; ?>
+                    </ul>
+                    <p class="total-box">Total: <?= number_format($c['prix_total'] ?? 0, 2) ?> €</p>
+                </div>
+            </div>
+        <?php endforeach; ?>
+        </div>
+    </section>
+
+</div>
+
+<?php include '../LIB/footer.php'; ?>
+</body>
+</html>

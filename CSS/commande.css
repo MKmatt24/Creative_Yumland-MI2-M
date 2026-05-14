@@ -40,15 +40,22 @@ nav {
     align-items: center;
 }
 
+.logo-box {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
 .nav-logo {
     height: 100px; 
     width: auto;
-    filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.3));
-    transition: 0.4s ease;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+.menu-toggle { display: none; }
+
 .nav-logo:hover {
-    transform: scale(1.1) rotate(-3deg);
+    transform: scale(1.15) rotate(-3deg);
 }
 
 nav ul {
@@ -60,38 +67,74 @@ nav ul {
 nav ul li a {
     color: var(--blanc);
     text-decoration: none;
+    font-size: 1rem;
     font-weight: 500;
     padding: 0.5rem 1rem;
-    transition: 0.3s;
+    border-radius: 5px;
+    transition: all 0.3s ease;
 }
 
 nav ul li a:hover, nav ul li a.active {
     background-color: var(--orange);
     color: var(--noir);
-    border-radius: 5px;
+    transform: translateY(-2px);
 }
 
 /* === TITRES DE SECTION === */
 .section-title {
     color: var(--orange);
     text-transform: uppercase;
-    font-size: 1.5rem;
-    margin: 2rem 0;
-    border-left: 5px solid var(--orange);
-    padding-left: 15px;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid var(--orange);
+    padding-left: 12px;
 }
 
 .admin-container {
-    max-width: 1200px;
+    max-width: 98vw; /* Presque toute la largeur pour les colonnes */
     margin: 0 auto;
-    padding: 2rem;
+    padding: 2rem 1rem;
 }
 
-/* === GRILLE DES COMMANDES === */
+/* === LAYOUT EN COLONNES (KANBAN) === */
+.kanban-board {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto; /* Permet de scroller horizontalement sur petit écran */
+    padding-bottom: 20px;
+    align-items: flex-start;
+}
+
+.kanban-column {
+    flex: 1;
+    min-width: 360px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 15px;
+    padding: 20px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Couleurs spécifiques par colonne pour une lecture instantanée */
+.column-todo { border-top: 4px solid #555; }          /* À préparer */
+.column-cooking { border-top: 4px solid var(--orange); } /* En cuisine */
+.column-delivery { border-top: 4px solid #3498db; }    /* En livraison */
+.column-done { border-top: 4px solid #2ecc71; }        /* Livrées */
+
+.kanban-column h2.section-title {
+    border-left: none;
+    padding-left: 0;
+    text-align: center;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+
 .orders-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .order-card {
@@ -228,10 +271,10 @@ nav ul li a:hover, nav ul li a.active {
 /* === FOOTER PAGE === */
 footer {
     text-align: center;
-    padding: 4rem;
-    color: #444;
+    padding: 4rem 2rem;
+    color: var(--blanc);
     font-size: 0.8rem;
-    border-top: 1px solid var(--bordure);
+    border-top: 3px solid var(--orange);
 }
 
 .separator {

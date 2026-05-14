@@ -29,91 +29,158 @@ if (isset($_SESSION['coupon'])) {
 }
 $total_final = max(0, $total - $reduction); // Le total ne peut pas être négatif
 $montant_formatte = number_format($total_final, 2, '.', '');
+
+// Chargement des données de référence pour comparer les ingrédients
+$menu_data = json_decode(file_get_contents('../DATA/menu.json'), true);
+$plats_ref = $menu_data['plats'] ?? [];
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Mon Panier | Los Pollos Hermanos</title>
+    <link rel="shortcut icon" type="image/png" href="../IMAGES/logo.png">
+    <link rel="icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="stylesheet" href="../CSS/accueil.css">
     <link rel="stylesheet" href="../CSS/menu.css">
-    <style>
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
 </head>
-<body style="background-color: #0a0a0a; color: white;">
+<body class="page-dark">
 
 <?php include '../LIB/header.php'; ?>
 
-<main style="padding: 50px 20px; max-width: 800px; margin: 0 auto;">
-    <h2 class="section-title" style="text-align: center; color: #ff6b35;">VOTRE PANIER</h2>
+<main class="container-narrow">
+    <h2 class="section-title">VOTRE PANIER</h2>
+
+    <?php if (isset($_SESSION['modification_id'])): ?>
+        <div class="modification-info-box">
+            <p><strong>Mode Modification :</strong> Vous modifiez la commande #<?= $_SESSION['modification_id'] ?></p>
+        </div>
+    <?php endif; ?>
 
     <?php if (empty($panier)): ?>
-        <div style="text-align: center; padding: 50px;">
-            <p>Votre panier est vide.</p>
-            <a href="menu.php" class="btn-primary" style="display: inline-block; margin-top: 20px; text-decoration:none; padding:15px 30px; background:#ff6b35; border-radius:5px; color:white; font-weight:bold;">VOIR LE MENU</a>
+        <div class="empty-cart">
+            <div class="empty-cart-icon">🍗</div>
+            <h3>Votre panier est vide</h3>
+            <p>On dirait que Gustavo attend votre commande. Ne le faites pas patienter, l'excellence n'attend pas !</p>
+            <a href="menu.php" class="btn-primary">DÉCOUVRIR LA CARTE</a>
         </div>
     <?php else: ?>
         
-        <div style="background: #111; border: 1px solid #333; border-radius: 10px; padding: 20px; margin-bottom: 30px;">
+        <div class="summary-box">
             <?php foreach ($panier as $item): ?>
-                <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #222; padding: 10px 0;">
-                    <span><?= htmlspecialchars($item['nom'] ?? 'Produit') ?> (x<?= $item['quantite'] ?? 1 ?>)</span>
-                    <span style="color: #ff6b35;"><?= number_format(($item['prix'] ?? 0) * ($item['quantite'] ?? 1), 2) ?> €</span>
+                <div class="item-row">
+                    <div class="item-info">
+                        <div class="cart-img-wrapper">
+                            <img src="<?= htmlspecialchars($item['image'] ?? '../IMAGES/default.png') ?>" alt="<?= htmlspecialchars($item['nom']) ?>" class="cart-item-img">
+                        </div>
+                        <div class="item-details">
+                            <div class="item-main-info">
+                                <span><?= htmlspecialchars($item['nom'] ?? 'Produit') ?> (x<?= $item['quantite'] ?? 1 ?>)</span>
+                                <span class="text-orange"><?= number_format(($item['prix'] ?? 0) * ($item['quantite'] ?? 1), 2) ?> €</span>
+                            </div>
+
+                        <?php 
+                        $mods = $item['modifications'] ?? [];
+                        $retraits = [];
+                        $ajouts = [];
+                        
+                        // On cherche le plat original dans le JSON pour identifier les différences
+                        foreach ($plats_ref as $p) {
+                            if ($p['nom'] === ($item['nom'] ?? '')) {
+                                $ing_choisis = $mods['ingredients'] ?? [];
+                                // Si l'ingrédient original n'est pas dans la session, il a été retiré
+                                foreach ($p['ingredients'] ?? [] as $ing_orig) {
+                                    if (!in_array($ing_orig, $ing_choisis)) $retraits[] = $ing_orig;
+                                }
+                                // Les ajouts en session commencent par "+ " (voir ajouter_panier.php)
+                                foreach ($ing_choisis as $ing) {
+                                    if (strpos($ing, '+ ') === 0) $ajouts[] = str_replace('+ ', '', $ing);
+                                }
+                                break;
+                            }
+                        }
+                        ?>
+
+                        <?php if (($item['nom'] ?? '') === 'Menu Mystère' && isset($item['modifications']['composition_aleatoire'])): ?>
+                            <div class="mystery-details">
+                                <p>Composition aléatoire :</p>
+                                <ul>
+                                    <?php foreach ($item['modifications']['composition_aleatoire'] as $type_plat => $plat_choisi): ?>
+                                        <li>- <?= htmlspecialchars($type_plat) ?> : <?= htmlspecialchars($plat_choisi) ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        <?php elseif (!empty($retraits) || !empty($ajouts)): ?>
+                            <div class="mystery-details">
+                                <?php if (!empty($retraits)): ?>
+                                    <p><span style="color: #e74c3c;">Retiré :</span> <?= implode(', ', array_map('htmlspecialchars', $retraits)) ?></p>
+                                <?php endif; ?>
+                                <?php if (!empty($ajouts)): ?>
+                                    <p><span style="color: #2ecc71;">Ajouté :</span> <?= implode(', ', array_map('htmlspecialchars', $ajouts)) ?></p>
+                                <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
+                        </div>
+                    </div>
+                    <form action="../TRAITEMENTS/supprimer_panier.php" method="POST" style="margin: 0;">
+                        <input type="hidden" name="nom_produit" value="<?= htmlspecialchars($item['nom']) ?>">
+                        <button type="submit" class="remove-item-btn" title="Supprimer cet article">🗑️</button>
+                    </form>
                 </div>
             <?php endforeach; ?>
-            <div style="text-align: right; margin-top: 20px; font-size: 1.2rem; font-weight: bold;">
-                TOTAL : <span style="color: #ff6b35;"><?= $montant_formatte ?> €</span>
+            <div class="total-display">
+                TOTAL : <span class="text-orange"><?= $montant_formatte ?> €</span>
             </div>
         </div>
 
-        <form action="../TRAITEMENTS/pre_paiement.php" method="POST">
-            <div style="background: #111; padding: 25px; border: 1px solid #ff6b35; border-radius: 10px; margin-bottom: 30px;">
-                <h3 style="color: #ff6b35; margin-top: 0; margin-bottom: 20px;">PLANIFICATION</h3>
+        <div class="coupon-container">
+            <label class="mb-10 text-orange">Code Promo / Coupon</label>
+            
+            <form action="../TRAITEMENTS/appliquer_coupon.php" method="POST" class="coupon-form">
+                <input type="text" name="code_coupon" class="coupon-input" placeholder="Entrez votre code ici...">
+                <button type="submit" class="coupon-btn">Appliquer</button>
+            </form>
+
+            <?php if(isset($_SESSION['coupon'])): ?>
+                <div class="coupon-message">
+                    <span>
+                        ✅ Coupon <strong><?= $_SESSION['coupon']['valeur'] ?><?= $_SESSION['coupon']['type'] == 'pourcentage' ? '%' : '€' ?></strong> appliqué !
+                    </span>
+                    <a href="../TRAITEMENTS/supprimer_coupon.php" class="coupon-remove">Retirer</a>
+                </div>
+            <?php endif; ?>
+        </div>
+
+        <?php 
+            $action_form = isset($_SESSION['modification_id']) ? "../TRAITEMENTS/valider_modification.php" : "../TRAITEMENTS/pre_paiement.php";
+        ?>
+
+        <form action="<?= $action_form ?>" method="POST">
+            <div class="plan-card">
+                <h3>PLANIFICATION</h3>
                 
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; margin-bottom: 10px; font-weight: bold;">Type de commande :</label>
-                    <select name="type_commande" id="type_commande" onchange="toggleHoraire()" 
-                            style="width: 100%; padding: 12px; background: #000; color: white; border: 1px solid #333; border-radius: 5px; font-size: 1rem;">
+                <div class="form-field">
+                    <label>Type de commande :</label>
+                    <select name="type_commande" id="type_commande" onchange="toggleHoraire()" class="planification-select">
                         <option value="immediate">Préparation immédiate (ASAP)</option>
                         <option value="programmee">Programmer pour plus tard...</option>
                     </select>
                 </div>
 
-                <div id="choix_horaire" style="display: none; animation: fadeIn 0.3s;">
-                    <label style="display: block; margin-bottom: 10px; font-weight: bold;">Heure souhaitée :</label>
-                    <input type="time" name="heure_programmee" 
-                           style="width: 100%; padding: 12px; background: #000; color: white; border: 1px solid #4CAF50; border-radius: 5px; font-size: 1rem;">
-                    <p style="font-size: 0.8rem; color: #888; margin-top: 5px;">Note : Prévoyez un délai pour la préparation par nos équipes.</p>
+                <div id="choix_horaire" class="choix-horaire">
+                    <label>Heure souhaitée :</label>
+                    <input type="time" name="heure_programmee" class="planification-time">
+                    <p class="note-delay">Note : Prévoyez un délai pour la préparation par nos équipes.</p>
                 </div>
             </div>
 
-            <div class="coupon-container">
-                <label style="display: block; margin-bottom: 10px; font-weight: bold; color: var(--orange);">
-                    Code Promo / Coupon
-                </label>
-                
-                <form action="../TRAITEMENTS/appliquer_coupon.php" method="POST" class="coupon-form">
-                    <input type="text" name="code_coupon" class="coupon-input" placeholder="Entrez votre code ici...">
-                    <button type="submit" class="coupon-btn">Appliquer</button>
-                </form>
-
-                <?php if(isset($_SESSION['coupon'])): ?>
-                    <div class="coupon-message">
-                        <span>
-                            ✅ Coupon <strong><?= $_SESSION['coupon']['valeur'] ?><?= $_SESSION['coupon']['type'] == 'pourcentage' ? '%' : '€' ?></strong> appliqué !
-                        </span>
-                        <a href="../TRAITEMENTS/supprimer_coupon.php" class="coupon-remove">Retirer</a>
-                    </div>
-                <?php endif; ?>
-            </div>
-
-            <div style="text-align: center;">
-                <button type="submit" class="btn-primary" style="width: 100%; padding: 20px; font-size: 1.2rem; background: #ff6b35; border: none; cursor: pointer; font-weight: bold; border-radius: 5px; color: white;">
-                    PROCÉDER AU PAIEMENT SÉCURISÉ (<?= $montant_formatte ?> €)
+            <div class="pay-btn-container">
+                <button type="submit" class="btn-full">
+                    <?php if (isset($_SESSION['modification_id'])): ?>
+                        VALIDER LES MODIFICATIONS
+                    <?php else: ?>
+                        PROCÉDER AU PAIEMENT SÉCURISÉ (<?= $montant_formatte ?> €)
+                    <?php endif; ?>
                 </button>
             </div>
         </form>
@@ -129,9 +196,7 @@ function toggleHoraire() {
 }
 </script>
 
-<footer style="text-align: center; padding: 40px; color: #555;">
-    <p>&copy; 2026 Los Pollos Hermanos - Albuquerque. Tous droits réservés.</p>
-</footer>
+<?php include '../LIB/footer.php'; ?>
 
 </body>
 </html>

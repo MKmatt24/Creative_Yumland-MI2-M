@@ -40,6 +40,22 @@ nav {
     align-items: center;
 }
 
+.error-message {
+    background-color: #ff4444; 
+    color: white; 
+    padding: 1rem; 
+    border-radius: 8px; 
+    margin-bottom: 1rem;
+}
+
+.success-message {
+    background-color: #44ff44; 
+    color: #1a1a1a; 
+    padding: 1rem; 
+    border-radius: 8px; 
+    margin-bottom: 1rem;
+}
+
 .logo-box {
     flex: 1;
     display: flex;

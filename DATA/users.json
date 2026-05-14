@@ -121,7 +121,7 @@
         "nom": "mon",
         "prenom": "max",
         "email": "max.mon@gmail.com",
-        "password": "$2y$10$KSB01yWe26sNgIQIwcTbqecolBjOPZigJdJa\/GCoXO3kpIAEMzzhm",
+        "password": "$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC\/.og\/at2.uheWG\/igi",
         "telephone": "0782223195",
         "adresse": "rue du moncel",
         "code_interphone": "",
@@ -131,7 +131,6 @@
         "statut": "actif",
         "date_inscription": "2026-04-05"
     },
-    
     {
         "id": 9,
         "nom": "Knopes",
@@ -147,8 +146,7 @@
         "statut": "actif",
         "date_inscription": "2026-04-05"
     },
-
-     {
+    {
         "id": 10,
         "nom": "Salamanca",
         "prenom": "Lalo",
@@ -163,9 +161,8 @@
         "statut": "actif",
         "date_inscription": "2026-04-05"
     },
-
     {
-        "id": 10,
+        "id": 11,
         "nom": "Marchand",
         "prenom": "Maxence",
         "email": "maxence@gmail.com",
@@ -178,5 +175,35 @@
         "role": "livreur",
         "statut": "actif",
         "date_inscription": "2026-04-05"
+    },
+    {
+        "id": 12,
+        "nom": "KNOPES",
+        "prenom": "Matt\u00e9o",
+        "email": "matteo@gmail.com",
+        "password": "$2y$12$h1S3zFrls2vvaNs\/joE4.OZDqlLztDZ8HYeKPQU17YL0RzJQ2RjFG",
+        "telephone": "0769092304",
+        "adresse": "5 avenue Paul Thoureau",
+        "code_interphone": "Pr\u00e9 Catelan 2",
+        "code_postal": "95290",
+        "ville": "L'Isle-Adam",
+        "role": "client",
+        "statut": "actif",
+        "date_inscription": "2026-04-23"
+    },
+    {
+        "id": 13,
+        "nom": "KNOPES",
+        "prenom": "Matt\u00e9o",
+        "email": "matt24@gmail.com",
+        "password": "$2y$12$lN4aWq8YDoTtyXJoadbE.Owm2mEMAPBTvnO2Jse2ipRLPY2pFQ\/Iq",
+        "telephone": "0769092304",
+        "adresse": "5 avenue Paul Thoureau",
+        "code_interphone": "Pr\u00e9 Catelan 2",
+        "code_postal": "95290",
+        "ville": "L'Isle-Adam",
+        "role": "client",
+        "statut": "actif",
+        "date_inscription": "2026-05-09"
     }
 ]

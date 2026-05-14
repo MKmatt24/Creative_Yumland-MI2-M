@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nouveau_statut = $_POST['nouveau_statut'];
     $id_livreur = $_POST['id_livreur'] ?? null;
 
-    $file = '../data/commande.json';
+    $file = '../DATA/commande.json';
     $commandes = json_decode(file_get_contents($file), true);
 
     foreach ($commandes as &$c) {

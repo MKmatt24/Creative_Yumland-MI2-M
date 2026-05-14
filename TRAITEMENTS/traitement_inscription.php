@@ -1,4 +1,5 @@
 <?php
+session_start();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Récupérer TOUTES les données du formulaire
     $nom = $_POST['nom'] ?? '';
@@ -14,6 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // VALIDATION : Vérifier que les mots de passe correspondent
     if ($password !== $confirm_password) {
+        // On sauvegarde tout le POST sauf les mots de passe (sécurité oblige)
+        $_SESSION['form_data'] = $_POST;
+        unset($_SESSION['form_data']['password']);
+        unset($_SESSION['form_data']['confirm-password']);
         header('Location: ../VUES/inscription.php?error=password_mismatch');
         exit;
     }
@@ -24,6 +29,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // VALIDATION : Vérifier que l'email n'existe pas déjà
     foreach ($users as $user) {
         if ($user['email'] === $email) {
+            // On sauvegarde tout le POST sauf les mots de passe (sécurité oblige)
+            $_SESSION['form_data'] = $_POST;
+            unset($_SESSION['form_data']['password']);
+            unset($_SESSION['form_data']['confirm-password']);
             header('Location: ../VUES/inscription.php?error=email_exists');
             exit;
         }

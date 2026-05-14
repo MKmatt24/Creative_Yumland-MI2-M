@@ -7,6 +7,13 @@ $hero = $accueil_data['hero'];
 $histoire = $accueil_data['histoire'];
 $contact = $accueil_data['contact'];
 $incontournables = $accueil_data['incontournables'];
+
+// Chargement des données du menu pour extraire les coups de coeur
+$menu_data = json_decode(file_get_contents('../DATA/menu.json'), true);
+$plats = $menu_data['plats'] ?? [];
+$coups_de_coeur = array_filter($plats, function($p) {
+    return in_array('coup de coeur', $p['tags'] ?? []);
+});
 ?>
 
 <!DOCTYPE html>
@@ -15,13 +22,71 @@ $incontournables = $accueil_data['incontournables'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Los Pollos Hermanos | Albuquerque</title>
+    <link rel="shortcut icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../CSS/accueil.css">
+    <link rel="stylesheet" href="../CSS/menu.css"> <!-- Ajout de menu.css pour les styles des cartes -->
 </head>
 <body>
 
     <?php include '../LIB/header.php'; ?>
+
+    <!-- Bouton de changement de thème unique -->
+    <div class="theme-switcher-container">
+        <button onclick="cycleTheme()" id="theme-toggle-btn" class="theme-switcher-btn">
+            🎨 Changer de style
+        </button>
+    </div>
+
+    <script>
+    const themes = ['default', 'light', 'contrast', 'accessible'];
+    
+    function cycleTheme() {
+        let current = localStorage.getItem('site-theme') || 'default';
+        let currentIndex = themes.indexOf(current);
+        // On passe au thème suivant, ou on revient au début (0) si on est à la fin
+        let nextIndex = (currentIndex + 1) % themes.length;
+        applyTheme(themes[nextIndex]);
+    }
+
+    function applyTheme(name) {
+        let themeLink = document.getElementById('dynamic-theme-css');
+        const body = document.body;
+        const btn = document.getElementById('theme-toggle-btn');
+
+        // On nettoie la classe spécifique au mode accessible
+        body.classList.remove('theme-accessible');
+
+        if (name === 'default') {
+            if (themeLink) themeLink.remove();
+            localStorage.removeItem('site-theme');
+            btn.innerHTML = "🎨 Mode Sombre (Défaut)";
+            return;
+        }
+
+        // Création de la balise link si elle n'existe pas
+        if (!themeLink) {
+            themeLink = document.createElement('link');
+            themeLink.id = 'dynamic-theme-css';
+            themeLink.rel = 'stylesheet';
+            document.head.appendChild(themeLink);
+        }
+
+        // Chargement du fichier CSS correspondant
+        themeLink.href = `../CSS/${name}.css`;
+        
+        // Gestion spécifique du mode accessible (agrandissement police)
+        if (name === 'accessible') {
+            body.classList.add('theme-accessible');
+        }
+
+        btn.innerHTML = `🎨 Style : ${name.charAt(0).toUpperCase() + name.slice(1)}`;
+        localStorage.setItem('site-theme', name);
+    }
+    // Chargement auto au démarrage
+    if(localStorage.getItem('site-theme')) applyTheme(localStorage.getItem('site-theme'));
+    </script>
 
     <main>
         <section id="top" class="main-title-screen">
@@ -30,7 +95,7 @@ $incontournables = $accueil_data['incontournables'];
                 
                 <div class="search-container">
                     <form action="menu.php" method="GET" class="search-form">
-                        <input type="text" name="recherche" placeholder="Rechercher un plaisir coupable (ex: Poulet)...">
+                        <input type="text" name="search" placeholder="Rechercher un plaisir coupable (ex: Poulet)...">
                         <button type="submit">🔍 CHERCHER</button>
                     </form>
                 </div>
@@ -56,6 +121,40 @@ $incontournables = $accueil_data['incontournables'];
                 </div>
             </div>
         </section>
+
+        <!-- SECTION : Nos Coups de Coeur -->
+        <?php if (!empty($coups_de_coeur)): ?>
+        <section class="container container-menu-layout" style="padding-top: 50px;">
+            <h3 class="section-subtitle">Vos Coups de Coeur ❤️</h3>
+            <div class="menu-container">
+                <?php foreach ($coups_de_coeur as $p): ?>
+                    <div class="menu-card">
+                        <img src="<?= htmlspecialchars($p['image'] ?? '../IMAGES/default.png') ?>" alt="<?= htmlspecialchars($p['nom']) ?>">
+                        <div class="card-body">
+                            <div class="flex-card-header">
+                                <span class="badge"><?= htmlspecialchars($p['cat']) ?></span>
+                                <div class="tags-container">
+                                    <?php foreach (($p['tags'] ?? []) as $tag): ?>
+                                        <span class="tag-pill <?= ($tag === 'coup de coeur') ? 'coup-de-coeur' : '' ?>">
+                                            <?= ($tag === 'coup de coeur') ? '❤️ ' : '' ?><?= htmlspecialchars($tag) ?>
+                                        </span>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                            <h3><?= htmlspecialchars($p['nom']) ?></h3>
+                            <p><?= htmlspecialchars($p['desc']) ?></p>
+                            
+                            <div class="card-footer">
+                                <span class="price"><?= number_format($p['prix'], 2, ',', ' ') ?>€</span>
+                                <a href="menu.php?search=<?= urlencode($p['nom']) ?>" class="add-btn" style="text-decoration: none; display: flex; align-items: center; justify-content: center; border-radius: 8px;">VOIR LE PLAT</a>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </section>
+        <?php endif; ?>
+
     </main>
 
     <footer class="main-footer">

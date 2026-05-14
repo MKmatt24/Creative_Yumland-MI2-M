@@ -1,6 +1,15 @@
 <?php
+    session_start();
     $error_message = '';
     $success_message = '';
+
+    // 1. Récupération des données sauvegardées
+    $old_values = isset($_SESSION['form_data']) ? $_SESSION['form_data'] : [];
+    
+    // 2. Fonction utilitaire pour éviter les erreurs d'index et sécuriser l'affichage
+    function get_value($field, $data) {
+        return isset($data[$field]) ? htmlspecialchars($data[$field]) : '';
+    }
 
     if (isset($_GET['error'])) {
         switch ($_GET['error']) {
@@ -13,6 +22,9 @@
         }
     }
 
+    // Une fois les données récupérées, on peut vider la session
+    unset($_SESSION['form_data']);
+
     if (isset($_GET['success'])) {
         $success_message = 'Inscription réussie ! Vous pouvez maintenant vous connecter.';
     }
@@ -24,7 +36,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>S'inscrire | Los Pollos Hermanos</title>
-    <link rel="icon" type="image/png" href="../Images/logo.svg">
+    <link rel="shortcut icon" type="image/png" href="../IMAGES/logo.png">
+    <link rel="icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="stylesheet" href="../CSS/inscription.css">
 </head>
 <body>
@@ -37,13 +50,13 @@
                 <h2>Créer un compte</h2>
 
                 <?php if ($error_message): ?>
-                    <div style="background-color: #ff4444; color: white; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                    <div class="error-message">
                         <?= htmlspecialchars($error_message) ?>
                     </div>
                 <?php endif; ?>
 
                 <?php if ($success_message): ?>
-                    <div style="background-color: #44ff44; color: #1a1a1a; padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                    <div class="success-message">
                         <?= htmlspecialchars($success_message) ?>
                     </div>
                 <?php endif; ?>
@@ -53,42 +66,42 @@
                 <form action="../TRAITEMENTS/traitement_inscription.php" method="post">
                     <div class="form-group">
                         <label for="nom">Nom</label>
-                        <input type="text" id="nom" name="nom" required placeholder="Votre nom">
+                        <input type="text" id="nom" name="nom" required value="<?= get_value('nom',$old_values) ?>" placeholder="Votre nom">
                     </div>
 
                     <div class="form-group">
                         <label for="prenom">Prénom</label>
-                        <input type="text" id="prenom" name="prenom" required placeholder="Votre prénom">
+                        <input type="text" id="prenom" name="prenom" required value="<?= get_value('prenom',$old_values) ?>" placeholder="Votre prénom">
                     </div>
 
                     <div class="form-group">
                         <label for="email">Adresse email</label>
-                        <input type="email" id="email" name="email" required placeholder="exemple@email.com">
+                        <input type="email" id="email" name="email" required value="<?= get_value('email',$old_values) ?>" placeholder="exemple@email.com">
                     </div>
 
                     <div class="form-group">
                         <label for="telephone">Numéro de téléphone</label>
-                        <input type="tel" id="telephone" name="telephone" required placeholder="06 12 34 56 78">
+                        <input type="tel" id="telephone" name="telephone" required value="<?= get_value('telephone',$old_values) ?>" placeholder="06 12 34 56 78">
                     </div>
 
                     <div class="form-group">
                         <label for="adresse">Adresse</label>
-                        <input type="text" id="adresse" name="adresse" required placeholder="Numéro et nom de rue">
+                        <input type="text" id="adresse" name="adresse" required value="<?= get_value('adresse',$old_values) ?>" placeholder="Numéro et nom de rue">
                     </div>
 
                     <div class="form-group">
                         <label for="interphone">Code interphone / Étage</label>
-                        <input type="text" id="interphone" name="interphone" placeholder="Ex: B32, 4ème étage">
+                        <input type="text" id="interphone" name="interphone" value="<?= get_value('code_interfone',$old_values) ?>" placeholder="Ex: B32, 4ème étage">
                     </div>
 
                     <div class="form-group">
                         <label for="code-postal">Code postal</label>
-                        <input type="text" id="code-postal" name="code-postal" required placeholder="75000">
+                        <input type="text" id="code-postal" name="code-postal" required value="<?= get_value('code_postal',$old_values) ?>" placeholder="75000">
                     </div>
 
                     <div class="form-group">
                         <label for="ville">Ville</label>
-                        <input type="text" id="ville" name="ville" required placeholder="Albuquerque">
+                        <input type="text" id="ville" name="ville" required value="<?= get_value('ville',$old_values) ?>" placeholder="Albuquerque">
                     </div>
 
                     <div class="form-group">

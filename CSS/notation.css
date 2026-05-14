@@ -40,6 +40,16 @@ nav {
     align-items: center;
 }
 
+.success-message {
+    background-color: rgba(68, 255, 68, 0.2); 
+    border: 2px solid #44ff44; 
+    color: #44ff44; 
+    padding: 1rem; 
+    border-radius: 10px; 
+    margin-bottom: 1.5rem; 
+    text-align: center;
+}
+
 .logo-box {
     flex: 1;
     display: flex;

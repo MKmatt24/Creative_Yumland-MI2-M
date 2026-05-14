@@ -1,0 +1,33 @@
+:root {
+    --noir: #ffffff;
+    --gris-sombre: #f5f5f5;
+    --orange: #d35400;
+    --orange-hover: #a04000;
+    --blanc: #1a1a1a;
+    --bordure: #dddddd;
+    --texte-gris: #444444;
+}
+
+body {
+    background-color: var(--noir);
+    color: var(--blanc);
+}
+
+header {
+    background-color: #f8f8f8;
+    border-bottom: 2px solid var(--orange);
+}
+
+.menu-card, .status-box, .admin-filters, .admin-stats, .users-list, .admin-actions, .summary-box {
+    background-color: #ffffff !important;
+    border-color: #cccccc !important;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1) !important;
+}
+
+.card-body h3, .section-subtitle, .admin-container h2 {
+    color: var(--blanc) !important;
+}
+
+.hero-main-title {
+    color: var(--orange) !important;
+}

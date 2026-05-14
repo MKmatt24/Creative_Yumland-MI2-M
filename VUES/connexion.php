@@ -25,6 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Redirection selon le rôle
             if ($user['role'] === 'admin') {
                 header('Location: admin.php');
+            } elseif ($user['role'] === 'restaurateur') {
+                header('Location: commande.php');
             } else {
                 header('Location: profil.php');
             }
@@ -45,7 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion | Los Pollos Hermanos</title>
-    <link rel="icon" type="image/png" href="../Images/logo.svg">
+    <link rel="shortcut icon" type="image/png" href="../IMAGES/logo.png">
+    <link rel="icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="stylesheet" href="../CSS/connexion.css">
 
     <script>
@@ -177,13 +180,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p>Connectez-vous pour accéder à votre compte</p>
                 
                 <?php if (!empty($error)): ?>
-                    <div style="background-color: rgba(255, 68, 68, 0.2); border: 2px solid #ff4444; color: #ff6b35; padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem; text-align: center;">
+                    <div class="error-message">
                         <?= htmlspecialchars($error) ?>
                     </div>
                 <?php endif; ?>
 
                 <?php if (isset($_GET['success'])): ?>
-                    <div style="background-color: rgba(68, 255, 68, 0.2); border: 2px solid #44ff44; color: #44ff44; padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem; text-align: center;">
+                    <div class="success-message">
                         Inscription réussie ! Vous pouvez maintenant vous connecter.
                     </div>
                 <?php endif; ?>

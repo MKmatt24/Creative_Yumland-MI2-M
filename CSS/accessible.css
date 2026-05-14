@@ -1,0 +1,11 @@
+/* MODE MALVOYANT (Grandes polices) */
+body.theme-accessible { 
+    font-size: 135% !important; 
+}
+
+body.theme-accessible p, body.theme-accessible li, body.theme-accessible span, 
+body.theme-accessible a, body.theme-accessible input, body.theme-accessible button, 
+body.theme-accessible label { 
+    font-weight: bold !important; 
+    line-height: 1.8 !important; 
+}

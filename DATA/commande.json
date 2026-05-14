@@ -11,12 +11,13 @@
             }
         ],
         "prix_total": 19.99,
-        "statut": "preparation",
+        "statut": "livree",
         "adresse": "308 Negra Arroyo Lane",
         "date": "2026-03-24 12:30",
         "heure_retrait": "12:45",
-        "livreur_id": 11,
-        "gain_livreur": 5.300000000000001
+        "livreur_id": null,
+        "gain_livreur": 5.300000000000001,
+        "statut_logistique": "livree"
     },
     {
         "id": 102,
@@ -112,7 +113,7 @@
         "type_livraison": "immediate",
         "horaire_souhaite": "ASAP",
         "statut_paiement": "paye",
-        "statut_logistique": "en_livraison",
+        "statut_logistique": "livree",
         "articles": [
             {
                 "nom": "Menu Bucket Family",
@@ -120,9 +121,9 @@
                 "quantite": 1
             }
         ],
-        "statut": "livraison",
+        "statut": "livree",
         "adresse": "3 avenue Raikage",
-        "livreur_id": "Jesse",
+        "livreur_id": null,
         "user_id": 3
     },
     {
@@ -133,7 +134,7 @@
         "type_livraison": "immediate",
         "horaire_souhaite": "ASAP",
         "statut_paiement": "paye",
-        "statut_logistique": "a_preparer",
+        "statut_logistique": "livree",
         "articles": [
             {
                 "nom": "Menu Bucket Family",
@@ -141,9 +142,9 @@
                 "quantite": 1
             }
         ],
-        "statut": "livraison",
+        "statut": "livree",
         "adresse": "221 archipel des Sabaody",
-        "livreur_id": 11,
+        "livreur_id": null,
         "user_id": 4
     },
     {
@@ -164,5 +165,186 @@
         "statut": "livr\u00e9e",
         "livreur_id": null,
         "user_id": 5
+    },
+    {
+        "id": "T1778340391",
+        "date": "09\/05\/2026 15:26",
+        "client": "Matt\u00e9o KNOPES",
+        "prix_total": 33.4,
+        "statut": "en pr\u00e9paration",
+        "articles": [
+            {
+                "nom": "Pollos Burger",
+                "prix": 8.5,
+                "quantite": 1
+            },
+            {
+                "nom": "Menu Bucket Family",
+                "prix": 24.9,
+                "quantite": 1
+            }
+        ],
+        "type": "immediate",
+        "horaire": "ASAP"
+    },
+    {
+        "id": "T1778341045",
+        "date": "09\/05\/2026 15:37",
+        "client": "Matt\u00e9o KNOPES",
+        "prix_total": 24.9,
+        "statut": "en pr\u00e9paration",
+        "articles": [
+            {
+                "nom": "Menu Bucket Family",
+                "prix": 24.9,
+                "quantite": 1
+            }
+        ],
+        "type": "immediate",
+        "horaire": "ASAP"
+    },
+    {
+        "id": "T1778342095",
+        "date": "09\/05\/2026 15:55",
+        "client": "Matt\u00e9o KNOPES",
+        "prix_total": 24.9,
+        "statut": "en pr\u00e9paration",
+        "articles": [
+            {
+                "nom": "Menu Bucket Family",
+                "prix": 24.9,
+                "quantite": 1
+            }
+        ],
+        "type": "immediate",
+        "horaire": "ASAP"
+    },
+    {
+        "id": "T1778343697",
+        "date": "09\/05\/2026 16:21",
+        "client": "Matt\u00e9o KNOPES",
+        "prix_total": 22.41,
+        "statut": "en pr\u00e9paration",
+        "articles": [
+            {
+                "nom": "Menu Bucket Family",
+                "prix": 24.9,
+                "quantite": 1
+            }
+        ],
+        "type": "immediate",
+        "horaire": "ASAP",
+        "coupon_utilise": 10
+    },
+    {
+        "id": "T1778345383",
+        "date": "09\/05\/2026 16:49",
+        "client": "Matt\u00e9o KNOPES",
+        "prix_total": 39.49,
+        "statut": "en pr\u00e9paration",
+        "articles": [
+            {
+                "nom": "Pollos Burger",
+                "prix": 8.5,
+                "quantite": 1
+            },
+            {
+                "nom": "Albuquerque Bucket",
+                "prix": 19.99,
+                "quantite": 1
+            },
+            {
+                "nom": "Fuego Wings",
+                "prix": 11,
+                "quantite": 1
+            }
+        ],
+        "type": "immediate",
+        "horaire": "ASAP"
+    },
+    {
+        "id": "T1778345628",
+        "date": "09\/05\/2026 16:54",
+        "client": "Matt\u00e9o KNOPES",
+        "prix_total": 39.49,
+        "statut": "preparation",
+        "articles": [
+            {
+                "nom": "Pollos Burger",
+                "prix": 8.5,
+                "quantite": 1
+            },
+            {
+                "nom": "Albuquerque Bucket",
+                "prix": 19.99,
+                "quantite": 1
+            },
+            {
+                "nom": "Fuego Wings",
+                "prix": 11,
+                "quantite": 1
+            }
+        ],
+        "type": "immediate",
+        "horaire": "ASAP",
+        "statut_logistique": "preparation",
+        "livreur_id": null
+    },
+    {
+        "id": "T1778345741",
+        "date": "09\/05\/2026 16:55",
+        "client": "Matt\u00e9o KNOPES",
+        "prix_total": 28.49,
+        "statut": "a_preparer",
+        "articles": [
+            {
+                "nom": "Albuquerque Bucket",
+                "prix": 19.99,
+                "quantite": 1
+            },
+            {
+                "nom": "Pollos Burger",
+                "prix": 8.5,
+                "quantite": 1
+            }
+        ],
+        "type": "immediate",
+        "horaire": "ASAP",
+        "date_modification": "09\/05\/2026 16:57"
+    },
+    {
+        "id": "T1778346037",
+        "date": "09\/05\/2026 17:00",
+        "client": "Matt\u00e9o KNOPES",
+        "prix_total": 9.5,
+        "statut": "a_preparer",
+        "articles": [
+            {
+                "nom": "Tacos Al Pastor",
+                "prix": 9.5,
+                "quantite": 1
+            }
+        ],
+        "type": "immediate",
+        "horaire": "ASAP",
+        "date_modification": "09\/05\/2026 17:01"
+    },
+    {
+        "id": "T1778361605",
+        "date": "09\/05\/2026 21:20",
+        "client": "Matt\u00e9o KNOPES",
+        "prix_total": 13.05,
+        "statut": "a_preparer",
+        "articles": [
+            {
+                "nom": "Menu Los Pollos Classic",
+                "prix": 14.5,
+                "quantite": 1,
+                "modifications": []
+            }
+        ],
+        "type": "immediate",
+        "horaire": "ASAP",
+        "coupon_utilise": 10
     }
 ]

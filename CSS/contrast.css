@@ -1,0 +1,31 @@
+:root {
+    --noir: #000000;
+    --gris-sombre: #000000;
+    --orange: #ffff00; /* Jaune vif sur noir */
+    --orange-hover: #ffffff;
+    --blanc: #ffffff;
+    --bordure: #ffffff;
+    --texte-gris: #ffffff;
+}
+
+body {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+}
+
+* {
+    text-shadow: none !important;
+    box-shadow: none !important;
+    border-width: 2px !important;
+}
+
+.btn-primary, .add-btn, .btn-full, .finish-btn {
+    background: #ffff00 !important;
+    color: #000000 !important;
+    font-weight: 900 !important;
+    border: 2px solid #ffffff !important;
+}
+
+.menu-card {
+    border: 3px solid #ffff00 !important;
+}
