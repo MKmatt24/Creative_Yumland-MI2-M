@@ -47,8 +47,126 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Connexion | Los Pollos Hermanos</title>
     <link rel="icon" type="image/png" href="../Images/logo.svg">
     <link rel="stylesheet" href="../CSS/connexion.css">
+
+    <script>
+    // Attendre que le DOM soit complètement chargé
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // === CHANGEMENT DE THÈME ===
+        const themeToggle = document.getElementById('theme-toggle');
+        
+        if (themeToggle) {
+            const themeLink = document.createElement('link');
+            themeLink.rel = 'stylesheet';
+            themeLink.id = 'theme-stylesheet';
+            document.head.appendChild(themeLink);
+
+            // Charger le thème depuis le cookie
+            function loadTheme() {
+                const savedTheme = getCookie('theme');
+                if (savedTheme === 'dark') {
+                    themeLink.href = '../CSS/dark_theme.css';
+                    themeToggle.textContent = '☀️';
+                } else {
+                    themeLink.href = '';
+                    themeToggle.textContent = '🌙';
+                }
+            }
+
+            // Changer le thème
+            themeToggle.addEventListener('click', () => {
+                const currentTheme = getCookie('theme');
+                if (currentTheme === 'dark') {
+                    setCookie('theme', 'light', 365);
+                    themeLink.href = '';
+                    themeToggle.textContent = '🌙';
+                } else {
+                    setCookie('theme', 'dark', 365);
+                    themeLink.href = '../CSS/dark_theme.css';
+                    themeToggle.textContent = '☀️';
+                }
+            });
+
+            // Fonctions pour gérer les cookies
+            function setCookie(name, value, days) {
+                const d = new Date();
+                d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+                document.cookie = name + "=" + value + ";expires=" + d.toUTCString() + ";path=/";
+            }
+
+            function getCookie(name) {
+                const nameEQ = name + "=";
+                const ca = document.cookie.split(';');
+                for(let i = 0; i < ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+                }
+                return null;
+            }
+
+            // Charger le thème au chargement de la page
+            loadTheme();
+        }
+
+        // === AFFICHER/MASQUER MOT DE PASSE ===
+        const passwordInput = document.getElementById('password');
+        
+        if (passwordInput) {
+            const passwordGroup = passwordInput.parentElement;
+            passwordGroup.style.position = 'relative';
+            
+            const togglePassword = document.createElement('span');
+            togglePassword.innerHTML = '👁️';
+            togglePassword.style.cssText = 'position: absolute; right: 15px; top: 38px; cursor: pointer; font-size: 1.3rem; user-select: none; z-index: 10;';
+            
+            passwordGroup.appendChild(togglePassword);
+
+            togglePassword.addEventListener('click', () => {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    togglePassword.innerHTML = '🙈';
+                } else {
+                    passwordInput.type = 'password';
+                    togglePassword.innerHTML = '👁️';
+                }
+            });
+        }
+
+        // === VALIDATION DU FORMULAIRE ===
+        const form = document.querySelector('form');
+        
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                
+                // Validation email
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    e.preventDefault();
+                    alert('❌ Veuillez entrer une adresse email valide.');
+                    return false;
+                }
+                
+                // Validation mot de passe
+                if (password.length < 6) {
+                    e.preventDefault();
+                    alert('❌ Le mot de passe doit contenir au moins 6 caractères.');
+                    return false;
+                }
+            });
+        }
+        
+    }); // Fin du DOMContentLoaded
+    </script>
 </head>
 <body>
+
+    <!-- Bouton changement de thème -->
+    <button id="theme-toggle" style="position: fixed; top: 20px; right: 20px; z-index: 9999; padding: 10px 15px; background: #ff6b35; color: white; border: none; border-radius: 50%; cursor: pointer; font-size: 1.2rem;" title="Changer le thème">
+        🌙
+    </button>
 
     <?php include '../LIB/header.php'; ?>
 
