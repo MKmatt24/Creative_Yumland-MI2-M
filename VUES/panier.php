@@ -43,6 +43,13 @@ $plats_ref = $menu_data['plats'] ?? [];
     <link rel="icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="stylesheet" href="../CSS/accueil.css">
     <link rel="stylesheet" href="../CSS/menu.css">
+    <script>
+    function toggleHoraire() {
+        const type = document.getElementById('type_commande').value;
+        const blockHoraire = document.getElementById('choix_horaire');
+        blockHoraire.style.display = (type === 'programmee') ? 'block' : 'none';
+    }
+    </script>
 </head>
 <body class="page-dark">
 
@@ -187,14 +194,6 @@ $plats_ref = $menu_data['plats'] ?? [];
 
     <?php endif; ?>
 </main>
-
-<script>
-function toggleHoraire() {
-    const type = document.getElementById('type_commande').value;
-    const blockHoraire = document.getElementById('choix_horaire');
-    blockHoraire.style.display = (type === 'programmee') ? 'block' : 'none';
-}
-</script>
 
 <?php include '../LIB/footer.php'; ?>
 
