@@ -130,6 +130,30 @@ main {
     margin-top: -1.5rem;
 }
 
+/* === BOUTON DE CHANGEMENT DE THÈME === */
+.theme-switcher-container {
+    position: fixed;
+    top: 120px;
+    right: 20px;
+    z-index: 2000;
+}
+
+.theme-switcher-btn {
+    background: var(--orange);
+    color: var(--noir);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: transform 0.3s, background-color 0.3s, color 0.3s;
+}
+
+.theme-switcher-btn:hover {
+    transform: scale(1.05);
+}
+
 /* === BLOCS GÉNÉRIQUES === */
 .admin-filters,
 .admin-stats,
@@ -379,6 +403,26 @@ tbody td:last-child a:nth-child(3) {
 
 tbody td:last-child a:nth-child(3):hover {
     background-color: rgba(220, 60, 60, 0.3);
+}
+
+/* Bouton de blocage/déblocage dynamique */
+.toggle-status-btn {
+    margin-left: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+    color: white;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-unblock {
+    background-color: #4caf50;
+}
+
+.btn-block {
+    background-color: #e74c3c;
 }
 
 /* === PAGINATION === */

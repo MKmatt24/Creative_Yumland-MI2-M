@@ -1,3 +1,16 @@
+<?php
+// Vérification de sécurité : si l'utilisateur est connecté, on vérifie s'il n'est pas banni
+if (isset($_SESSION['user_id'])) {
+    $check_users = json_decode(file_get_contents(__DIR__ . '/../DATA/users.json'), true);
+    foreach ($check_users as $u) {
+        if ($u['id'] == $_SESSION['user_id'] && ($u['statut'] === 'suspendu' || $u['statut'] === 'inactif')) {
+            session_destroy();
+            header('Location: connexion.php?error=account_disabled');
+            exit;
+        }
+    }
+}
+?>
 <header>
     <nav>
         <div class="logo">

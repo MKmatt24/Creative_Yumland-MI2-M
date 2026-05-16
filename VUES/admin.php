@@ -1,7 +1,5 @@
-<?php include '../LIB/authentification.php'; ?>
-
 <?php
-    session_start();
+include '../LIB/authentification.php';
 
 // Vérifier que c'est un admin
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
@@ -212,9 +210,16 @@ if ($date_filtre !== 'tous') {
                                 <td><?= htmlspecialchars($user['email']) ?></td>
                                 <td><?= htmlspecialchars($user['role']) ?></td>
                                 <td><?= htmlspecialchars($user['date_inscription'] ?? 'N/A') ?></td>
-                                <td><?= htmlspecialchars($user['statut']) ?></td>
+                                <td class="status-cell"><?= htmlspecialchars($user['statut']) ?></td>
                                 <td>
                                     <a href="profil.php?id=<?= $user['id'] ?>">Voir profil</a>
+                                    <?php if ($user['role'] !== 'admin'): ?>
+                                        <button class="toggle-status-btn <?= $user['statut'] === 'suspendu' ? 'btn-unblock' : 'btn-block' ?>" 
+                                                data-id="<?= $user['id'] ?>" 
+                                                data-current="<?= $user['statut'] ?>">
+                                            <?= $user['statut'] === 'suspendu' ? 'Débloquer' : 'Bloquer' ?>
+                                        </button>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
@@ -233,6 +238,34 @@ if ($date_filtre !== 'tous') {
             </div>
         </section>
     </main>
+
+    <script>
+    document.querySelectorAll('.toggle-status-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const userId = this.dataset.id;
+            const currentStatus = this.dataset.current;
+            const newStatus = currentStatus === 'suspendu' ? 'actif' : 'suspendu';
+
+            if (!confirm(`Voulez-vous vraiment ${newStatus === 'suspendu' ? 'bloquer' : 'débloquer'} cet utilisateur ?`)) return;
+
+            fetch('../TRAITEMENTS/traitement_bloquer_utilisateur.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `id=${userId}&statut=${newStatus}`
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    this.dataset.current = newStatus;
+                    this.textContent = newStatus === 'suspendu' ? 'Débloquer' : 'Bloquer';
+                    this.classList.toggle('btn-unblock', newStatus === 'suspendu');
+                    this.classList.toggle('btn-block', newStatus !== 'suspendu');
+                    this.closest('tr').querySelector('.status-cell').textContent = newStatus;
+                }
+            });
+        });
+    });
+    </script>
 
     <footer>
         <div class="footer-content">

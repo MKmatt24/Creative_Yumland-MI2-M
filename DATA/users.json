@@ -111,7 +111,7 @@
         "code_postal": "87102",
         "ville": "Albuquerque",
         "role": "client",
-        "statut": "actif",
+        "statut": "suspendu",
         "date_inscription": "2026-04-04",
         "points_fidelite": "0",
         "date_naissance": ""

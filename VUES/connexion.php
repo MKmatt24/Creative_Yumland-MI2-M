@@ -4,6 +4,11 @@ session_start();
 // Initialiser la variable d'erreur
 $error = '';
 
+// Vérifier si l'utilisateur est redirigé ici suite à un bannissement
+if (isset($_GET['error']) && $_GET['error'] === 'account_disabled') {
+    $error = "Votre compte a été suspendu par l'administrateur. Session terminée.";
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
@@ -15,6 +20,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     foreach ($users as $user) {
         if ($user['email'] === $email && password_verify($password, $user['password'])) {
+            // VÉRIFICATION DU STATUT
+            if ($user['statut'] === 'suspendu' || $user['statut'] === 'inactif') {
+                $error = "Ce compte est suspendu. Accès refusé.";
+                break;
+            }
+
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['role'] = $user['role'];
             $_SESSION['nom'] = $user['nom'];
