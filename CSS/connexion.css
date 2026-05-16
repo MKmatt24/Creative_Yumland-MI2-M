@@ -76,6 +76,30 @@ nav {
     transition: all 0.3s ease;
 }
 
+/* === BOUTON DE CHANGEMENT DE THÈME === */
+.theme-switcher-container {
+    position: fixed;
+    top: 120px;
+    right: 20px;
+    z-index: 2000;
+}
+
+.theme-switcher-btn {
+    background: var(--orange);
+    color: var(--noir);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: transform 0.3s, background-color 0.3s, color 0.3s;
+}
+
+.theme-switcher-btn:hover {
+    transform: scale(1.05);
+}
+
 /*Animation du menu en X*/
 
 .menu-toggle.active span:nth-child(1) {
@@ -193,7 +217,8 @@ form {
 }
 
 .form-group input[type="email"],
-.form-group input[type="password"] {
+.form-group input[type="password"],
+.form-group input[type="text"] {
     width: 100%;
     padding: 1rem;
     background-color: var(--noir);

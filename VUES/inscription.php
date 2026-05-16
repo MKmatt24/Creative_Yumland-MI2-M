@@ -39,10 +39,42 @@
     <link rel="shortcut icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="stylesheet" href="../CSS/inscription.css">
+
+    <script>
+        //COMPTEUR DE CARACTÈRES
+        document.addEventListener('DOMContentLoaded', function() {
+            const pwdInputs = [document.getElementById('password'), document.getElementById('confirm-password')];
+            
+            pwdInputs.forEach(input => {
+                if (input) {
+                    input.setAttribute('maxlength', '8');
+                    const counter = document.createElement('div');
+                    counter.style.fontSize = '0.8rem';
+                    counter.style.marginTop = '5px';
+                    counter.style.textAlign = 'right';
+                    counter.style.color = '#888';
+                    input.parentElement.appendChild(counter);
+
+                    const updateCounter = () => {
+                        counter.textContent = `${input.value.length} / 8`;
+                        counter.style.color = input.value.length >= 8 ? '#ff6b35' : '#888';
+                    };
+                    input.addEventListener('input', updateCounter);
+                    updateCounter();
+                }
+            });
+        });
+    </script>
 </head>
 <body>
 
     <?php include '../LIB/header.php'; ?>
+
+    <div class="theme-switcher-container">
+        <button onclick="cycleTheme()" id="theme-toggle-btn" class="theme-switcher-btn">
+            🎨 Changer de style
+        </button>
+    </div>
 
     <main>
         <section class="inscription-section">
@@ -106,12 +138,12 @@
 
                     <div class="form-group">
                         <label for="password">Mot de passe</label>
-                        <input type="password" id="password" name="password" required placeholder="Minimum 8 caractères">
+                        <input type="password" id="password" name="password" required placeholder="Maximum 8 caractères" maxlength="8">
                     </div>
 
                     <div class="form-group">
                         <label for="confirm-password">Confirmer le mot de passe</label>
-                        <input type="password" id="confirm-password" name="confirm-password" required placeholder="Retapez votre mot de passe">
+                        <input type="password" id="confirm-password" name="confirm-password" required placeholder="Retapez votre mot de passe" maxlength="8">
                     </div>
 
                     <div class="form-group">

@@ -63,6 +63,12 @@ if ($commandes && is_array($commandes)) {
 
     <?php include '../LIB/header.php'; ?>
 
+    <div class="theme-switcher-container">
+        <button onclick="cycleTheme()" id="theme-toggle-btn" class="theme-switcher-btn">
+            🎨 Changer de style
+        </button>
+    </div>
+
     <main>
         <section class="profil-section">
             <div class="profil-container">

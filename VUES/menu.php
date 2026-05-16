@@ -43,6 +43,11 @@ if (isset($_SESSION['panier'])) {
 
 <?php include '../LIB/header.php'; ?>
 
+    <div class="theme-switcher-container">
+        <button onclick="cycleTheme()" id="theme-toggle-btn" class="theme-switcher-btn">
+            🎨 Changer de style
+        </button>
+    </div>
 <main>
     <?php if (isset($_SESSION['modification_id'])): ?>
         <div class="modification-banner">

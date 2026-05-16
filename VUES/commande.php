@@ -33,6 +33,12 @@ function filtrerCommandes($liste, $statuts_recherches) {
 
 <?php include '../LIB/header.php'; ?>
 
+<div class="theme-switcher-container">
+        <button onclick="cycleTheme()" id="theme-toggle-btn" class="theme-switcher-btn">
+            🎨 Changer de style
+        </button>
+    </div>
+
 <div class="kanban-board admin-container">
 
     <section class="kanban-column column-todo">

@@ -69,6 +69,12 @@ if ($commandeEnCours && isset($commandeEnCours['user_id'])) {
 
     <?php include '../LIB/header.php'; ?>
 
+    <div class="theme-switcher-container">
+        <button onclick="cycleTheme()" id="theme-toggle-btn" class="theme-switcher-btn">
+            🎨 Changer de style
+        </button>
+    </div>
+
     <main>
         <?php if ($commandeEnCours): ?>
             <section class="delivery-section" id="zone-livraison">

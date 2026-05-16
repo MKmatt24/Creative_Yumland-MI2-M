@@ -42,6 +42,14 @@ $temps_estime = $commande_trouvee['temps_minutes'] ?? 0;
 </head>
 <body>
 
+    <?php include '../LIB/header.php'; ?>
+
+    <div class="theme-switcher-container">
+        <button onclick="cycleTheme()" id="theme-toggle-btn" class="theme-switcher-btn">
+            🎨 Changer de style
+        </button>
+    </div>
+
     <main class="success-page">
         
         <div class="success-container">

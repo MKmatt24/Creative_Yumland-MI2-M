@@ -48,6 +48,11 @@ $plats_ref = $menu_data['plats'] ?? [];
 
 <?php include '../LIB/header.php'; ?>
 
+    <div class="theme-switcher-container">
+        <button onclick="cycleTheme()" id="theme-toggle-btn" class="theme-switcher-btn">
+            🎨 Changer de style
+        </button>
+    </div>
 <main class="container-narrow">
     <h2 class="section-title">VOTRE PANIER</h2>
 

@@ -293,6 +293,30 @@ button[type="submit"]:active {
     transform: translateY(0);
 }
 
+/* === BOUTON DE CHANGEMENT DE THÈME === */
+.theme-switcher-container {
+    position: fixed;
+    top: 120px;
+    right: 20px;
+    z-index: 2000;
+}
+
+.theme-switcher-btn {
+    background: var(--orange);
+    color: var(--noir);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: transform 0.3s, background-color 0.3s, color 0.3s;
+}
+
+.theme-switcher-btn:hover {
+    transform: scale(1.05);
+}
+
 /* === LIEN DE CONNEXION === */
 .connexion-link {
     text-align: center;

@@ -35,6 +35,12 @@ $success = $_GET['success'] ?? false;
     
     <?php include '../LIB/header.php'; ?>
 
+    <div class="theme-switcher-container">
+        <button onclick="cycleTheme()" id="theme-toggle-btn" class="theme-switcher-btn">
+            🎨 Changer de style
+        </button>
+    </div>
+
     <main>
         <section class="notation-section">
             <div class="notation-container">

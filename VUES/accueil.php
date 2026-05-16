@@ -32,61 +32,12 @@ $coups_de_coeur = array_filter($plats, function($p) {
 
     <?php include '../LIB/header.php'; ?>
 
-    <!-- Bouton de changement de thème unique -->
+    
     <div class="theme-switcher-container">
         <button onclick="cycleTheme()" id="theme-toggle-btn" class="theme-switcher-btn">
             🎨 Changer de style
         </button>
     </div>
-
-    <script>
-    const themes = ['default', 'light', 'contrast', 'accessible'];
-    
-    function cycleTheme() {
-        let current = localStorage.getItem('site-theme') || 'default';
-        let currentIndex = themes.indexOf(current);
-        // On passe au thème suivant, ou on revient au début (0) si on est à la fin
-        let nextIndex = (currentIndex + 1) % themes.length;
-        applyTheme(themes[nextIndex]);
-    }
-
-    function applyTheme(name) {
-        let themeLink = document.getElementById('dynamic-theme-css');
-        const body = document.body;
-        const btn = document.getElementById('theme-toggle-btn');
-
-        // On nettoie la classe spécifique au mode accessible
-        body.classList.remove('theme-accessible');
-
-        if (name === 'default') {
-            if (themeLink) themeLink.remove();
-            localStorage.removeItem('site-theme');
-            btn.innerHTML = "🎨 Mode Sombre (Défaut)";
-            return;
-        }
-
-        // Création de la balise link si elle n'existe pas
-        if (!themeLink) {
-            themeLink = document.createElement('link');
-            themeLink.id = 'dynamic-theme-css';
-            themeLink.rel = 'stylesheet';
-            document.head.appendChild(themeLink);
-        }
-
-        // Chargement du fichier CSS correspondant
-        themeLink.href = `../CSS/${name}.css`;
-        
-        // Gestion spécifique du mode accessible (agrandissement police)
-        if (name === 'accessible') {
-            body.classList.add('theme-accessible');
-        }
-
-        btn.innerHTML = `🎨 Style : ${name.charAt(0).toUpperCase() + name.slice(1)}`;
-        localStorage.setItem('site-theme', name);
-    }
-    // Chargement auto au démarrage
-    if(localStorage.getItem('site-theme')) applyTheme(localStorage.getItem('site-theme'));
-    </script>
 
     <main>
         <section id="top" class="main-title-screen">
