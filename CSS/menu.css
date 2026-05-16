@@ -541,7 +541,7 @@ nav ul li a:hover, nav ul li a.active {
     
     /* Rendre le bouton flottant et positionné en haut à droite, juste à côté du titre */
     position: fixed;
-    top: 155px; /* Ajusté pour être en ligne avec le titre h2 du menu-hero */
+    top: 175px; /* Ajusté pour être en ligne avec le titre h2 du menu-hero */
     right: 20px; /* Aligné à droite de la page */
     z-index: 998; /* Un peu moins que le header pour ne pas le masquer */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); /* Ombre pour la profondeur */
