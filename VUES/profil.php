@@ -1,17 +1,17 @@
 <?php include '../LIB/authentification.php';
 
-// Récupération de tous les utilisateurs depuis le JSON
+//Récupération de tous les utilisateurs depuis le JSON
 $usersData = file_get_contents('../DATA/users.json');
 $users = json_decode($usersData, true);
 
 $currentUser = null;
 
-// Déterminer quel ID on veut afficher
-// On utilise l'ID de l'URL ($_GET) s'il existe, sinon on prend celui de la session
+//Déterminer quel ID on veut afficher
+//On utilise l'ID de l'URL ($_GET) s'il existe, sinon on prend celui de la session
 $idAAfficher = $_GET['id'] ?? $_SESSION['user_id'];
 
 
-// 2. Recherche de l'utilisateur correspondant à cet ID
+//Recherche de l'utilisateur correspondant à cet ID
 foreach ($users as $user) {
     if ($user['id'] == $idAAfficher) {
         $currentUser = $user;
@@ -19,7 +19,7 @@ foreach ($users as $user) {
     }
 }
 
-// Optionnel : Sécurité
+//Optionnel : Sécurité
 if (!$currentUser) {
     echo "Utilisateur introuvable.";
     exit;
@@ -34,7 +34,7 @@ $nomComplet = $currentUser['prenom'] . ' ' . $currentUser['nom'];
 
 //Tri pour avoir uniquement les commandes de l'utilisateur
 $mesCommandes = [];
-// On s'assure que le nom complet est bien calculé
+//On s'assure que le nom complet est bien calculé
 $nomComplet = $currentUser['prenom'] . ' ' . $currentUser['nom'];
 
 if ($commandes && is_array($commandes)) {
@@ -57,7 +57,301 @@ if ($commandes && is_array($commandes)) {
     <title>Mon Profil - LOS POLLOS HERMANOS</title>
     <link rel="shortcut icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="icon" type="image/png" href="../IMAGES/logo.png">
-    <link rel="stylesheet" href="../CSS/profil.css"> 
+    <link rel="stylesheet" href="../CSS/profil.css">
+    <script defer>
+    document.addEventListener('DOMContentLoaded', function() {
+        //Gestion du menu mobile
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.querySelector('nav ul');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        const navLinks = document.querySelectorAll('nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('nav')) {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+
+        //Edition du profil concernant les requêtes asynchrones (phase 3)
+
+        const userId = <?= json_encode($currentUser['id']) ?>;
+
+        const fieldConfig = [
+            { label: 'Nom complet', field: 'nom_complet', type: 'text', validate: validateNom },
+            { label: 'Date de naissance', field: 'date_naissance', type: 'date', validate: validateDate },
+            { label: 'Email', field: 'email', type: 'email', validate: validateEmail },
+            { label: 'Téléphone', field: 'telephone', type: 'tel', validate: validateTelephone },
+            { label: 'Adresse de livraison', field: 'adresse', type: 'text', validate: validateAdresse }
+        ];
+
+        const editButtons = document.querySelectorAll('.icon-btn');
+
+        editButtons.forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                const config = fieldConfig[index];
+                const inputGroup = btn.closest('.input-with-btn');
+                const input = inputGroup.querySelector('input');
+
+                if (input.readOnly) {
+                    activerEdition(input, btn, config);
+                } else {
+                    sauvegarderChamp(input, btn, config);
+                }
+            });
+        });
+
+        function activerEdition(input, btn, config) {
+            input.readOnly = false;
+            input.classList.add('editing');
+            input.focus();
+
+            if (config.type === 'date') {
+                input.type = 'date';
+                const parts = input.value.split('/');
+                if (parts.length === 3) {
+                    input.value = `${parts[2]}-${parts[1].padStart(2,'0')}-${parts[0].padStart(2,'0')}`;
+                }
+            }
+
+            btn.textContent = '✅';
+            btn.title = 'Sauvegarder';
+            input.dataset.originalValue = input.value;
+
+            const container = btn.closest('.input-with-btn');
+            let cancelBtn = container.querySelector('.cancel-btn');
+            if (!cancelBtn) {
+                cancelBtn = document.createElement('button');
+                cancelBtn.type = 'button';
+                cancelBtn.className = 'icon-btn cancel-btn';
+                cancelBtn.textContent = '❌';
+                cancelBtn.title = 'Annuler';
+                btn.parentElement.appendChild(cancelBtn);
+                cancelBtn.addEventListener('click', () => {
+                    annulerEdition(input, btn, config);
+                    cancelBtn.remove();
+                });
+            }
+
+            let counter = input.parentElement.parentElement.querySelector('.char-counter');
+            if (!counter) {
+                counter = document.createElement('span');
+                counter.className = 'char-counter';
+                input.parentElement.parentElement.appendChild(counter);
+            }
+            const maxLen = getMaxLength(config.field);
+            counter.textContent = `${input.value.length} / ${maxLen}`;
+            input.addEventListener('input', () => {
+                counter.textContent = `${input.value.length} / ${maxLen}`;
+                counter.style.color = input.value.length > maxLen ? '#e74c3c' : '#888';
+            });
+        }
+
+        function annulerEdition(input, btn, config) {
+            input.value = input.dataset.originalValue;
+            input.readOnly = true;
+            input.classList.remove('editing');
+            if (config.type === 'date') input.type = 'text';
+            btn.textContent = '✏️';
+            btn.title = 'Modifier';
+            const counter = input.parentElement.parentElement.querySelector('.char-counter');
+            if (counter) counter.remove();
+            supprimerErreur(input);
+        }
+
+        function sauvegarderChamp(input, btn, config) {
+            supprimerErreur(input);
+            const valeur = input.value.trim();
+            const erreur = config.validate(valeur);
+
+            if (erreur) {
+                afficherErreur(input, erreur);
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = '⏳';
+
+            const donnees = new FormData();
+            donnees.append('user_id', userId);
+            donnees.append('champ', config.field);
+            donnees.append('valeur', valeur);
+
+            fetch('../TRAITEMENTS/update_profil.php', {
+                method: 'POST',
+                body: donnees
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    input.readOnly = true;
+                    input.classList.remove('editing');
+                    input.classList.add('save-success');
+                    if (config.type === 'date') {
+                        input.type = 'text';
+                        const d = new Date(valeur);
+                        input.value = d.toLocaleDateString('fr-FR');
+                    }
+                    btn.textContent = '✏️';
+                    btn.title = 'Modifier';
+                    const cancelBtn = btn.parentElement.querySelector('.cancel-btn');
+                    if (cancelBtn) cancelBtn.remove();
+                    const counter = input.parentElement.parentElement.querySelector('.char-counter');
+                    if (counter) counter.remove();
+                    afficherNotification('Modification enregistrée !', 'success');
+                    setTimeout(() => input.classList.remove('save-success'), 2000);
+                } else {
+                    afficherErreur(input, data.message || 'Erreur lors de la sauvegarde.');
+                    btn.textContent = '✅';
+                }
+            })
+            .catch(() => {
+                afficherErreur(input, 'Erreur réseau. Réessayez.');
+                btn.textContent = '✅';
+            })
+            .finally(() => {
+                btn.disabled = false;
+            });
+        }
+
+        //Validation des champs côté client
+
+        function validateNom(value) {
+            if (!value || value.length < 3) return 'Le nom doit contenir au moins 3 caractères.';
+            if (value.length > 60) return 'Le nom ne doit pas dépasser 60 caractères.';
+            if (!/^[a-zA-ZÀ-ÿ\s\-']+$/.test(value)) return 'Le nom ne doit contenir que des lettres.';
+            if (!value.includes(' ')) return 'Veuillez entrer le prénom et le nom (séparés par un espace).';
+            return null;
+        }
+
+        function validateEmail(value) {
+            if (!value) return "L'email est obligatoire.";
+            if (value.length > 100) return "L'email ne doit pas dépasser 100 caractères.";
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!regex.test(value)) return "Format d'email invalide.";
+            return null;
+        }
+
+        function validateTelephone(value) {
+            if (!value) return 'Le téléphone est obligatoire.';
+            const cleaned = value.replace(/[\s\.\-]/g, '');
+            if (!/^(0|\+33)[1-9]\d{8}$/.test(cleaned)) return 'Numéro de téléphone invalide (format français attendu).';
+            return null;
+        }
+
+        function validateDate(value) {
+            if (!value) return 'La date de naissance est obligatoire.';
+            const date = new Date(value);
+            if (isNaN(date.getTime())) return 'Date invalide.';
+            const today = new Date();
+            let age = today.getFullYear() - date.getFullYear();
+            const m = today.getMonth() - date.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < date.getDate())) age--;
+            if (age < 16) return 'Vous devez avoir au moins 16 ans.';
+            if (age > 120) return 'Date de naissance invalide.';
+            return null;
+        }
+
+        function validateAdresse(value) {
+            if (!value) return "L'adresse est obligatoire.";
+            if (value.length < 10) return "L'adresse semble trop courte.";
+            if (value.length > 150) return "L'adresse ne doit pas dépasser 150 caractères.";
+            return null;
+        }
+
+        function getMaxLength(field) {
+            const lengths = { nom_complet: 60, email: 100, telephone: 15, date_naissance: 10, adresse: 150 };
+            return lengths[field] || 100;
+        }
+
+        //Affichage des erreurs et notifications
+
+        function afficherErreur(input, message) {
+            supprimerErreur(input);
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'field-error';
+            errorDiv.textContent = message;
+            input.parentElement.parentElement.appendChild(errorDiv);
+            input.classList.add('input-error');
+        }
+
+        function supprimerErreur(input) {
+            const parent = input.parentElement.parentElement;
+            const err = parent.querySelector('.field-error');
+            if (err) err.remove();
+            input.classList.remove('input-error');
+        }
+
+        function afficherNotification(message, type) {
+            const existing = document.querySelector('.toast-notification');
+            if (existing) existing.remove();
+            const toast = document.createElement('div');
+            toast.className = `toast-notification toast-${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 3000);
+        }
+
+        //Gestion du bouton "Commander à nouveau" dans les commandes passées
+
+        document.querySelectorAll('.reorder-btn[data-articles]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const articles = JSON.parse(this.dataset.articles);
+                if (!articles || articles.length === 0) {
+                    afficherNotification('Aucun article dans cette commande.', 'error');
+                    return;
+                }
+
+                this.disabled = true;
+                this.textContent = '⏳ Ajout...';
+
+                const promesses = articles.map(article => {
+                    const formData = new FormData();
+                    formData.append('nom', article.nom);
+                    formData.append('prix', article.prix || 0);
+                    formData.append('quantite', article.quantite || 1);
+
+                    return fetch('../TRAITEMENTS/ajouter_panier.php', {
+                        method: 'POST',
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                        body: formData
+                    }).then(res => res.json());
+                });
+
+                Promise.all(promesses)
+                    .then(results => {
+                        const lastResult = results[results.length - 1];
+                        if (lastResult.success) {
+                            afficherNotification(articles.length + ' article(s) ajouté(s) au panier !', 'success');
+                            this.textContent = '✅ Ajouté !';
+                            setTimeout(() => { this.textContent = 'Commander à nouveau'; this.disabled = false; }, 2000);
+                        } else {
+                            afficherNotification('Erreur lors de l\'ajout au panier.', 'error');
+                            this.textContent = 'Commander à nouveau';
+                            this.disabled = false;
+                        }
+                    })
+                    .catch(() => {
+                        afficherNotification('Erreur réseau.', 'error');
+                        this.textContent = 'Commander à nouveau';
+                        this.disabled = false;
+                    });
+            });
+        });
+    });
+    </script>
 </head>
 <body>
 
@@ -97,7 +391,7 @@ if ($commandes && is_array($commandes)) {
                             <div class="progress-bar">
                                 <div class="progress-fill" style="width: <?= round($pourcentage) ?>%;"></div>
                             </div>
-                            <p style="font-size: 0.8rem; opacity: 0.8; margin-top: 10px;">
+                            <p class="points-hint">
                                 (Encore <?= $objectif - $points ?> points avant votre prochaine récompense !)
                             </p>
                         </div>
@@ -158,26 +452,26 @@ if ($commandes && is_array($commandes)) {
                         <h3>Dernières Commandes</h3>
                         <div class="order-list">
                             <?php if (empty($mesCommandes)): ?>
-                                <p style="color: #888; text-align: center;">Vous n'avez passé aucune commande.</p>
+                                <p class="empty-orders">Vous n'avez passé aucune commande.</p>
                             <?php else: ?>
                                 <?php foreach ($mesCommandes as $commande): ?>
                                     <div class="order-card">
                                         <div class="order-icon">🍗</div>
                                         <div class="order-details">
                                             <h4>Commande #<?= $commande['id'] ?></h4>
-                                            <span><?= htmlspecialchars($commande['date']) ?> • <?= number_format($commande['prix_total'], 2, ',', ' ') ?>€</span>
-                                            <span style="display: block; color: #ff6b35; font-size: 0.75rem; margin-top: 5px;">Statut : <?= ucfirst($commande['statut']) ?></span>
+                                            <span><?= htmlspecialchars($commande['date'] ?? $commande['date_commande'] ?? 'Date inconnue') ?> • <?= number_format($commande['prix_total'], 2, ',', ' ') ?>€</span>
+                                            <span class="order-status">Statut : <?= ucfirst($commande['statut']) ?></span>
                                         </div>
                                         
-                                        <div style="display: flex; flex-direction: column; gap: 5px;">
-                                            <button class="reorder-btn">Commander à nouveau</button>
+                                        <div class="order-actions">
+                                            <button class="reorder-btn" data-articles='<?= htmlspecialchars(json_encode($commande["articles"]), ENT_QUOTES) ?>'>Commander à nouveau</button>
                                             
                                             <!-- NOUVEAU BOUTON POUR NOTER -->
                                             <?php 
                                             // On s'assure de gérer "livrée" avec ou sans accent selon ce qui est dans le JSON
                                             if (strtolower($commande['statut']) === 'livree' || strtolower($commande['statut']) === 'livrée'): 
                                             ?>
-                                                <a href="notation.php?commande=<?= $commande['id'] ?>" class="reorder-btn" style="text-decoration: none; text-align: center; border-color: #2ecc71; color: #2ecc71;">
+                                                <a href="notation.php?commande=<?= $commande['id'] ?>" class="reorder-btn noter-btn">
                                                     Noter
                                                 </a>
                                             <?php endif; ?>
@@ -222,28 +516,4 @@ if ($commandes && is_array($commandes)) {
     <?php include '../LIB/footer.php'; ?>
 
 </body>
-<script>
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navMenu = document.querySelector('nav ul');
-
-    menuToggle.addEventListener('click', () => {
-        menuToggle.classList.toggle('active');
-        navMenu.classList.toggle('active');
-    });
-
-    const navLinks = document.querySelectorAll('nav ul li a');
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            menuToggle.classList.remove('active');
-            navMenu.classList.remove('active');
-        });
-    });
-
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('nav')) {
-            menuToggle.classList.remove('active');
-            navMenu.classList.remove('active');
-        }
-    });
-</script>
 </html>

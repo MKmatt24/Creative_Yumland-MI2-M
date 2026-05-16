@@ -27,12 +27,67 @@ $coups_de_coeur = array_filter($plats, function($p) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../CSS/accueil.css">
     <link rel="stylesheet" href="../CSS/menu.css"> <!-- Ajout de menu.css pour les styles des cartes -->
+<<<<<<< HEAD
+=======
+    <script>
+    const themes = ['default', 'light', 'contrast', 'accessible'];
+    
+    function cycleTheme() {
+        let current = localStorage.getItem('site-theme') || 'default';
+        let currentIndex = themes.indexOf(current);
+        // On passe au thème suivant, ou on revient au début (0) si on est à la fin
+        let nextIndex = (currentIndex + 1) % themes.length;
+        applyTheme(themes[nextIndex]);
+    }
+
+    function applyTheme(name) {
+        let themeLink = document.getElementById('dynamic-theme-css');
+        const body = document.body;
+        const btn = document.getElementById('theme-toggle-btn');
+
+        // On nettoie la classe spécifique au mode accessible
+        if (body) body.classList.remove('theme-accessible');
+
+        if (name === 'default') {
+            if (themeLink) themeLink.remove();
+            localStorage.removeItem('site-theme');
+            if (btn) btn.innerHTML = "🎨 Mode Sombre (Défaut)";
+            return;
+        }
+
+        // Création de la balise link si elle n'existe pas
+        if (!themeLink) {
+            themeLink = document.createElement('link');
+            themeLink.id = 'dynamic-theme-css';
+            themeLink.rel = 'stylesheet';
+            document.head.appendChild(themeLink);
+        }
+
+        // Chargement du fichier CSS correspondant
+        themeLink.href = `../CSS/${name}.css`;
+        
+        // Gestion spécifique du mode accessible (agrandissement police)
+        if (name === 'accessible' && body) {
+            body.classList.add('theme-accessible');
+        }
+
+        if (btn) btn.innerHTML = `🎨 Style : ${name.charAt(0).toUpperCase() + name.slice(1)}`;
+        localStorage.setItem('site-theme', name);
+    }
+    // Chargement auto au démarrage
+    if(localStorage.getItem('site-theme')) applyTheme(localStorage.getItem('site-theme'));
+    </script>
+>>>>>>> 21ab9aadb799486caad32e23615de81e008dff21
 </head>
 <body>
 
     <?php include '../LIB/header.php'; ?>
 
+<<<<<<< HEAD
     
+=======
+    <!-- Bouton de changement de thème unique -->
+>>>>>>> 21ab9aadb799486caad32e23615de81e008dff21
     <div class="theme-switcher-container">
         <button onclick="cycleTheme()" id="theme-toggle-btn" class="theme-switcher-btn">
             🎨 Changer de style

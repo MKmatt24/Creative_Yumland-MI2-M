@@ -465,6 +465,105 @@ nav ul li a:hover {
     }
 }
 
+/*Edition dynamique du profil (Phase 3)*/
+
+.input-with-btn input.editing {
+    background-color: #1a1a1a;
+    border: 1px solid var(--orange);
+    color: var(--blanc);
+    border-radius: 5px;
+    padding: 0.5rem;
+}
+
+.input-with-btn input.save-success {
+    border-color: #2ecc71 !important;
+    box-shadow: 0 0 8px rgba(46, 204, 113, 0.3);
+}
+
+.input-with-btn input.input-error {
+    border-color: #e74c3c !important;
+    box-shadow: 0 0 8px rgba(231, 76, 60, 0.3);
+}
+
+.field-error {
+    color: #e74c3c;
+    font-size: 0.78rem;
+    margin-top: 4px;
+    padding-left: 2px;
+}
+
+.char-counter {
+    display: block;
+    font-size: 0.72rem;
+    color: #888;
+    margin-top: 3px;
+    text-align: right;
+}
+
+.cancel-btn {
+    margin-left: 4px;
+}
+
+.toast-notification {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    padding: 14px 24px;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 0.9rem;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s, transform 0.3s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.toast-notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast-success {
+    background-color: #2ecc71;
+}
+
+.toast-error {
+    background-color: #e74c3c;
+}
+
+.empty-orders {
+    color: #888;
+    text-align: center;
+}
+
+.order-status {
+    display: block;
+    color: var(--orange);
+    font-size: 0.75rem;
+    margin-top: 5px;
+}
+
+.order-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.noter-btn {
+    text-decoration: none;
+    text-align: center;
+    border-color: #2ecc71;
+    color: #2ecc71;
+}
+
+.points-hint {
+    font-size: 0.8rem;
+    opacity: 0.8;
+    margin-top: 10px;
+}
+
 /*Footer*/
 
 footer {
