@@ -4,15 +4,20 @@
 :root {
     --bg-primary: #fafafa;
     --bg-secondary: #ffffff;
-    --text-primary: #1a1a1a;
-    --text-secondary: #333333;
+    --text-primary: #000000;
+    --text-secondary: #1a1a1a;
     --accent: #ff6b35;
     --border-color: rgba(26, 26, 26, 0.2);
+
+    /* On écrase les variables globales : ce qui était blanc devient noir */
+    --blanc: #000000;
+    --noir: #ffffff;
+    --gris-texte: #333333;
 }
 
 /* === BODY === */
 body {
-    background: linear-gradient(145deg, #fafafa 0%, #e8e8e8 100%);
+    background: #ffffff !important;
     color: var(--text-primary);
 }
 
