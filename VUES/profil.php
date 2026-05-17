@@ -55,6 +55,7 @@ $notations = json_decode($notationsData, true) ?? [];
 // On crée un tableau des IDs de commandes déjà notées pour une recherche rapide
 $idsCommandesNotées = array_column($notations, 'commande_id');
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -312,6 +313,57 @@ $idsCommandesNotées = array_column($notations, 'commande_id');
 
         //Gestion du bouton "Commander à nouveau" dans les commandes passées
 
+        //Changement de l'avatar (Phase 3 - Async)
+
+        const avatarBtn = document.querySelector('.edit-avatar-btn');
+        const avatarInput = document.getElementById('avatar-input');
+        const avatarImg = document.querySelector('.avatar-container img');
+
+        if (avatarBtn && avatarInput) {
+            avatarBtn.addEventListener('click', () => avatarInput.click());
+
+            avatarInput.addEventListener('change', function() {
+                const fichier = this.files[0];
+                if (!fichier) return;
+
+                if (!fichier.type.startsWith('image/')) {
+                    afficherNotification('Veuillez choisir une image.', 'error');
+                    return;
+                }
+                if (fichier.size > 2 * 1024 * 1024) {
+                    afficherNotification('L\'image ne doit pas dépasser 2 Mo.', 'error');
+                    return;
+                }
+
+                const formData = new FormData();
+                formData.append('avatar', fichier);
+                formData.append('user_id', userId);
+
+                avatarBtn.textContent = '⏳';
+
+                fetch('../TRAITEMENTS/update_avatar.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        avatarImg.src = data.chemin + '?t=' + Date.now();
+                        afficherNotification('Photo de profil mise à jour !', 'success');
+                    } else {
+                        afficherNotification(data.message || 'Erreur.', 'error');
+                    }
+                    avatarBtn.textContent = '📷';
+                })
+                .catch(() => {
+                    afficherNotification('Erreur réseau.', 'error');
+                    avatarBtn.textContent = '📷';
+                });
+            });
+        }
+
+        //Commander à nouveau
+
         document.querySelectorAll('.reorder-btn[data-articles]').forEach(btn => {
             btn.addEventListener('click', function() {
                 const articles = JSON.parse(this.dataset.articles);
@@ -381,8 +433,10 @@ $idsCommandesNotées = array_column($notations, 'commande_id');
                     <?php endif; ?>
 
                     <div class="avatar-container">
-                        <img src="../IMAGES/avatar_anonyme.png" alt="Avatar">
-                        <button class="edit-avatar-btn" aria-label="Changer la photo">📷</button>
+                        <?php $avatarPath = $currentUser['avatar'] ?? '../IMAGES/avatar_anonyme.png'; ?>
+                        <img src="<?= htmlspecialchars($avatarPath) ?>" alt="Avatar">
+                        <button type="button" class="edit-avatar-btn" aria-label="Changer la photo">📷</button>
+                        <input type="file" id="avatar-input" accept="image/*" hidden>
                     </div>
                     <div class="user-identity">
                         <h2><?= htmlspecialchars($currentUser['prenom'] . ' ' . $currentUser['nom']) ?></h2>
@@ -428,7 +482,13 @@ $idsCommandesNotées = array_column($notations, 'commande_id');
                                 <div class="form-group">
                                     <label>Date de naissance 🎁</label>
                                     <div class="input-with-btn">
-                                        <input type="text" value="<?= htmlspecialchars($currentUser['date_naissance'] ?? '') ?>" readonly>
+                                        <?php
+    $dateNaissance = $currentUser['date_naissance'] ?? '';
+    if ($dateNaissance && strpos($dateNaissance, '-') !== false) {
+        $dateNaissance = date('d/m/Y', strtotime($dateNaissance));
+    }
+?>
+                                        <input type="text" value="<?= htmlspecialchars($dateNaissance) ?>" readonly>
                                         <button type="button" class="icon-btn">✏️</button>
                                     </div>
                                 </div>
@@ -476,13 +536,13 @@ $idsCommandesNotées = array_column($notations, 'commande_id');
                                         </div>
                                         
                                         <div class="order-actions">
-                                            <?php if (!(isset($currentUser['est_bloque']) && $currentUser['est_bloque'] === true)): ?>
+                                                                                        <?php if (!(isset($currentUser['est_bloque']) && $currentUser['est_bloque'] === true)): ?>
                                                 <button class="reorder-btn" data-articles='<?= htmlspecialchars(json_encode($commande["articles"]), ENT_QUOTES) ?>'>Commander à nouveau</button>
                                             <?php else: ?>
                                                 <button class="reorder-btn" disabled title="Action impossible : compte suspendu">Commander à nouveau</button>
                                             <?php endif; ?>
                                             
-                                            <!-- NOUVEAU BOUTON POUR NOTER -->
+                                            // Affichage du bouton "Noter" seulement si la commande est livrée et pas encore notée
                                             <?php 
                                             // On affiche le bouton seulement si livrée ET non déjà notée
                                             $estLivree = in_array(strtolower($commande['statut']), ['livree', 'livrée']);
