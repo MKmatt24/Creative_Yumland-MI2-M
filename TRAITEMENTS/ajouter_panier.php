@@ -1,6 +1,22 @@
 <?php
 session_start();
 
+// Vérification si l'utilisateur est bloqué
+if (isset($_SESSION['user_id'])) {
+    $users = json_decode(file_get_contents('../DATA/users.json'), true);
+    foreach ($users as $u) {
+        if ($u['id'] == $_SESSION['user_id'] && ($u['est_bloque'] ?? false)) {
+            if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'message' => 'Votre compte est suspendu.']);
+                exit();
+            }
+            header('Location: ../VUES/menu.php?error=blocked');
+            exit();
+        }
+    }
+}
+
 // On vérifie que les données arrivent bien du formulaire
 if (isset($_POST['nom'], $_POST['prix'])) {
     

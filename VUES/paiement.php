@@ -2,6 +2,17 @@
 session_start();
 require_once '../TRAITEMENTS/getapikey.php';
 
+// Sécurité : un utilisateur bloqué ne peut pas initier un nouveau paiement
+if (isset($_SESSION['user_id'])) {
+    $users = json_decode(file_get_contents('../DATA/users.json'), true);
+    foreach ($users as $u) {
+        if ($u['id'] == $_SESSION['user_id'] && ($u['est_bloque'] ?? false)) {
+            header('Location: panier.php?error=blocked');
+            exit();
+        }
+    }
+}
+
 $vendeur = "TEST"; 
 $api_key = trim(getAPIKey($vendeur)); // Nettoyage de la clé
 $transaction = "T" . time();

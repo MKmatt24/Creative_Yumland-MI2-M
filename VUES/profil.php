@@ -48,6 +48,12 @@ if ($commandes && is_array($commandes)) {
         }
     }
 }
+
+// Récupération des notations existantes pour masquer le bouton "Noter" si déjà fait
+$notationsData = file_exists('../DATA/notation.json') ? file_get_contents('../DATA/notation.json') : '[]';
+$notations = json_decode($notationsData, true) ?? [];
+// On crée un tableau des IDs de commandes déjà notées pour une recherche rapide
+$idsCommandesNotées = array_column($notations, 'commande_id');
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -368,6 +374,12 @@ if ($commandes && is_array($commandes)) {
             <div class="profil-container">
                 
                 <div class="profil-header">
+                    <?php if (isset($currentUser['est_bloque']) && $currentUser['est_bloque'] === true): ?>
+                        <div class="blocked-banner">
+                            <strong>Compte Suspendu :</strong> Vous ne pouvez plus passer de nouvelles commandes. Vos commandes déjà payées restent en cours de traitement et vous seront livrées.
+                        </div>
+                    <?php endif; ?>
+
                     <div class="avatar-container">
                         <img src="../IMAGES/avatar_anonyme.png" alt="Avatar">
                         <button class="edit-avatar-btn" aria-label="Changer la photo">📷</button>
@@ -464,12 +476,17 @@ if ($commandes && is_array($commandes)) {
                                         </div>
                                         
                                         <div class="order-actions">
-                                            <button class="reorder-btn" data-articles='<?= htmlspecialchars(json_encode($commande["articles"]), ENT_QUOTES) ?>'>Commander à nouveau</button>
+                                            <?php if (!(isset($currentUser['est_bloque']) && $currentUser['est_bloque'] === true)): ?>
+                                                <button class="reorder-btn" data-articles='<?= htmlspecialchars(json_encode($commande["articles"]), ENT_QUOTES) ?>'>Commander à nouveau</button>
+                                            <?php else: ?>
+                                                <button class="reorder-btn" disabled title="Action impossible : compte suspendu">Commander à nouveau</button>
+                                            <?php endif; ?>
                                             
                                             <!-- NOUVEAU BOUTON POUR NOTER -->
                                             <?php 
-                                            // On s'assure de gérer "livrée" avec ou sans accent selon ce qui est dans le JSON
-                                            if (strtolower($commande['statut']) === 'livree' || strtolower($commande['statut']) === 'livrée'): 
+                                            // On affiche le bouton seulement si livrée ET non déjà notée
+                                            $estLivree = in_array(strtolower($commande['statut']), ['livree', 'livrée']);
+                                            if ($estLivree && !in_array($commande['id'], $idsCommandesNotées)): 
                                             ?>
                                                 <a href="notation.php?commande=<?= $commande['id'] ?>" class="reorder-btn noter-btn">
                                                     Noter

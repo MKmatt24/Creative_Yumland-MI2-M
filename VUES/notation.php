@@ -1,6 +1,5 @@
-<?php include '../LIB/authentification.php'; ?>
 <?php
-    session_start();
+include '../LIB/authentification.php';
 
 // Vérifier que l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
@@ -8,14 +7,35 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-// Simuler une commande (en Phase 2, tu n'as pas encore de système de commandes)
-// Plus tard, tu récupéreras la vraie commande depuis un fichier ou une BDD
-$commande_id = $_GET['commande'] ?? 12345;
-$commande = [
-    'id' => $commande_id,
-    'date' => '02/02/2026',
-    'montant' => '32,50 €'
-];
+$commande_id = $_GET['commande'] ?? null;
+if (!$commande_id) {
+    header('Location: profil.php');
+    exit;
+}
+
+// Chargement des données 
+$commandes = json_decode(file_get_contents('../DATA/commande.json'), true) ?? [];
+$notations = file_exists('../DATA/notation.json') ? json_decode(file_get_contents('../DATA/notation.json'), true) : [];
+
+$ma_commande = null;
+foreach ($commandes as $c) {
+    if ($c['id'] == $commande_id) {
+        $ma_commande = $c;
+        break;
+    }
+}
+
+// Vérification de sécurité : La commande doit exister, appartenir au client, être livrée et non notée
+$nomComplet = $_SESSION['prenom'] . ' ' . $_SESSION['nom'];
+$dejaNotee = false;
+foreach ($notations as $n) {
+    if ($n['commande_id'] == $commande_id) { $dejaNotee = true; break; }
+}
+
+if (!$ma_commande || strcasecmp($ma_commande['client'], $nomComplet) !== 0 || !in_array(strtolower($ma_commande['statut']), ['livree', 'livrée']) || $dejaNotee) {
+    header('Location: profil.php?error=notation_impossible');
+    exit;
+}
 
 // Message de succès si la notation a été enregistrée
 $success = $_GET['success'] ?? false;
@@ -55,14 +75,14 @@ $success = $_GET['success'] ?? false;
                 <?php endif; ?>
 
                 <div class="commande-info">
-                    <h3>Commande n°<?= htmlspecialchars($commande['id']) ?></h3>
-                    <p>Date : <?= htmlspecialchars($commande['date']) ?></p>
-                    <p>Montant : <?= htmlspecialchars($commande['montant']) ?></p>
+                    <h3>Commande n°<?= htmlspecialchars($ma_commande['id']) ?></h3>
+                    <p>Date : <?= htmlspecialchars($ma_commande['date'] ?? 'N/A') ?></p>
+                    <p>Montant : <?= number_format($ma_commande['prix_total'], 2, ',', ' ') ?> €</p>
                 </div>
 
                 <form action="../TRAITEMENTS/traitement_notation.php" method="post">
                     <!-- Champ caché pour envoyer l'ID de la commande -->
-                    <input type="hidden" name="commande_id" value="<?= htmlspecialchars($commande['id']) ?>">
+                    <input type="hidden" name="commande_id" value="<?= htmlspecialchars($ma_commande['id']) ?>">
                     
                     <div class="form-section">
                         <h3>Qualité de la livraison</h3>
