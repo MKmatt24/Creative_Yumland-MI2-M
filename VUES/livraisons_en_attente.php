@@ -141,6 +141,36 @@ foreach ($commandes as $cmd) {
                 .catch(() => {});
         }, 15000);
 
+        //Bouton de simulation de commande (pour les tests)
+
+        const btnSimuler = document.getElementById('btn-simuler');
+        if (btnSimuler) {
+            btnSimuler.addEventListener('click', () => {
+                btnSimuler.disabled = true;
+                btnSimuler.textContent = '⏳ Génération...';
+
+                fetch('../TRAITEMENTS/generer_commande.php', {
+                    method: 'POST'
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        afficherToast(data.message, 'success');
+                        setTimeout(() => location.reload(), 1000);
+                    } else {
+                        afficherToast(data.message || 'Erreur.', 'error');
+                    }
+                    btnSimuler.disabled = false;
+                    btnSimuler.textContent = '🎲 Simuler une commande';
+                })
+                .catch(() => {
+                    afficherToast('Erreur réseau.', 'error');
+                    btnSimuler.disabled = false;
+                    btnSimuler.textContent = '🎲 Simuler une commande';
+                });
+            });
+        }
+
         function afficherToast(message, type) {
             const existing = document.querySelector('.toast-notification');
             if (existing) existing.remove();
@@ -174,6 +204,8 @@ foreach ($commandes as $cmd) {
                 <div class="pulse-ring"></div>
                 <h2>En ligne - Recherche de livraisons en attente...</h2>
             </div>
+
+            <button type="button" class="simulate-btn" id="btn-simuler">🎲 Simuler une commande</button>
 
             <div class="offers-grid">
                 

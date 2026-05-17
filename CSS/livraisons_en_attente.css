@@ -393,6 +393,29 @@ nav ul li a:hover {
     transform: scale(0.98);
 }
 
+/*Bouton simuler une commande*/
+
+.simulate-btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 1.5rem;
+    background: var(--gris-carte);
+    color: var(--blanc);
+    border: 2px dashed #555;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.simulate-btn:hover {
+    border-color: var(--orange);
+    color: var(--orange);
+    background: rgba(255, 107, 53, 0.1);
+}
+
 /*Footer*/
 
 footer {
