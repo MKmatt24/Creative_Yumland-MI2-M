@@ -426,7 +426,7 @@ nav ul li a:hover {
     color: var(--noir);
 }
 
-/* === STYLE DES COUPONS DANS LE PROFIL === */
+/*Section des coupons*/
 .coupons-section {
     margin-top: 30px;
     padding-top: 20px;
@@ -545,7 +545,10 @@ nav ul li a:hover {
 }
 
 .cancel-btn {
-    margin-left: 4px;
+    position: absolute;
+    right: 35px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .toast-notification {
