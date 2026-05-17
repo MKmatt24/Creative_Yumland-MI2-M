@@ -6,12 +6,12 @@ Voici la liste de tous les mots de passe pour vous connecter afin de tester notr
 Prénom Nom : MDP (rôle) - mail
  
 Client : 
-Walter White : jesuislaporte (client) - heisenberg@gmail.com (+ 12)
-Jesse Pinkman : toietmoi (client) - capncook@gmail.com
-Saul Goodman : besoindunbonavocat (client) - saul@bettercallsaul.com (+ 12)
-Hank Schrader : officier (client) - hank.dea@gmail.com
-Mike Ehrmantraut : gardien (client) - mike.e@gmail.com (Suspendu)
-Mattéo Knopes : matteva24 (client) - mk@gmail.com
+Walter White : jesuislaporte (client) - heisenberg@gmail.com (+ 12) ///
+Jesse Pinkman : toietmoi (client) - capncook@gmail.com ///
+Saul Goodman : besoindunbonavocat (client) - saul@bettercallsaul.com (+ 12) ///
+Hank Schrader : officier (client) - hank.dea@gmail.com ///
+Mike Ehrmantraut : gardien (client) - mike.e@gmail.com (Suspendu) ///
+Mattéo Knopes : matteva24 (client) - mk@gmail.com ///
 
 Administrateur : 
 Max Mon : password (administrateur) - max.mon@gmail.com
