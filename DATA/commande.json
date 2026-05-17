@@ -129,7 +129,7 @@
         "date": "17\/05\/2026 20:45",
         "client": "Matt\u00e9o Knopes",
         "prix_total": 108.19999999999999,
-        "statut": "a_preparer",
+        "statut": "livree",
         "articles": [
             {
                 "nom": "Pollos Burger",
@@ -181,6 +181,41 @@
         "type": "immediate",
         "horaire": "ASAP",
         "coupon_utilise": 10,
-        "date_modification": "17\/05\/2026 20:46"
+        "date_modification": "17\/05\/2026 20:46",
+        "statut_logistique": "livree",
+        "livreur_id": null
+    },
+    {
+        "id": "T1779051056",
+        "date": "17\/05\/2026 20:51",
+        "client": "Matt\u00e9o Knopes",
+        "prix_total": 21,
+        "statut": "preparation",
+        "articles": [
+            {
+                "nom": "Pollos Burger",
+                "prix": 8.5,
+                "image": "..\/IMAGES\/pollos_burger.jpg",
+                "quantite": 1,
+                "modifications": []
+            },
+            {
+                "nom": "Menu Myst\u00e8re",
+                "prix": 12.5,
+                "image": "..\/IMAGES\/logo.png",
+                "quantite": 1,
+                "modifications": {
+                    "composition_aleatoire": {
+                        "Plat": "Red enchiladas",
+                        "Accompagnement": "Nachos de la Loma",
+                        "Dessert": "Sopapillas"
+                    }
+                }
+            }
+        ],
+        "type": "immediate",
+        "horaire": "ASAP",
+        "statut_logistique": "preparation",
+        "livreur_id": null
     }
 ]
