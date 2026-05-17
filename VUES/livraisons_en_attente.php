@@ -1,4 +1,10 @@
-<?php include '../LIB/authentification.php'; 
+<?php include '../LIB/authentification.php';
+
+//Vérification que l'utilisateur est bien un livreur
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'livreur') {
+    header('Location: connexion.php?erreur=livreur');
+    exit();
+}
 
 //Récupération des data du fichier JSON
 $fichierCommandes = '../DATA/commande.json';
@@ -44,7 +50,112 @@ foreach ($commandes as $cmd) {
     <title>Courses Disponibles - LOS POLLOS HERMANOS</title>
     <link rel="shortcut icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="icon" type="image/png" href="../IMAGES/logo.png">
-    <link rel="stylesheet" href="../CSS/livraisons_en_attente.css"> 
+    <link rel="stylesheet" href="../CSS/livraisons_en_attente.css">
+    <script defer>
+    document.addEventListener('DOMContentLoaded', function() {
+        //Menu mobile
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.querySelector('nav ul');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        const navLinks = document.querySelectorAll('nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('nav')) {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+
+        //Acceptation d'une course
+
+        function bindAccepter(btn) {
+            btn.addEventListener('click', function() {
+                const idCommande = this.dataset.id;
+                const card = this.closest('.offer-card');
+
+                this.disabled = true;
+                this.textContent = '⏳ Acceptation...';
+
+                const formData = new FormData();
+                formData.append('action', 'accepter');
+                formData.append('id_commande', idCommande);
+
+                fetch('../TRAITEMENTS/update_livraison.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        card.style.transition = 'all 0.4s ease';
+                        card.style.transform = 'scale(0.95)';
+                        card.style.opacity = '0.5';
+                        card.style.border = '2px solid #2ecc71';
+                        afficherToast('Course acceptée ! Redirection...', 'success');
+                        setTimeout(() => { window.location.href = 'livraison.php'; }, 1500);
+                    } else {
+                        afficherToast(data.message || 'Erreur.', 'error');
+                        btn.disabled = false;
+                        btn.textContent = 'Accepter la course';
+                    }
+                })
+                .catch(() => {
+                    afficherToast('Erreur réseau. Vérifiez votre connexion.', 'error');
+                    btn.disabled = false;
+                    btn.textContent = 'Accepter la course';
+                });
+            });
+        }
+
+        document.querySelectorAll('.btn-accepter').forEach(bindAccepter);
+
+        //Rafraîchissement automatique de la liste des courses toutes les 15 secondes
+        setInterval(() => {
+            fetch('livraisons_en_attente.php')
+                .then(res => res.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const nouvelleGrille = doc.querySelector('.offers-grid');
+                    const grilleActuelle = document.querySelector('.offers-grid');
+                    if (nouvelleGrille && grilleActuelle) {
+                        const nbActuel = grilleActuelle.querySelectorAll('.offer-card').length;
+                        const nbNouveau = nouvelleGrille.querySelectorAll('.offer-card').length;
+                        if (nbNouveau !== nbActuel) {
+                            grilleActuelle.innerHTML = nouvelleGrille.innerHTML;
+                            document.querySelectorAll('.btn-accepter').forEach(bindAccepter);
+                        }
+                    }
+                })
+                .catch(() => {});
+        }, 15000);
+
+        function afficherToast(message, type) {
+            const existing = document.querySelector('.toast-notification');
+            if (existing) existing.remove();
+
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification toast-' + type;
+            toast.textContent = message;
+            toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);padding:16px 28px;border-radius:10px;color:#fff;font-weight:bold;font-size:1rem;z-index:9999;opacity:0;transition:opacity 0.3s,transform 0.3s;box-shadow:0 4px 12px rgba(0,0,0,0.3);';
+            toast.style.background = type === 'success' ? '#2ecc71' : '#e74c3c';
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.style.opacity = '1'; toast.style.transform = 'translateX(-50%) translateY(0)'; }, 10);
+            setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3500);
+        }
+    });
+    </script>
 </head>
 <body>
 
@@ -55,7 +166,7 @@ foreach ($commandes as $cmd) {
             🎨 Changer de style
         </button>
     </div>
-
+    
     <main>
         <section class="radar-section">
             
@@ -67,9 +178,9 @@ foreach ($commandes as $cmd) {
             <div class="offers-grid">
                 
                 <?php if (empty($offres)): ?>
-                    <div class="empty-state" style="text-align: center; padding: 40px 20px; background: #242424; border-radius: 15px; border: 1px solid #333;">
-                        <h3 style="color: #888;">Aucune course disponible</h3>
-                        <p style="color: #666; font-size: 0.9rem; margin-top: 10px;">Le restaurant est calme pour le moment. Restez en ligne.</p>
+                    <div class="empty-state">
+                        <h3>Aucune course disponible</h3>
+                        <p>Le restaurant est calme pour le moment. Restez en ligne.</p>
                     </div>
                 <?php else: ?>
 
@@ -102,13 +213,11 @@ foreach ($commandes as $cmd) {
                                 </div>
                             </div>
 
-                            <form method="POST" action="Livraisons_en_attente.php" class="offer-actions" style="display: flex; gap: 10px;">
-                                <input type="hidden" name="id_commande" value="<?= $offre['id'] ?>">
-                                
+                            <div class="offer-actions">
                                 <button type="button" class="decline-btn" aria-label="Ignorer la course" onclick="this.closest('.offer-card').style.display='none';">❌</button>
-                                
-                                <button type="submit" name="action" value="accepter" class="accept-btn" style="flex: 1;">Accepter la course</button>
-                            </form>
+
+                                <button type="button" class="accept-btn btn-accepter" data-id="<?= $offre['id'] ?>">Accepter la course</button>
+                            </div>
                         </div>
                     <?php endforeach; ?>
 
@@ -121,35 +230,4 @@ foreach ($commandes as $cmd) {
     <?php include '../LIB/footer.php'; ?>
     
 </body>
-<script>
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navMenu = document.querySelector('nav ul');
-
-    window.addEventListener('load', function() {
-            const cible = document.getElementById('zone-livraison');
-            if (cible) {
-                cible.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-
-    menuToggle.addEventListener('click', () => {
-        menuToggle.classList.toggle('active');
-        navMenu.classList.toggle('active');
-    });
-
-    const navLinks = document.querySelectorAll('nav ul li a');
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            menuToggle.classList.remove('active');
-            navMenu.classList.remove('active');
-        });
-    });
-
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('nav')) {
-            menuToggle.classList.remove('active');
-            navMenu.classList.remove('active');
-        }
-    });
-</script>
 </html>

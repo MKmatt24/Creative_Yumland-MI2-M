@@ -63,6 +63,7 @@ nav {
 }
 
 /* === BOUTON DE CHANGEMENT DE THÈME === */
+
 .theme-switcher-container {
     position: fixed;
     top: 120px;
@@ -340,9 +341,10 @@ nav ul li a:hover {
     background: var(--gris-carte);
     color: #888;
     border: 1px solid #444;
-    width: 60px;
+    min-width: 55px;
+    min-height: 55px;
     border-radius: 10px;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     cursor: pointer;
     transition: 0.2s;
 }
@@ -355,17 +357,36 @@ nav ul li a:hover {
 
 .accept-btn {
     flex: 1;
+    min-height: 55px;
     background: linear-gradient(135deg, var(--orange) 0%, var(--orange-hover) 100%);
     color: #fff;
     border: none;
     padding: 18px;
     border-radius: 10px;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: bold;
     text-transform: uppercase;
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
     transition: transform 0.2s;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    background: var(--gris-carte);
+    border-radius: 15px;
+    border: 1px solid #333;
+}
+
+.empty-state h3 {
+    color: #888;
+}
+
+.empty-state p {
+    color: #666;
+    font-size: 0.9rem;
+    margin-top: 10px;
 }
 
 .accept-btn:active {

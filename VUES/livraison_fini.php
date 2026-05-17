@@ -1,5 +1,11 @@
 <?php include '../LIB/authentification.php';
 
+//Vérification que l'utilisateur est bien un livreur
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'livreur') {
+    header('Location: connexion.php?erreur=livreur');
+    exit();
+}
+
 $id_commande = $_GET['id'] ?? null;
 
 if (!$id_commande) {
@@ -39,6 +45,34 @@ $temps_estime = $commande_trouvee['temps_minutes'] ?? 0;
     <link rel="shortcut icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="stylesheet" href="../CSS/livraison_fini.css">
+    <link rel="stylesheet" href="../CSS/livraison.css">
+    <script defer>
+    document.addEventListener('DOMContentLoaded', function() {
+        //Menu mobile
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.querySelector('nav ul');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        const navLinks = document.querySelectorAll('nav ul li a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('nav')) {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+    });
+    </script>
 </head>
 <body>
 
@@ -49,7 +83,7 @@ $temps_estime = $commande_trouvee['temps_minutes'] ?? 0;
             🎨 Changer de style
         </button>
     </div>
-
+    
     <main class="success-page">
         
         <div class="success-container">
@@ -80,11 +114,13 @@ $temps_estime = $commande_trouvee['temps_minutes'] ?? 0;
             </div>
 
             <div class="action-buttons">
-                <a href="Livraisons_en_attente.php" class="primary-btn">🏠 Retour à la page de livraison</a>
+                <a href="livraisons_en_attente.php" class="primary-btn">🏠 Retour à la page de livraison</a>
             </div>
         </div>
 
     </main>
+
+    <?php include '../LIB/footer.php'; ?>
 
 </body>
 </html>
