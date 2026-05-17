@@ -63,6 +63,7 @@ nav {
 }
 
 /* === BOUTON DE CHANGEMENT DE THÈME === */
+
 .theme-switcher-container {
     position: fixed;
     top: 120px;
@@ -324,6 +325,44 @@ nav ul li a:hover {
 
 .finish-btn:active {
     transform: scale(0.98);
+}
+
+.delivery-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.abandon-btn {
+    background: #242424;
+    color: #888;
+    border: 1px solid #444;
+    width: 70px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.4rem;
+    min-height: 60px;
+}
+
+.finish-btn.finish-btn--large {
+    flex: 1;
+    min-height: 60px;
+    font-size: 1.1rem;
+}
+
+.delivery-section--empty {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.delivery-section--empty p {
+    color: #888;
+    margin-bottom: 20px;
+}
+
+.finish-btn--link {
+    text-decoration: none;
+    display: inline-block;
 }
 
 /*Animation de clignotement pour le badge "En cours de livraison"*/
