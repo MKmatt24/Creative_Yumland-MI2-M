@@ -26,7 +26,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] != $userId) {
 }
 
 //Liste des champs que l'utilisateur a le droit de modifier
-$champsAutorises = ['nom_complet', 'email', 'telephone', 'date_naissance', 'adresse'];
+$champsAutorises = ['nom_complet', 'email', 'telephone', 'date_naissance', 'adresse', 'objectif_jour'];
 if (!in_array($champ, $champsAutorises)) {
     echo json_encode(['success' => false, 'message' => 'Champ non modifiable.']);
     exit;
@@ -88,6 +88,16 @@ foreach ($users as &$user) {
             //Adresse : pas de validation spécifique
             case 'adresse':
                 $user['adresse'] = $valeur;
+                break;
+
+            //Objectif du jour : validation entre 10 et 500€
+            case 'objectif_jour':
+                $obj = floatval($valeur);
+                if ($obj < 10 || $obj > 500) {
+                    echo json_encode(['success' => false, 'message' => 'Objectif entre 10 et 500 €.']);
+                    exit;
+                }
+                $user['objectif_jour'] = $obj;
                 break;
         }
         break;

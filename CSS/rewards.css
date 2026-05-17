@@ -233,17 +233,42 @@ nav ul li a:hover {
     margin-bottom: 5px;
 }
 
-.progress-bar { 
-    width: 100%;
+.progress-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.progress-bar {
+    flex: 1;
     height: 8px;
     background-color: var(--noir);
     border-radius: 4px;
     overflow: hidden;
 }
 
-.progress-fill { height: 100%;
+.progress-fill {
+    height: 100%;
     background: linear-gradient(90deg, var(--orange), var(--orange-hover));
     border-radius: 4px;
+}
+
+.goal-complete {
+    font-size: 1.4rem;
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+.goal-message {
+    color: #2ecc71;
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-top: 8px;
+    text-align: center;
 }
 
 /*Bouton de retrait*/

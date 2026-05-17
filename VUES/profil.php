@@ -101,6 +101,9 @@ $idsCommandesNotées = array_column($notations, 'commande_id');
             { label: 'Email', field: 'email', type: 'email', validate: validateEmail },
             { label: 'Téléphone', field: 'telephone', type: 'tel', validate: validateTelephone },
             { label: 'Adresse de livraison', field: 'adresse', type: 'text', validate: validateAdresse }
+            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'livreur'): ?>
+            ,{ label: 'Objectif du jour', field: 'objectif_jour', type: 'number', validate: validateObjectif }
+            <?php endif; ?>
         ];
 
         const editButtons = document.querySelectorAll('.icon-btn');
@@ -277,8 +280,16 @@ $idsCommandesNotées = array_column($notations, 'commande_id');
             return null;
         }
 
+        function validateObjectif(value) {
+            const num = parseFloat(value);
+            if (isNaN(num)) return 'Veuillez entrer un nombre.';
+            if (num < 10) return 'L\'objectif doit être d\'au moins 10 €.';
+            if (num > 500) return 'L\'objectif ne peut pas dépasser 500 €.';
+            return null;
+        }
+
         function getMaxLength(field) {
-            const lengths = { nom_complet: 60, email: 100, telephone: 15, date_naissance: 10, adresse: 150 };
+            const lengths = { nom_complet: 60, email: 100, telephone: 15, date_naissance: 10, adresse: 150, objectif_jour: 6 };
             return lengths[field] || 100;
         }
 
@@ -517,6 +528,16 @@ $idsCommandesNotées = array_column($notations, 'commande_id');
                                     <button type="button" class="icon-btn">✏️</button>
                                 </div>
                             </div>
+
+                            <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'livreur'): ?>
+                            <div class="form-group">
+                                <label>Objectif du jour (€)</label>
+                                <div class="input-with-btn">
+                                    <input type="number" value="<?= htmlspecialchars($currentUser['objectif_jour'] ?? '160') ?>" readonly min="10" max="500" step="5">
+                                    <button type="button" class="icon-btn">✏️</button>
+                                </div>
+                            </div>
+                            <?php endif; ?>
                         </form>
                     </div>
 

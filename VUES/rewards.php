@@ -6,7 +6,16 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'livreur') {
     exit();
 }
 
+//Récupération de l'objectif du jour depuis le profil du livreur (modifiable)
+$usersData = json_decode(file_get_contents('../DATA/users.json'), true);
 $objectif_jour = 160.00;
+foreach ($usersData as $u) {
+    if ($u['id'] == $_SESSION['user_id'] && isset($u['objectif_jour'])) {
+        $objectif_jour = floatval($u['objectif_jour']);
+        break;
+    }
+}
+
 $solde_disponible = 0;
 $historique_commandes = [];
 
@@ -97,8 +106,8 @@ if ($pourcentage_objectif > 100) {$pourcentage_objectif = 100;}
                 const soldeEl = document.querySelector('.balance-amount');
                 const solde = parseFloat(soldeEl.textContent.replace(',', '.').replace(/[^\d.]/g, ''));
 
-                if (solde <= 0) {
-                    afficherToast('Aucun gain à retirer.', 'error');
+                if (solde < 20) {
+                    afficherToast('Retrait possible à partir de 20 €. (Solde actuel : ' + solde.toFixed(2) + ' €)', 'error');
                     return;
                 }
 
@@ -221,9 +230,17 @@ if ($pourcentage_objectif > 100) {$pourcentage_objectif = 100;}
                                     <span>Objectif du jour</span>
                                     <span><?= number_format($objectif_jour, 2, ',', ' ') ?> €</span>
                                 </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: <?= round($pourcentage_objectif) ?>%;"></div>
+                                <div class="progress-bar-row">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: <?= round($pourcentage_objectif) ?>%;"></div>
+                                    </div>
+                                    <?php if ($pourcentage_objectif >= 100): ?>
+                                        <span class="goal-complete">✅</span>
+                                    <?php endif; ?>
                                 </div>
+                                <?php if ($pourcentage_objectif >= 100): ?>
+                                    <p class="goal-message">Objectif atteint ! Bonne journée !</p>
+                                <?php endif; ?>
                             </div>
 
                             <button class="withdraw-btn">💸 Retirer mes gains</button>
