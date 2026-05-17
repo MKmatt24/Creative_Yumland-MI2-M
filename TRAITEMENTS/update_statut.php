@@ -10,18 +10,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $commandes = json_decode(file_get_contents($file), true);
 
     foreach ($commandes as &$c) {
-        // On vérifie l'ID (attention au type string/int selon ton JSON)
         if ($c['id'] == $id_cmd) {
             $c['statut'] = $nouveau_statut;
-            $c['statut_logistique'] = ($nouveau_statut === 'livraison') ? 'en_livraison' : $nouveau_statut;
-            $c['livreur_id'] = $id_livreur;
+            if ($nouveau_statut === 'livraison') {
+                $c['statut_logistique'] = 'en_livraison';
+                $c['livreur_id'] = intval($id_livreur);
+            } else {
+                $c['statut_logistique'] = $nouveau_statut;
+            }
             break;
         }
     }
 
-    file_put_contents($file, json_encode($commandes, JSON_PRETTY_PRINT));
-    
-    // REDIRECTION : On retourne vers la page d'affichage des commandes
+    file_put_contents($file, json_encode($commandes, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+
     header('Location: ../VUES/commande.php?updated=1');
     exit;
 }

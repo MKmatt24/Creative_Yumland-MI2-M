@@ -9,6 +9,7 @@ if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'restaurateur' && $_SESS
 
 $json_file = '../DATA/commande.json';
 $commandes = json_decode(file_get_contents($json_file), true) ?? [];
+$usersData = json_decode(file_get_contents('../DATA/users.json'), true) ?? [];
 
 // Fonction pour filtrer et harmoniser les statuts du JSON
 function filtrerCommandes($liste, $statuts_recherches) {
@@ -83,8 +84,11 @@ function filtrerCommandes($liste, $statuts_recherches) {
                     <input type="hidden" name="id_commande" value="<?= $c['id'] ?>">
                     <select name="id_livreur" class="select-livreur" required>
                         <option value="">-- Assigner Livreur --</option>
-                        <option value="Jesse">Jesse Pinkman</option>
-                        <option value="Mike">Mike Ehrmantraut</option>
+                        <?php foreach ($usersData as $u):
+                            if (($u['role'] ?? '') === 'livreur'):
+                        ?>
+                            <option value="<?= $u['id'] ?>"><?= htmlspecialchars($u['prenom'] . ' ' . $u['nom']) ?></option>
+                        <?php endif; endforeach; ?>
                     </select>
                     <button type="submit" name="nouveau_statut" value="livraison" class="btn-status">Prêt pour envoi 🚚</button>
                 </form>
@@ -103,12 +107,19 @@ function filtrerCommandes($liste, $statuts_recherches) {
                 </div>
                 <div class="order-content">
                     <p>📍 <?= htmlspecialchars($c['adresse'] ?? 'À emporter') ?></p>
-                    <p style="color: #3498db !important; font-weight: bold;">👤 Livreur : <?= $c['livreur_id'] ?? 'Inconnu' ?></p>
+                    <?php
+                    $nomLivreur = 'Inconnu';
+                    if (isset($c['livreur_id']) && is_numeric($c['livreur_id'])) {
+                        foreach ($usersData as $ul) {
+                            if ($ul['id'] == $c['livreur_id']) {
+                                $nomLivreur = $ul['prenom'] ?? $ul['nom'] ?? 'Inconnu';
+                                break;
+                            }
+                        }
+                    }
+                    ?>
+                    <p style="color: #3498db !important; font-weight: bold;">👤 Livreur : <?= htmlspecialchars($nomLivreur) ?></p>
                 </div>
-                <form action="../TRAITEMENTS/update_statut.php" method="POST">
-                    <input type="hidden" name="id_commande" value="<?= $c['id'] ?>">
-                    <button type="submit" name="nouveau_statut" value="livree" class="btn-status" style="background-color: #3498db;">Confirmer Livraison 🏁</button>
-                </form>
             </div>
         <?php endforeach; ?>
         </div>
@@ -117,7 +128,7 @@ function filtrerCommandes($liste, $statuts_recherches) {
     <section class="kanban-column column-done">
         <h2 class="section-title">🏁 Livrées</h2>
         <div class="orders-grid">
-        <?php foreach (filtrerCommandes($commandes, ['livree']) as $c): ?>
+        <?php foreach (filtrerCommandes($commandes, ['livree', 'livrée']) as $c): ?>
             <div class="order-card">
                 <div class="order-header">
                     <span class="order-id">#<?= $c['id'] ?></span>

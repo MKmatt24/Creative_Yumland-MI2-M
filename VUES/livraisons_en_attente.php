@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['id_
     }
 }
 
-//Recherche des courses en préparation
+//Recherche des courses en préparation (disponibles pour les livreurs)
 $offres = [];
 
 foreach ($commandes as $cmd) {
