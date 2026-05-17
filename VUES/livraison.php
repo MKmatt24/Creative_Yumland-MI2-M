@@ -35,8 +35,10 @@ foreach ($commandes as &$cmd) {
     }
 }
 
-//Sauvegarde du fichier JSON modifié et rafraichissement de la page pour vider le formulaire
-    file_put_contents($fichierCommandes, json_encode($commandes, JSON_PRETTY_PRINT));
+//Sauvegarde du fichier JSON modifié
+    file_put_contents($fichierCommandes, json_encode($commandes, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+
+//Rafraichissement de la page pour vider le formulaire
     header('Location: livraison.php');
     exit();
 }

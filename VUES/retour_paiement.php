@@ -68,6 +68,14 @@ if ($paiement_valide) {
 
     file_put_contents($file, json_encode($commandesData, JSON_PRETTY_PRINT));
 
+    // --- SUPPRESSION DU COUPON FIDÉLITÉ DE COUPONS.JSON (USAGE UNIQUE) ---
+    if (isset($_SESSION['coupon']['code']) && strpos($_SESSION['coupon']['code'], 'FIDELITE-') === 0) {
+        $fichierCoupons = '../DATA/coupons.json';
+        $couponsData = json_decode(file_get_contents($fichierCoupons), true) ?? [];
+        unset($couponsData[$_SESSION['coupon']['code']]);
+        file_put_contents($fichierCoupons, json_encode($couponsData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+    }
+
     // --- NETTOYAGE APRÈS ACHAT ---
     unset($_SESSION['panier']);       // Vide le panier
     unset($_SESSION['coupon']);       // SUPPRIME LE COUPON ICI

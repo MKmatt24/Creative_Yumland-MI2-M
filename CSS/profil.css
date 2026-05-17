@@ -502,6 +502,18 @@ nav ul li a:hover {
     margin-top: 5px;
 }
 
+.coupon-fidelite {
+    border: 1px solid #2ecc71;
+}
+
+.coupon-fidelite .coupon-left {
+    background-color: #2ecc71;
+}
+
+.coupon-fidelite:hover {
+    border-color: #27ae60;
+}
+
 /* Responsive */
 @media (max-width: 480px) {
     .coupons-grid {

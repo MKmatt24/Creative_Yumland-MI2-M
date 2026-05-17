@@ -54,6 +54,57 @@ $notationsData = file_exists('../DATA/notation.json') ? file_get_contents('../DA
 $notations = json_decode($notationsData, true) ?? [];
 // On crée un tableau des IDs de commandes déjà notées pour une recherche rapide
 $idsCommandesNotées = array_column($notations, 'commande_id');
+
+//Calcul des points de fidélité à partir de l'historique des commandes livrées (5 points par euro)
+$totalPointsGagnes = 0;
+foreach ($mesCommandes as $cmd) {
+    $statut = strtolower($cmd['statut'] ?? '');
+    if ($statut === 'livrée' || $statut === 'livree') {
+        $totalPointsGagnes += floor(floatval($cmd['prix_total'] ?? 0)) * 5;
+    }
+}
+//Calcul du nombre de coupons déjà gagnés et des points restants
+$nbCouponsGagnes = floor($totalPointsGagnes / 500);
+$pointsRestants = $totalPointsGagnes % 500;
+
+//Génération des coupons de fidélité dans coupons.json (codes à usage unique)
+$fichierCoupons = '../DATA/coupons.json';
+$couponsData = json_decode(file_get_contents($fichierCoupons), true) ?? [];
+$prixPlats = ['Hermano Tenders' => 9.00, 'Pollos Burger' => 8.50];
+$platsOfferts = ['Hermano Tenders', 'Pollos Burger'];
+
+//On vérifie combien de coupons fidélité existent déjà pour cet utilisateur
+$prefixe = 'FIDELITE-' . $currentUser['id'] . '-';
+$couponsExistants = 0;
+foreach ($couponsData as $code => $infos) {
+    if (strpos($code, $prefixe) === 0) {
+        $couponsExistants++;
+    }
+}
+
+//On génère les coupons manquants
+$couponsModifies = false;
+for ($i = $couponsExistants; $i < $nbCouponsGagnes; $i++) {
+    $plat = $platsOfferts[$i % 2];
+    $code = $prefixe . strtoupper(substr(md5($currentUser['id'] . $i . 'fidelite'), 0, 6));
+    $couponsData[$code] = [
+        'type' => 'fixe',
+        'valeur' => $prixPlats[$plat],
+        'description' => $plat . ' offert (Fidélité 500 pts)'
+    ];
+    $couponsModifies = true;
+}
+if ($couponsModifies) {
+    file_put_contents($fichierCoupons, json_encode($couponsData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+}
+
+//Récupération des coupons fidélité de l'utilisateur pour affichage
+$couponsFidelite = [];
+foreach ($couponsData as $code => $infos) {
+    if (strpos($code, $prefixe) === 0) {
+        $couponsFidelite[] = ['code' => $code, 'description' => $infos['description'], 'valeur' => $infos['valeur']];
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -455,21 +506,17 @@ $idsCommandesNotées = array_column($notations, 'commande_id');
                         
                         <div class="loyalty-card">
                             <h3>Los Pollos Club</h3>
-                            <?php 
-                            $points = $currentUser['points_fidelite'] ?? 0;
-                            $objectif = 500; 
-                            $pourcentage = ($points / $objectif) * 100;
-                            
-                            if ($pourcentage > 100) {
-                                $pourcentage = 100;
-                            }
+                            <?php
+                            $objectif = 500;
+                            $pourcentage = ($pointsRestants / $objectif) * 100;
+                            if ($pourcentage > 100) $pourcentage = 100;
                             ?>
-                            <p>Vous avez <strong><?= htmlspecialchars($points) ?> / <?= $objectif ?> points</strong></p>
+                            <p>Vous avez <strong><?= $pointsRestants ?> / <?= $objectif ?> points</strong></p>
                             <div class="progress-bar">
                                 <div class="progress-fill" style="width: <?= round($pourcentage) ?>%;"></div>
                             </div>
                             <p class="points-hint">
-                                (Encore <?= $objectif - $points ?> points avant votre prochaine récompense !)
+                                (Encore <?= $objectif - $pointsRestants ?> points avant votre prochaine récompense !)
                             </p>
                         </div>
                     </div>
@@ -603,6 +650,19 @@ $idsCommandesNotées = array_column($notations, 'commande_id');
                                     <small>Dès 30€ d'achat</small>
                                 </div>
                             </div>
+
+                            <?php foreach ($couponsFidelite as $coupon): ?>
+                            <div class="coupon-card coupon-fidelite">
+                                <div class="coupon-left">
+                                    <span class="coupon-value">GRATUIT</span>
+                                </div>
+                                <div class="coupon-right">
+                                    <h4><?= htmlspecialchars($coupon['description']) ?></h4>
+                                    <p>Code : <span class="coupon-code"><?= htmlspecialchars($coupon['code']) ?></span></p>
+                                    <small>À utiliser dans le panier (-<?= number_format($coupon['valeur'], 2, ',', '') ?> €)</small>
+                                </div>
+                            </div>
+                            <?php endforeach; ?>
                         </div>
                     </div>
 
