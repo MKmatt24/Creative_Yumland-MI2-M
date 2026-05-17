@@ -12,12 +12,12 @@
             }
         ],
         "prix_total": 19.99,
-        "statut": "livrée",
+        "statut": "livr\u00e9e",
         "adresse": "308 Negra Arroyo Lane, Albuquerque",
         "date": "2026-03-24 12:30",
         "heure_retrait": "12:45",
         "livreur_id": 11,
-        "gain_livreur": 5.30,
+        "gain_livreur": 5.3,
         "statut_logistique": "livree"
     },
     {
@@ -28,22 +28,22 @@
         "articles": [
             {
                 "nom": "Ailes Fuego",
-                "prix": 9.50,
+                "prix": 9.5,
                 "quantite": 2
             },
             {
                 "nom": "Frites Maison",
-                "prix": 4.50,
+                "prix": 4.5,
                 "quantite": 1
             }
         ],
-        "prix_total": 23.50,
-        "statut": "livrée",
+        "prix_total": 23.5,
+        "statut": "livr\u00e9e",
         "adresse": "9809 Margo Street, Albuquerque",
         "date": "2026-03-25 19:15",
         "heure_retrait": "19:30",
         "livreur_id": 11,
-        "gain_livreur": 4.70,
+        "gain_livreur": 4.7,
         "statut_logistique": "livree"
     },
     {
@@ -54,22 +54,22 @@
         "articles": [
             {
                 "nom": "Pollos Burger",
-                "prix": 12.90,
+                "prix": 12.9,
                 "quantite": 1
             },
             {
                 "nom": "Nachos de la Loma",
-                "prix": 8.90,
+                "prix": 8.9,
                 "quantite": 2
             }
         ],
-        "prix_total": 30.70,
-        "statut": "livrée",
+        "prix_total": 30.7,
+        "statut": "livr\u00e9e",
         "adresse": "160 Montgomery Blvd, Albuquerque",
         "date": "2026-04-02 20:00",
         "heure_retrait": "20:15",
         "livreur_id": 11,
-        "gain_livreur": 6.10,
+        "gain_livreur": 6.1,
         "statut_logistique": "livree"
     },
     {
@@ -80,17 +80,17 @@
         "articles": [
             {
                 "nom": "Quesadilla XL",
-                "prix": 11.50,
+                "prix": 11.5,
                 "quantite": 1
             },
             {
                 "nom": "Spicy Wrap",
-                "prix": 10.50,
+                "prix": 10.5,
                 "quantite": 1
             }
         ],
-        "prix_total": 22.00,
-        "statut": "abandonnée",
+        "prix_total": 22,
+        "statut": "abandonn\u00e9e",
         "adresse": "4901 Cumbre Del Sur, Albuquerque",
         "date": "2026-04-10 13:30",
         "heure_retrait": "13:45",
@@ -106,22 +106,116 @@
         "articles": [
             {
                 "nom": "Hermano Tenders",
-                "prix": 9.90,
+                "prix": 9.9,
                 "quantite": 2
             },
             {
                 "nom": "Burrito Breakfast",
-                "prix": 11.90,
+                "prix": 11.9,
                 "quantite": 1
             }
         ],
-        "prix_total": 31.70,
-        "statut": "livrée",
+        "prix_total": 31.7,
+        "statut": "livr\u00e9e",
         "adresse": "308 Negra Arroyo Lane, Albuquerque",
         "date": "2026-05-10 12:00",
         "heure_retrait": "12:20",
         "livreur_id": 11,
-        "gain_livreur": 5.90,
+        "gain_livreur": 5.9,
         "statut_logistique": "livree"
+    },
+    {
+        "id": "T1779050725",
+        "date": "17\/05\/2026 20:45",
+        "client": "Matt\u00e9o Knopes",
+        "prix_total": 108.19999999999999,
+        "statut": "livree",
+        "articles": [
+            {
+                "nom": "Pollos Burger",
+                "prix": 8.5,
+                "image": "..\/IMAGES\/pollos_burger.jpg",
+                "quantite": 1,
+                "modifications": {
+                    "ingredients": [
+                        "Laitue",
+                        "Sauce Pollos",
+                        "Tomate"
+                    ]
+                }
+            },
+            {
+                "nom": "Menu Myst\u00e8re",
+                "prix": 12.5,
+                "image": "..\/IMAGES\/logo.png",
+                "quantite": 1,
+                "modifications": {
+                    "composition_aleatoire": {
+                        "Plat": "Ultimate Burrito",
+                        "Accompagnement": "Fries",
+                        "Dessert": "Sopapillas"
+                    }
+                }
+            },
+            {
+                "nom": "Menu Bucket Family",
+                "prix": 24.9,
+                "image": "..\/IMAGES\/logo.png",
+                "quantite": 3,
+                "modifications": []
+            },
+            {
+                "nom": "Menu Myst\u00e8re",
+                "prix": 12.5,
+                "image": "..\/IMAGES\/logo.png",
+                "quantite": 1,
+                "modifications": {
+                    "composition_aleatoire": {
+                        "Plat": "Tacos Al Pastor",
+                        "Accompagnement": "Rice Pollos bowl",
+                        "Dessert": "Butterscotch Pudding"
+                    }
+                }
+            }
+        ],
+        "type": "immediate",
+        "horaire": "ASAP",
+        "coupon_utilise": 10,
+        "date_modification": "17\/05\/2026 20:46",
+        "statut_logistique": "livree",
+        "livreur_id": null
+    },
+    {
+        "id": "T1779051056",
+        "date": "17\/05\/2026 20:51",
+        "client": "Matt\u00e9o Knopes",
+        "prix_total": 21,
+        "statut": "preparation",
+        "articles": [
+            {
+                "nom": "Pollos Burger",
+                "prix": 8.5,
+                "image": "..\/IMAGES\/pollos_burger.jpg",
+                "quantite": 1,
+                "modifications": []
+            },
+            {
+                "nom": "Menu Myst\u00e8re",
+                "prix": 12.5,
+                "image": "..\/IMAGES\/logo.png",
+                "quantite": 1,
+                "modifications": {
+                    "composition_aleatoire": {
+                        "Plat": "Red enchiladas",
+                        "Accompagnement": "Nachos de la Loma",
+                        "Dessert": "Sopapillas"
+                    }
+                }
+            }
+        ],
+        "type": "immediate",
+        "horaire": "ASAP",
+        "statut_logistique": "preparation",
+        "livreur_id": null
     }
 ]

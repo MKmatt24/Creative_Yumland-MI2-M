@@ -7,11 +7,16 @@
     "GUSTAVO5": {
         "type": "fixe",
         "valeur": 5,
-        "description": "5\u20ac de r\u00e9duction imm\u00e9diate"
+        "description": "5€ de réduction immédiate"
     },
     "REFUND-668E58": {
         "type": "fixe",
         "valeur": 19.99,
         "description": "Remboursement modification commande #T1778346037"
+    },
+    "FIDELITE-9-F57245": {
+        "type": "fixe",
+        "valeur": 9,
+        "description": "Hermano Tenders offert (Fidélité 500 pts)"
     }
 }
