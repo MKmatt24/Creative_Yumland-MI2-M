@@ -219,8 +219,9 @@ if ($commandeEnCours && isset($commandeEnCours['user_id'])) {
 
                     <div class="address-block">
                         <label>📍 Adresse de livraison</label>
-                        <p class="address-text"><?= htmlspecialchars($commandeEnCours['adresse']) ?></p>
-                        <a href="https://maps.google.com/?q=<?= urlencode($commandeEnCours['adresse']) ?>" target="_blank" class="gps-btn">
+                        <?php $adresseLivraison = $commandeEnCours['adresse'] ?? $clientInfo['adresse'] ?? 'Adresse non renseignée'; ?>
+                        <p class="address-text"><?= htmlspecialchars($adresseLivraison) ?></p>
+                        <a href="https://maps.google.com/?q=<?= urlencode($adresseLivraison) ?>" target="_blank" class="gps-btn">
                             🗺️ Ouvrir le GPS
                         </a>
                     </div>
@@ -234,12 +235,12 @@ if ($commandeEnCours && isset($commandeEnCours['user_id'])) {
                         <div class="access-item">
                             <span class="icon">🏢</span>
                             <span class="label">Étage</span>
-                            <span class="value"><?= htmlspecialchars($commandeEnCours['etage'] ?? 'N/A') ?></span>
+                            <span class="value"><?= htmlspecialchars($clientInfo['etage'] ?? 'N/A') ?></span>
                         </div>
                         <div class="access-item">
                             <span class="icon">🚪</span>
                             <span class="label">Appartement</span>
-                            <span class="value"><?= htmlspecialchars($commandeEnCours['appartement'] ?? 'N/A') ?></span>
+                            <span class="value"><?= htmlspecialchars($clientInfo['appartement'] ?? 'N/A') ?></span>
                         </div>
                     </div>
 

@@ -757,6 +757,7 @@ nav ul li a:hover, nav ul li a.active {
 .form-field input[type="time"] { border-color: #4CAF50; }
 .note-delay { font-size: 0.8rem; color: #888; margin-top: 5px; }
 
+.plan-card textarea { width: 100%; padding: 12px; background: #000; color: white; border: 1px solid #333; border-radius: 5px; font-size: 1rem; outline: none; box-sizing: border-box; resize: vertical; font-family: inherit; }
 .choix-horaire { display: none; animation: fadeIn 0.3s; }
 
 .btn-full { 

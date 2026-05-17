@@ -11,6 +11,14 @@ $fichierCommandes = '../DATA/commande.json';
 $commandesData = file_get_contents($fichierCommandes);
 $commandes = json_decode($commandesData, true);
 
+//Si le livreur a déjà une commande en cours, on le redirige vers livraison.php
+foreach ($commandes as $cmd) {
+    if (($cmd['statut'] ?? '') === 'livraison' && ($cmd['livreur_id'] ?? '') == $_SESSION['user_id']) {
+        header('Location: livraison.php');
+        exit();
+    }
+}
+
 //Quand le livreur accepte une course
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['id_commande'])) {
     if ($_POST['action'] === 'accepter') {

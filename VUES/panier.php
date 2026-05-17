@@ -186,6 +186,14 @@ $plats_ref = $menu_data['plats'] ?? [];
                 </div>
             </div>
 
+            <div class="plan-card">
+                <h3>COMMENTAIRE AU LIVREUR</h3>
+                <div class="form-field">
+                    <label>Instructions de livraison (facultatif) :</label>
+                    <textarea name="commentaire_livreur" class="planification-select" rows="2" placeholder="Ex: Sonnez 2 fois, laissez devant la porte..."></textarea>
+                </div>
+            </div>
+
             <div class="pay-btn-container">
                 <button type="submit" class="btn-full">
                     <?php if (isset($_SESSION['modification_id'])): ?>

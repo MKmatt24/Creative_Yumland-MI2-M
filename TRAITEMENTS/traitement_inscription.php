@@ -8,6 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $telephone = $_POST['telephone'] ?? '';
     $adresse = $_POST['adresse'] ?? '';
     $code_interphone = $_POST['interphone'] ?? '';
+    $etage = $_POST['etage'] ?? '';
+    $appartement = $_POST['appartement'] ?? '';
     $code_postal = $_POST['code-postal'] ?? '';
     $ville = $_POST['ville'] ?? '';
     $password = $_POST['password'] ?? '';
@@ -65,6 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'telephone' => $telephone,
         'adresse' => $adresse,
         'code_interphone' => $code_interphone,
+        'etage' => $etage,
+        'appartement' => $appartement,
         'code_postal' => $code_postal,
         'ville' => $ville,
         'role' => 'client',

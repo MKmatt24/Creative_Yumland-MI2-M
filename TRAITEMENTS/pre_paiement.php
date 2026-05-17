@@ -11,14 +11,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 1. Récupération des choix du formulaire
     $type_commande = $_POST['type_commande'] ?? 'immediate';
     $heure_choisie = $_POST['heure_programmee'] ?? '';
+    $commentaire_livreur = trim($_POST['commentaire_livreur'] ?? '');
 
     // 2. Validation et stockage en Session
-    // On crée une structure propre pour la planification
     $_SESSION['planification'] = [
-        'type' => $type_commande, // 'immediate' ou 'programmee'
+        'type' => $type_commande,
         'horaire' => ($type_commande === 'programmee' && !empty($heure_choisie)) ? $heure_choisie : 'ASAP',
-        'date_demande' => date('Y-m-d') 
+        'date_demande' => date('Y-m-d')
     ];
+    $_SESSION['commentaire_livreur'] = $commentaire_livreur;
 
     /**
      * Note : On peut ajouter ici une vérification si l'heure choisie 

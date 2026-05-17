@@ -125,8 +125,18 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="interphone">Code interphone / Étage</label>
-                        <input type="text" id="interphone" name="interphone" value="<?= get_value('code_interfone',$old_values) ?>" placeholder="Ex: B32, 4ème étage">
+                        <label for="interphone">Code interphone (facultatif)</label>
+                        <input type="text" id="interphone" name="interphone" value="<?= get_value('code_interphone',$old_values) ?>" placeholder="Ex: B32">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="etage">Étage (facultatif)</label>
+                        <input type="text" id="etage" name="etage" value="<?= get_value('etage',$old_values) ?>" placeholder="Ex: 3ème étage">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="appartement">Appartement (facultatif)</label>
+                        <input type="text" id="appartement" name="appartement" value="<?= get_value('appartement',$old_values) ?>" placeholder="Ex: Porte 12">
                     </div>
 
                     <div class="form-group">

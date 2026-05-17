@@ -52,11 +52,13 @@ if ($paiement_valide) {
             "id" => $transaction,
             "date" => date('d/m/Y H:i'),
             "client" => $_SESSION['prenom'] . " " . $_SESSION['nom'],
-            "prix_total" => (float)$montant, 
+            "user_id" => $_SESSION['user_id'],
+            "prix_total" => (float)$montant,
             "statut" => "a_preparer",
             "articles" => $_SESSION['panier'],
             "type" => $_SESSION['planification']['type'] ?? 'direct',
-            "horaire" => $_SESSION['planification']['horaire'] ?? 'ASAP'
+            "horaire" => $_SESSION['planification']['horaire'] ?? 'ASAP',
+            "commentaire" => $_SESSION['commentaire_livreur'] ?? ''
         ];
 
         if (isset($_SESSION['coupon'])) {
@@ -77,9 +79,10 @@ if ($paiement_valide) {
     }
 
     // --- NETTOYAGE APRÈS ACHAT ---
-    unset($_SESSION['panier']);       // Vide le panier
-    unset($_SESSION['coupon']);       // SUPPRIME LE COUPON ICI
-    unset($_SESSION['planification']); // Vide les infos de livraison
+    unset($_SESSION['panier']);
+    unset($_SESSION['coupon']);
+    unset($_SESSION['planification']);
+    unset($_SESSION['commentaire_livreur']);
     unset($_SESSION['modification_id']);
     unset($_SESSION['modification_total_initial']);
     unset($_SESSION['paiement_complementaire']);
