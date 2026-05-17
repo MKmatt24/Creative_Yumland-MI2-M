@@ -563,9 +563,8 @@ $idsCommandesNotées = array_column($notations, 'commande_id');
                                                 <button class="reorder-btn" disabled title="Action impossible : compte suspendu">Commander à nouveau</button>
                                             <?php endif; ?>
                                             
+                                            <?php
                                             // Affichage du bouton "Noter" seulement si la commande est livrée et pas encore notée
-                                            <?php 
-                                            // On affiche le bouton seulement si livrée ET non déjà notée
                                             $estLivree = in_array(strtolower($commande['statut']), ['livree', 'livrée']);
                                             if ($estLivree && !in_array($commande['id'], $idsCommandesNotées)): 
                                             ?>
