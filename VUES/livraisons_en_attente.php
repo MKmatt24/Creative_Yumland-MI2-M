@@ -214,13 +214,11 @@ foreach ($commandes as $cmd) {
                     </div>
                 <?php else: ?>
 
-                    <?php foreach ($offres as $offre): 
-                        //Distance inventé qui est basée sur l'aléatoire pour que chaque course ait des km différents sans passer par un vrai algo de GPS
-                        $distanceKm = 1.5 + mt_rand(0, 6);
-                        //Calcul du gain : 2.50€ de forfait + 0.80€ / km
-                        $gainEstime = 2.50 + ($distanceKm * 0.80);
-                        //Calcul d'un temps estimé (environ 4 min par km)
-                        $tempsEstime = round($distanceKm * 4);
+                    <?php foreach ($offres as $offre):
+                        //Lecture des données de distance et gain déjà calculées à la création de la commande
+                        $distanceKm = $offre['distance_km'] ?? round(1.5 + mt_rand(0, 60) / 10, 1);
+                        $gainEstime = $offre['gain_livreur'] ?? round(2.50 + ($distanceKm * 0.80), 2);
+                        $tempsEstime = $offre['temps_minutes'] ?? round($distanceKm * 4);
                     ?>
                         <div class="offer-card">
                             <div class="offer-header">

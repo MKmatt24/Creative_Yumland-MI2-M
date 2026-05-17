@@ -21,13 +21,15 @@ foreach ($commandes as &$cmd) {
     if ($cmd['id'] == $idCible) {
         $cmd['statut'] = $nouveauStatut;
 
-//Si la commande est bien livrée, on calcule et on sauvegarde le gain
+//Si la commande est bien livrée, on récupère le gain déjà stocké
         if ($nouveauStatut === 'livrée') {
-//On reprend le même calcul que dans livraisons_en_attente.php
-            $distanceKm = 1.5 + mt_rand(0, 6);
-            $gainEstime = 2.50 + ($distanceKm * 0.80);
-//On sauvegarde la clé gain_livreur
-            $cmd['gain_livreur'] = $gainEstime;
+            $gainExistant = floatval($cmd['gain_livreur'] ?? 0);
+            if ($gainExistant <= 0) {
+                $distanceKm = round(1.5 + mt_rand(0, 60) / 10, 1);
+                $cmd['gain_livreur'] = round(2.50 + ($distanceKm * 0.80), 2);
+                $cmd['distance_km'] = $distanceKm;
+                $cmd['temps_minutes'] = round($distanceKm * 4);
+            }
         }
         break;
     }

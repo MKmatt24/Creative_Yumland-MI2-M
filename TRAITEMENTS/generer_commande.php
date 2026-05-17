@@ -66,6 +66,11 @@ foreach ($commandes as $cmd) {
     }
 }
 
+//Calcul de la distance et du gain dès la création (pour cohérence entre les pages)
+$distanceKm = round(1.5 + mt_rand(0, 60) / 10, 1);
+$gainLivreur = round(2.50 + ($distanceKm * 0.80), 2);
+$tempsMinutes = round($distanceKm * 4);
+
 //Création de la nouvelle commande
 $nouvelleCommande = [
     'id' => $maxId + 1,
@@ -79,7 +84,9 @@ $nouvelleCommande = [
     'date' => date('Y-m-d H:i'),
     'heure_retrait' => date('H:i', strtotime('+15 minutes')),
     'livreur_id' => null,
-    'gain_livreur' => null,
+    'gain_livreur' => $gainLivreur,
+    'distance_km' => $distanceKm,
+    'temps_minutes' => $tempsMinutes,
     'statut_logistique' => 'en_preparation'
 ];
 

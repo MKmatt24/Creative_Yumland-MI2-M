@@ -48,7 +48,7 @@ foreach ($commandes as &$cmd) {
                 $cmd['livreur_id'] = $_SESSION['user_id'];
                 break;
 
-            //Terminer une course : calcul du gain et enregistrement des stats
+            //Terminer une course : on récupère le gain déjà calculé à la création
             case 'terminer':
                 if (($cmd['livreur_id'] ?? '') != $_SESSION['user_id']) {
                     echo json_encode(['success' => false, 'message' => 'Cette commande ne vous est pas assignée.']);
@@ -56,12 +56,15 @@ foreach ($commandes as &$cmd) {
                 }
                 $cmd['statut'] = 'livrée';
                 $cmd['statut_logistique'] = 'livree';
-                //Calcul du gain : 2.50€ de forfait + 0.80€ par km
-                $distanceKm = 1.5 + mt_rand(0, 6);
-                $gainLivreur = 2.50 + ($distanceKm * 0.80);
-                $cmd['gain_livreur'] = $gainLivreur;
-                $cmd['distance_km'] = $distanceKm;
-                $cmd['temps_minutes'] = round($distanceKm * 4);
+                //Récupération du gain déjà stocké (ou calcul de secours si absent)
+                $gainLivreur = floatval($cmd['gain_livreur'] ?? 0);
+                if ($gainLivreur <= 0) {
+                    $distanceKm = round(1.5 + mt_rand(0, 60) / 10, 1);
+                    $gainLivreur = round(2.50 + ($distanceKm * 0.80), 2);
+                    $cmd['gain_livreur'] = $gainLivreur;
+                    $cmd['distance_km'] = $distanceKm;
+                    $cmd['temps_minutes'] = round($distanceKm * 4);
+                }
                 break;
 
             //Abandonner une course : le livreur renonce à la livraison
