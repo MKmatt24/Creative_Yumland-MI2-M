@@ -551,6 +551,18 @@ nav ul li a:hover {
     transform: translateY(-50%);
 }
 
+.input-with-btn input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.input-with-btn input[type="number"]::-webkit-outer-spin-button,
+.input-with-btn input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
 .toast-notification {
     position: fixed;
     bottom: 30px;

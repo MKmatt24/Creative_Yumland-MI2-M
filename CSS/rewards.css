@@ -275,7 +275,7 @@ nav ul li a:hover {
 
 .withdraw-btn {
     width: 100%;
-    background: linear-gradient(135deg, var(--orange 0%), var(--orange-hover) 100%);
+    background: linear-gradient(135deg, var(--orange) 0%, var(--orange-hover) 100%);
     color: #fff;
     border: none;
     padding: 15px;
@@ -285,7 +285,12 @@ nav ul li a:hover {
     text-transform: uppercase;
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
-    transition: transform 0.2s;
+    transition: transform 0.2s, opacity 0.3s;
+}
+
+.withdraw-btn.disabled-look {
+    opacity: 0.4;
+    cursor: not-allowed;
 }
 
 .withdraw-btn:hover {

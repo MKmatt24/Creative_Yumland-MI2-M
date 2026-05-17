@@ -102,8 +102,13 @@ if ($pourcentage_objectif > 100) {$pourcentage_objectif = 100;}
 
         const withdrawBtn = document.querySelector('.withdraw-btn');
         if (withdrawBtn) {
+            const soldeEl = document.querySelector('.balance-amount');
+            const soldeInit = parseFloat(soldeEl.textContent.replace(',', '.').replace(/[^\d.]/g, ''));
+            if (soldeInit < 20) {
+                withdrawBtn.classList.add('disabled-look');
+            }
+
             withdrawBtn.addEventListener('click', () => {
-                const soldeEl = document.querySelector('.balance-amount');
                 const solde = parseFloat(soldeEl.textContent.replace(',', '.').replace(/[^\d.]/g, ''));
 
                 if (solde < 20) {
