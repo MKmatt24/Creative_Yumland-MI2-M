@@ -23,6 +23,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
     
+    // VALIDATION : Limiter à 12 caractères
+    if (strlen($password) > 12) {
+        $_SESSION['form_data'] = $_POST;
+        unset($_SESSION['form_data']['password']);
+        unset($_SESSION['form_data']['confirm-password']);
+        header('Location: ../VUES/inscription.php?error=password_too_long');
+        exit;
+    }
+    
     // Charger les utilisateurs existants
     $users = json_decode(file_get_contents('../DATA/users.json'), true);
     

@@ -13,41 +13,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
     
-    // Charger les utilisateurs
-    $users = json_decode(file_get_contents('../DATA/users.json'), true);
-    
-    $login_successful = false;
-    
-    foreach ($users as $user) {
-        if ($user['email'] === $email && password_verify($password, $user['password'])) {
-            // VÉRIFICATION DU STATUT
-            if ($user['statut'] === 'suspendu' || $user['statut'] === 'inactif') {
-                $error = "Ce compte est suspendu. Accès refusé.";
-                break;
-            }
+    // VALIDATION : Limiter à 12 caractères
+    if (strlen($password) > 12) {
+        $error = "Le mot de passe ne peut pas dépasser 12 caractères.";
+    } else {
+        // Charger les utilisateurs
+        $users = json_decode(file_get_contents('../DATA/users.json'), true);
+        
+        $login_successful = false;
+        
+        foreach ($users as $user) {
+            if ($user['email'] === $email && password_verify($password, $user['password'])) {
+                // VÉRIFICATION DU STATUT
+                if ($user['statut'] === 'suspendu' || $user['statut'] === 'inactif') {
+                    $error = "Ce compte est suspendu. Accès refusé.";
+                    break;
+                }
 
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['role'] = $user['role'];
-            $_SESSION['nom'] = $user['nom'];
-            $_SESSION['prenom'] = $user['prenom'];
-            
-            $login_successful = true;
-            
-            // Redirection selon le rôle
-            if ($user['role'] === 'admin') {
-                header('Location: admin.php');
-            } elseif ($user['role'] === 'restaurateur') {
-                header('Location: commande.php');
-            } else {
-                header('Location: profil.php');
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['role'] = $user['role'];
+                $_SESSION['nom'] = $user['nom'];
+                $_SESSION['prenom'] = $user['prenom'];
+                
+                $login_successful = true;
+                
+                // Redirection selon le rôle
+                if ($user['role'] === 'admin') {
+                    header('Location: admin.php');
+                } elseif ($user['role'] === 'restaurateur') {
+                    header('Location: commande.php');
+                } else {
+                    header('Location: profil.php');
+                }
+                exit;
             }
-            exit;
         }
-    }
-    
-    // Si on arrive ici, la connexion a échoué
-    if (!$login_successful) {
-        $error = "Email ou mot de passe incorrect";
+        
+        // Si on arrive ici, la connexion a échoué
+        if (!$login_successful && empty($error)) {
+            $error = "Email ou mot de passe incorrect";
+        }
     }
 }
 ?>
@@ -119,8 +124,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             pwdInput.parentElement.appendChild(counter);
 
             const updateCounter = () => {
-                counter.textContent = `${pwdInput.value.length} / 8`;
-                counter.style.color = pwdInput.value.length >= 8 ? 'var(--orange)' : '#888';
+                counter.textContent = `${pwdInput.value.length} / 12`;
+                counter.style.color = pwdInput.value.length >= 12 ? 'var(--orange)' : '#888';
             };
             pwdInput.addEventListener('input', updateCounter);
             updateCounter();
@@ -166,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <div class="form-group">
                         <label for="password">Mot de passe</label>
-                        <input type="password" id="password" name="password" required placeholder="Votre mot de passe" maxlength="8">
+                        <input type="password" id="password" name="password" required placeholder="Votre mot de passe" maxlength="12">
                     </div>
 
                     <div class="form-group checkbox-group">
