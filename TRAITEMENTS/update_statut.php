@@ -9,6 +9,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $file = '../DATA/commande.json';
     $commandes = json_decode(file_get_contents($file), true);
 
+    if ($nouveau_statut === 'livraison' && empty($id_livreur)) {
+        header('Location: ../VUES/commande.php?erreur=livreur');
+        exit;
+    }
+
     foreach ($commandes as &$c) {
         if ($c['id'] == $id_cmd) {
             $c['statut'] = $nouveau_statut;
