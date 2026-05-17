@@ -47,7 +47,7 @@
         "adresse": "308 Negra Arroyo Lane",
         "code_interphone": "RDC",
         "etage": "RDC",
-        "appartement": "",
+        "appartement": "Apt606",
         "code_postal": "87104",
         "ville": "Albuquerque",
         "role": "client",
@@ -206,7 +206,7 @@
         "role": "livreur",
         "statut": "actif",
         "date_inscription": "2026-04-05",
-        "date_naissance": "2005-11-24",
+        "date_naissance": "2006-06-26",
         "points_fidelite": 0,
         "objectif_jour": 160
     },
