@@ -495,7 +495,7 @@ foreach ($couponsData as $code => $infos) {
                     <?php endif; ?>
 
                     <div class="avatar-container">
-                        <?php $avatarPath = $currentUser['avatar'] ?? '../IMAGES/avatar_anonyme.png'; ?>
+                        <?php $avatarPath = $currentUser['avatar'] ?? '../IMAGES/AVATARS/avatar_anonyme.png'; ?>
                         <img src="<?= htmlspecialchars($avatarPath) ?>" alt="Avatar">
                         <button type="button" class="edit-avatar-btn" aria-label="Changer la photo">📷</button>
                         <input type="file" id="avatar-input" accept="image/*" hidden>
