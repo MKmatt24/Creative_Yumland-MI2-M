@@ -149,9 +149,7 @@ foreach ($commandes as $cmd) {
                 btnSimuler.disabled = true;
                 btnSimuler.textContent = '⏳ Génération...';
 
-                fetch('../TRAITEMENTS/generer_commande.php', {
-                    method: 'POST'
-                })
+                fetch('../TRAITEMENTS/generer_commande.php')
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {

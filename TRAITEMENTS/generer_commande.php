@@ -1,16 +1,10 @@
 <?php
 session_start();
-header('Content-Type: application/json');
-
-//Vérification que la requête est bien en POST
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo json_encode(['success' => false, 'message' => 'Méthode non autorisée.']);
-    exit;
-}
+header('Content-Type: application/json; charset=utf-8');
 
 //Vérification que l'utilisateur est un livreur connecté
-if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'livreur') {
-    echo json_encode(['success' => false, 'message' => 'Non autorisé.']);
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['role']) || $_SESSION['role'] !== 'livreur') {
+    echo json_encode(['success' => false, 'message' => 'Non autorisé. Role: ' . ($_SESSION['role'] ?? 'aucun')]);
     exit;
 }
 
@@ -31,7 +25,7 @@ $plats = [
     ['nom' => 'Quesadilla XL', 'prix' => 11.50],
     ['nom' => 'Nachos de la Loma', 'prix' => 8.90],
     ['nom' => 'Frites Maison', 'prix' => 4.50],
-    ['nom' => 'Rice & Pollos Bowl', 'prix' => 13.90],
+    ['nom' => 'Rice Pollos Bowl', 'prix' => 13.90],
     ['nom' => 'Spicy Wrap', 'prix' => 10.50],
     ['nom' => 'Hermano Tenders', 'prix' => 9.90],
     ['nom' => 'Burrito Breakfast', 'prix' => 11.90],
@@ -40,31 +34,36 @@ $plats = [
 //Choix aléatoire d'un client
 $client = $clients[array_rand($clients)];
 
-//Choix aléatoire de 1 à 4 articles
-$nbArticles = mt_rand(1, 4);
+//Choix aléatoire de 1 à 3 articles
+$nbArticles = mt_rand(1, 3);
 $articlesChoisis = [];
 $prixTotal = 0;
-$indices = array_rand($plats, $nbArticles);
-if (!is_array($indices)) $indices = [$indices];
 
-foreach ($indices as $i) {
-    $quantite = mt_rand(1, 3);
+for ($i = 0; $i < $nbArticles; $i++) {
+    $plat = $plats[array_rand($plats)];
+    $quantite = mt_rand(1, 2);
     $articlesChoisis[] = [
-        'nom' => $plats[$i]['nom'],
-        'prix' => $plats[$i]['prix'],
+        'nom' => $plat['nom'],
+        'prix' => $plat['prix'],
         'quantite' => $quantite
     ];
-    $prixTotal += $plats[$i]['prix'] * $quantite;
+    $prixTotal += $plat['prix'] * $quantite;
 }
 
 //Récupération des commandes existantes pour générer un ID unique
-$fichier = '../DATA/commande.json';
-$commandes = json_decode(file_get_contents($fichier), true);
+$fichier = __DIR__ . '/../DATA/commande.json';
+$contenu = file_get_contents($fichier);
+$commandes = json_decode($contenu, true);
+if (!is_array($commandes)) {
+    $commandes = [];
+}
 
 //Calcul du prochain ID
 $maxId = 0;
 foreach ($commandes as $cmd) {
-    if ($cmd['id'] > $maxId) $maxId = $cmd['id'];
+    if (isset($cmd['id']) && intval($cmd['id']) > $maxId) {
+        $maxId = intval($cmd['id']);
+    }
 }
 
 //Création de la nouvelle commande
@@ -78,7 +77,7 @@ $nouvelleCommande = [
     'statut' => 'preparation',
     'adresse' => $client['adresse'],
     'date' => date('Y-m-d H:i'),
-    'heure_retrait' => date('H:i', strtotime('+' . mt_rand(10, 30) . ' minutes')),
+    'heure_retrait' => date('H:i', strtotime('+15 minutes')),
     'livreur_id' => null,
     'gain_livreur' => null,
     'statut_logistique' => 'en_preparation'
@@ -86,10 +85,14 @@ $nouvelleCommande = [
 
 //Ajout de la commande et sauvegarde du fichier JSON
 $commandes[] = $nouvelleCommande;
-file_put_contents($fichier, json_encode($commandes, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+$resultat = file_put_contents($fichier, json_encode($commandes, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+
+if ($resultat === false) {
+    echo json_encode(['success' => false, 'message' => 'Erreur ecriture fichier.']);
+    exit;
+}
 
 echo json_encode([
     'success' => true,
-    'message' => 'Commande #' . $nouvelleCommande['id'] . ' générée pour ' . $client['nom'],
-    'commande' => $nouvelleCommande
+    'message' => 'Commande #' . $nouvelleCommande['id'] . ' generee pour ' . $client['nom']
 ]);
