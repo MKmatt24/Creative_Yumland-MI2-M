@@ -33,6 +33,12 @@ $montant_formatte = number_format($total_final, 2, '.', '');
 // Chargement des données de référence pour comparer les ingrédients
 $menu_data = json_decode(file_get_contents('../DATA/menu.json'), true);
 $plats_ref = $menu_data['plats'] ?? [];
+
+$coupon_error = '';
+if (isset($_SESSION['coupon_error'])) {
+    $coupon_error = $_SESSION['coupon_error'];
+    unset($_SESSION['coupon_error']); // Effacer l'erreur après l'avoir affichée
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -48,6 +54,34 @@ $plats_ref = $menu_data['plats'] ?? [];
         const type = document.getElementById('type_commande').value;
         const blockHoraire = document.getElementById('choix_horaire');
         blockHoraire.style.display = (type === 'programmee') ? 'block' : 'none';
+    }
+
+    /**
+     * Met à jour la quantité d'un article dans le panier
+     * @param {number} index - L'index de l'article dans la session
+     * @param {string} action - 'plus' ou 'moins'
+     */
+    function updateQty(index, action) {
+        const formData = new FormData();
+        formData.append('index', index);
+        formData.append('action', action);
+
+        fetch('../TRAITEMENTS/modifier_panier.php', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.reload();
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => console.error('Erreur:', error));
     }
     </script>
 </head>
@@ -79,7 +113,7 @@ $plats_ref = $menu_data['plats'] ?? [];
     <?php else: ?>
         
         <div class="summary-box">
-            <?php foreach ($panier as $item): ?>
+            <?php foreach ($panier as $index => $item): ?>
                 <div class="item-row">
                     <div class="item-info">
                         <div class="cart-img-wrapper">
@@ -87,7 +121,13 @@ $plats_ref = $menu_data['plats'] ?? [];
                         </div>
                         <div class="item-details">
                             <div class="item-main-info">
-                                <span><?= htmlspecialchars($item['nom'] ?? 'Produit') ?> (x<?= $item['quantite'] ?? 1 ?>)</span>
+                                <span><?= htmlspecialchars($item['nom'] ?? 'Produit') ?></span>
+                                
+                                <div class="cart-qty-selector">
+                                    <button type="button" class="cart-qty-btn" onclick="updateQty(<?= $index ?>, 'moins')">-</button>
+                                    <span class="cart-qty-val"><?= $item['quantite'] ?? 1 ?></span>
+                                    <button type="button" class="cart-qty-btn" onclick="updateQty(<?= $index ?>, 'plus')">+</button>
+                                </div>
                                 <span class="text-orange"><?= number_format(($item['prix'] ?? 0) * ($item['quantite'] ?? 1), 2) ?> €</span>
                             </div>
 
@@ -162,6 +202,15 @@ $plats_ref = $menu_data['plats'] ?? [];
                 </div>
             <?php endif; ?>
         </div>
+        
+        <?php if (!empty($coupon_error)): ?>
+            <div class="coupon-message error">
+                <div class="error-wrapper">
+                    <span class="error-icon">⚠️</span>
+                    <span class="error-text"><?= htmlspecialchars($coupon_error) ?></span>
+                </div>
+            </div>
+        <?php endif; ?>
 
         <?php 
             $action_form = isset($_SESSION['modification_id']) ? "../TRAITEMENTS/valider_modification.php" : "../TRAITEMENTS/pre_paiement.php";

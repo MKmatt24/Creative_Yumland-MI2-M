@@ -93,16 +93,18 @@ if (isset($_SESSION['panier'])) {
         displayedPlats = plats; // On garde une trace pour la modale
         const searchVal = searchInput.value.trim();
         const activeCat = document.querySelector('#cat-filters .cat-btn.active').dataset.cat;
+
+        // Détection de l'activation de filtres (recherche, catégorie, régimes ou saveurs)
+        const dietsActive = document.querySelectorAll('.diet-filter:checked').length > 0;
+        const tastesActive = document.querySelectorAll('.taste-filter:checked').length > 0;
+        const hasFilters = searchVal !== '' || activeCat !== 'Tous' || dietsActive || tastesActive;
+
         const staticMenus = document.getElementById('static-menus-section');
         const platsTitle = document.getElementById('plats-title');
 
-        // Gestion de la visibilité des sections statiques (Menus et Titre Plats)
-        if (staticMenus) {
-            staticMenus.style.display = (searchVal === '' && activeCat === 'Tous') ? 'block' : 'none';
-        }
-        if (platsTitle) {
-            platsTitle.style.display = (searchVal === '' && activeCat === 'Tous') ? 'block' : 'none';
-        }
+        // On masque les menus statiques et le titre si un filtre est actif
+        if (staticMenus) staticMenus.style.display = hasFilters ? 'none' : 'block';
+        if (platsTitle) platsTitle.style.display = hasFilters ? 'none' : 'block';
 
         if (plats.length === 0 && menus.length === 0) {
             container.innerHTML = '<p class="no-results">Désolé, Gustavo n\'a rien trouvé pour cette recherche.</p>';
@@ -111,73 +113,7 @@ if (isset($_SESSION['panier'])) {
 
         let html = '';
 
-        // Affichage des menus correspondants si on est en recherche ou filtrage
-        if (searchVal !== '' || activeCat !== 'Tous') {
-            if (menus.length > 0) {
-                html += '<h3 class="section-subtitle" style="grid-column: 1/-1; margin-left:0; padding-left:0;">Menus & Formules</h3>';
-                html += menus.map(m => {
-                    if (m.is_mystery_menu) {
-                        return `
-                        <div class="menu-card mystery-card">
-                            <div class="mystery-icon-container">?</div>
-                            <div class="card-body">
-                                <span class="badge">SURPRISE</span>
-                                <h3>${m.nom}</h3>
-                                <p>${m.description || ''}</p>
-                                
-                                <div class="card-footer">
-                                    <span class="price">${parseFloat(m.prix).toFixed(2)}€</span>
-                                    <form action="../TRAITEMENTS/ajouter_panier.php" method="POST" class="add-form">
-                                        <input type="hidden" name="nom" value="${m.nom}">
-                                        <input type="hidden" name="prix" value="${m.prix}">
-                                        <button type="submit" class="add-btn" style="border-radius: 8px;">TENTER MA CHANCE</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>`;
-                    } else {
-                        const now = new Date();
-                        const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
-                        const hDebut = m.heure_debut || '00:00';
-                        const hFin = m.heure_fin || '23:59';
-                        
-                        const dispo = (hDebut <= hFin) 
-                            ? (timeStr >= hDebut && timeStr <= hFin) 
-                            : (timeStr >= hDebut || timeStr <= hFin);
-                        
-                        return `
-                        <div class="menu-card">
-                            <div class="card-body">
-                                <div class="badge-container">
-                                    <span class="badge">Formule</span>
-                                    ${m.creneau ? `<span class="badge badge-yellow">🕒 ${m.creneau}</span>` : ''}
-                                </div>
-                                <h3>${m.nom}</h3>
-                                <p>${m.description || ''}</p>
-                                <div class="composition-box">
-                                    <ul class="comp-list">${(m.liste_plats || []).map(item => `<li>✓ ${item}</li>`).join('')}</ul>
-                                </div>
-                                <div class="card-footer">
-                                    <span class="price">${parseFloat(m.prix).toFixed(2)}€</span>
-                                    <form action="../TRAITEMENTS/ajouter_panier.php" method="POST" class="add-form">
-                                        <div class="qty-group">
-                                            <input type="hidden" name="nom" value="${m.nom}">
-                                            <input type="hidden" name="prix" value="${m.prix}">
-                                            <input type="number" name="quantite" value="1" min="1" class="qty-input">
-                                            <button type="submit" class="add-btn" ${!dispo ? 'disabled' : ''}>${dispo ? 'AJOUTER' : 'INDISPONIBLE'}</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>`;
-                    }
-                }).join('');
-                
-                if (plats.length > 0) {
-                    html += '<h3 class="section-subtitle" style="grid-column: 1/-1; margin-left:0; padding-left:0; margin-top:40px;">Plats à la carte trouvés</h3>';
-                }
-            }
-        }
+        // Note : On ne réaffiche pas les menus ici car ils doivent disparaître lors du filtrage.
 
         container.innerHTML = html + plats.map((p, index) => `
             <div class="menu-card" onclick="openPlatModal(${index})">
