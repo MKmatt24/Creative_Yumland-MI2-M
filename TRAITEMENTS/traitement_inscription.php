@@ -25,12 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
     
-    // VALIDATION : Limiter à 12 caractères
-    if (strlen($password) > 12) {
+    // VALIDATION : Minimum 8 caractères
+    if (strlen($password) < 8) {
         $_SESSION['form_data'] = $_POST;
         unset($_SESSION['form_data']['password']);
         unset($_SESSION['form_data']['confirm-password']);
-        header('Location: ../VUES/inscription.php?error=password_too_long');
+        header('Location: ../VUES/inscription.php?error=password_too_short');
         exit;
     }
     

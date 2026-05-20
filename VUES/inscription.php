@@ -19,8 +19,8 @@
             case 'email_exists':
                 $error_message = 'Cette adresse email est déjà utilisée.';
                 break;
-            case 'password_too_long':
-                $error_message = 'Le mot de passe ne doit pas dépasser 12 caractères.';
+            case 'password_too_short':
+                $error_message = 'Le mot de passe doit contenir au moins 8 caractères.';
                 break;
         }
     }
@@ -50,17 +50,19 @@
             
             pwdInputs.forEach(input => {
                 if (input) {
-                    input.setAttribute('maxlength', '12');
                     const counter = document.createElement('div');
-                    counter.style.fontSize = '0.8rem';
-                    counter.style.marginTop = '5px';
-                    counter.style.textAlign = 'right';
-                    counter.style.color = '#888';
+                    counter.className = 'pwd-counter';
                     input.parentElement.appendChild(counter);
 
                     const updateCounter = () => {
-                        counter.textContent = `${input.value.length} / 12`;
-                        counter.style.color = input.value.length >= 12 ? '#ff6b35' : '#888';
+                        counter.textContent = `${input.value.length} caractères (min. 8)`;
+                        if (input.value.length < 8) {
+                            counter.classList.add('invalid');
+                            counter.classList.remove('valid');
+                        } else {
+                            counter.classList.add('valid');
+                            counter.classList.remove('invalid');
+                        }
                     };
                     input.addEventListener('input', updateCounter);
                     updateCounter();
@@ -151,12 +153,12 @@
 
                     <div class="form-group">
                         <label for="password">Mot de passe</label>
-                        <input type="password" id="password" name="password" required placeholder="Maximum 12 caractères" maxlength="12">
+                        <input type="password" id="password" name="password" required placeholder="Minimum 8 caractères">
                     </div>
 
                     <div class="form-group">
                         <label for="confirm-password">Confirmer le mot de passe</label>
-                        <input type="password" id="confirm-password" name="confirm-password" required placeholder="Retapez votre mot de passe" maxlength="12">
+                        <input type="password" id="confirm-password" name="confirm-password" required placeholder="Retapez votre mot de passe">
                     </div>
 
                     <div class="form-group">
