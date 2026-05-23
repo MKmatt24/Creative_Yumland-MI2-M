@@ -10,7 +10,7 @@ Walter White : jesuislaport (client) - heisenberg@gmail.com
 Jesse Pinkman : toietmoi (client) - capncook@gmail.com
 Saul Goodman : besoindunbon (client) - saul@bettercallsaul.com 
 
-Mike Ehrmantraut : gardien (client) - mike.e@gmail.com  
+Mike Ehrmantraut : legardien (client) - mike.e@gmail.com  
 Mattéo Knopes : matteva24 (client) - mk@gmail.com
 
 Administrateur : 
@@ -22,5 +22,3 @@ Hank Schrader : officier (livreur) - hank.dea@gmail.com
 
 Restaurateur : 
 Lalo Salamanca : password (restaurateur) - lalo@lospollos.fr
-
-
