@@ -34,6 +34,12 @@ function filtrerCommandes($liste, $statuts_recherches) {
 
 <?php include '../LIB/header.php'; ?>
 
+<div class="admin-top-bar" style="max-width: 1200px; margin: 20px auto; padding: 0 20px; display: flex; justify-content: flex-end;">
+    <a href="gestion_menu.php" class="btn-status" style="background: var(--orange); color: var(--noir); text-decoration: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; box-shadow: 0 4px 10px rgba(255,107,53,0.3);">
+        🍴 GÉRER LA CARTE & LES MENUS
+    </a>
+</div>
+
 <div class="theme-switcher-container">
         <button onclick="cycleTheme()" id="theme-toggle-btn" class="theme-switcher-btn">
             🎨 Changer de style
