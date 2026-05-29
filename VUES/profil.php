@@ -10,6 +10,11 @@ $currentUser = null;
 //On utilise l'ID de l'URL ($_GET) s'il existe, sinon on prend celui de la session
 $idAAfficher = $_GET['id'] ?? $_SESSION['user_id'];
 
+// Seul un admin peut consulter le profil d'un autre utilisateur
+if ($idAAfficher != $_SESSION['user_id'] && (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin')) {
+    $idAAfficher = $_SESSION['user_id'];
+}
+
 
 //Recherche de l'utilisateur correspondant à cet ID
 foreach ($users as $user) {
@@ -112,6 +117,8 @@ foreach ($couponsData as $code => $infos) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Page de profil utilisateur Los Pollos Hermanos">
+    <meta name="csrf-token" content="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
     <title>Mon Profil - LOS POLLOS HERMANOS</title>
     <link rel="shortcut icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="icon" type="image/png" href="../IMAGES/logo.png">
@@ -248,6 +255,7 @@ foreach ($couponsData as $code => $infos) {
             donnees.append('user_id', userId);
             donnees.append('champ', config.field);
             donnees.append('valeur', valeur);
+            donnees.append('csrf_token', document.querySelector('meta[name="csrf-token"]').content);
 
             fetch('../TRAITEMENTS/update_profil.php', {
                 method: 'POST',
@@ -367,10 +375,13 @@ foreach ($couponsData as $code => $infos) {
             if (existing) existing.remove();
             const toast = document.createElement('div');
             toast.className = `toast-notification toast-${type}`;
+            toast.setAttribute('role', 'alert');
             toast.textContent = message;
             document.body.appendChild(toast);
             setTimeout(() => toast.classList.add('show'), 10);
             setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 3000);
+            const ariaZone = document.getElementById('aria-notifications');
+            if (ariaZone) ariaZone.textContent = message;
         }
 
         //Gestion du bouton "Commander à nouveau" dans les commandes passées
@@ -400,6 +411,7 @@ foreach ($couponsData as $code => $infos) {
                 const formData = new FormData();
                 formData.append('avatar', fichier);
                 formData.append('user_id', userId);
+                formData.append('csrf_token', document.querySelector('meta[name="csrf-token"]').content);
 
                 avatarBtn.textContent = '⏳';
 
@@ -483,8 +495,8 @@ foreach ($couponsData as $code => $infos) {
         </button>
     </div>
 
-    <main>
-        <section class="profil-section">
+    <main role="main" aria-label="Profil utilisateur">
+        <section class="profil-section" aria-labelledby="profil-titre">
             <div class="profil-container">
                 
                 <div class="profil-header">
@@ -496,15 +508,15 @@ foreach ($couponsData as $code => $infos) {
 
                     <div class="avatar-container">
                         <?php $avatarPath = $currentUser['avatar'] ?? '../IMAGES/AVATARS/avatar_anonyme.png'; ?>
-                        <img src="<?= htmlspecialchars($avatarPath) ?>" alt="Avatar">
-                        <button type="button" class="edit-avatar-btn" aria-label="Changer la photo">📷</button>
-                        <input type="file" id="avatar-input" accept="image/*" hidden>
+                        <img src="<?= htmlspecialchars($avatarPath) ?>" alt="Photo de profil de <?= htmlspecialchars($currentUser['prenom']) ?>">
+                        <button type="button" class="edit-avatar-btn" aria-label="Changer la photo de profil" title="Modifier la photo">📷</button>
+                        <input type="file" id="avatar-input" accept="image/*" hidden aria-label="Sélectionner une nouvelle photo de profil">
                     </div>
                     <div class="user-identity">
-                        <h2><?= htmlspecialchars($currentUser['prenom'] . ' ' . $currentUser['nom']) ?></h2>
+                        <h2 id="profil-titre"><?= htmlspecialchars($currentUser['prenom'] . ' ' . $currentUser['nom']) ?></h2>
                         <p class="member-date">Membre depuis <?= substr($currentUser['date_inscription'] ?? '2024', 0, 4) ?></p>
                         
-                        <div class="loyalty-card">
+                        <div class="loyalty-card" aria-label="Programme de fidélité Los Pollos Club">
                             <h3>Los Pollos Club</h3>
                             <?php
                             $objectif = 500;
@@ -512,7 +524,7 @@ foreach ($couponsData as $code => $infos) {
                             if ($pourcentage > 100) $pourcentage = 100;
                             ?>
                             <p>Vous avez <strong><?= $pointsRestants ?> / <?= $objectif ?> points</strong></p>
-                            <div class="progress-bar">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="<?= $pointsRestants ?>" aria-valuemin="0" aria-valuemax="<?= $objectif ?>" aria-label="Progression fidélité : <?= $pointsRestants ?> sur <?= $objectif ?> points">
                                 <div class="progress-fill" style="width: <?= round($pourcentage) ?>%;"></div>
                             </div>
                             <p class="points-hint">
@@ -526,19 +538,19 @@ foreach ($couponsData as $code => $infos) {
 
                 <div class="profil-content-grid">
                     <div class="info-column">
-                        <h3>Mes Coordonnées</h3>
-                        <form class="profil-form">
+                        <h3 id="titre-coordonnees">Mes Coordonnées</h3>
+                        <form class="profil-form" aria-labelledby="titre-coordonnees">
                             <div class="form-group-row">
                                 <div class="form-group">
-                                    <label>Nom complet</label>
+                                    <label for="field-nom">Nom complet</label>
                                     <div class="input-with-btn">
-                                        <input type="text" value="<?= htmlspecialchars($currentUser['prenom'] . ' ' . strtoupper($currentUser['nom'])) ?>" readonly>
-                                        <button type="button" class="icon-btn">✏️</button>
+                                        <input type="text" id="field-nom" value="<?= htmlspecialchars($currentUser['prenom'] . ' ' . strtoupper($currentUser['nom'])) ?>" readonly autocomplete="name">
+                                        <button type="button" class="icon-btn" aria-label="Modifier le nom complet" title="Modifier">✏️</button>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Date de naissance 🎁</label>
+                                    <label for="field-date">Date de naissance</label>
                                     <div class="input-with-btn">
                                         <?php
     $dateNaissance = $currentUser['date_naissance'] ?? '';
@@ -546,42 +558,42 @@ foreach ($couponsData as $code => $infos) {
         $dateNaissance = date('d/m/Y', strtotime($dateNaissance));
     }
 ?>
-                                        <input type="text" value="<?= htmlspecialchars($dateNaissance) ?>" readonly>
-                                        <button type="button" class="icon-btn">✏️</button>
+                                        <input type="text" id="field-date" value="<?= htmlspecialchars($dateNaissance) ?>" readonly autocomplete="bday">
+                                        <button type="button" class="icon-btn" aria-label="Modifier la date de naissance" title="Modifier">✏️</button>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label>Email</label>
+                                <label for="field-email">Email</label>
                                 <div class="input-with-btn">
-                                    <input type="email" value="<?= htmlspecialchars($currentUser['email']) ?>" readonly>
-                                    <button type="button" class="icon-btn">✏️</button>
+                                    <input type="email" id="field-email" value="<?= htmlspecialchars($currentUser['email']) ?>" readonly autocomplete="email">
+                                    <button type="button" class="icon-btn" aria-label="Modifier l'email" title="Modifier">✏️</button>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label>Téléphone</label>
+                                <label for="field-tel">Téléphone</label>
                                 <div class="input-with-btn">
-                                    <input type="tel" value="<?= htmlspecialchars($currentUser['telephone']) ?>" readonly>
-                                    <button type="button" class="icon-btn">✏️</button>
+                                    <input type="tel" id="field-tel" value="<?= htmlspecialchars($currentUser['telephone']) ?>" readonly autocomplete="tel">
+                                    <button type="button" class="icon-btn" aria-label="Modifier le téléphone" title="Modifier">✏️</button>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label>Adresse de livraison</label>
+                                <label for="field-adresse">Adresse de livraison</label>
                                 <div class="input-with-btn">
-                                    <input type="text" value="<?= htmlspecialchars($currentUser['adresse'] . ', ' . $currentUser['code_postal'] . ' ' . $currentUser['ville']) ?>" readonly>
-                                    <button type="button" class="icon-btn">✏️</button>
+                                    <input type="text" id="field-adresse" value="<?= htmlspecialchars($currentUser['adresse'] . ', ' . $currentUser['code_postal'] . ' ' . $currentUser['ville']) ?>" readonly autocomplete="street-address">
+                                    <button type="button" class="icon-btn" aria-label="Modifier l'adresse" title="Modifier">✏️</button>
                                 </div>
                             </div>
 
                             <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'livreur'): ?>
                             <div class="form-group">
-                                <label>Objectif du jour (€)</label>
+                                <label for="field-objectif">Objectif du jour (€)</label>
                                 <div class="input-with-btn">
-                                    <input type="number" value="<?= htmlspecialchars($currentUser['objectif_jour'] ?? '160') ?>" readonly min="10" max="500" step="5">
-                                    <button type="button" class="icon-btn">✏️</button>
+                                    <input type="number" id="field-objectif" value="<?= htmlspecialchars($currentUser['objectif_jour'] ?? '160') ?>" readonly min="10" max="500" step="5">
+                                    <button type="button" class="icon-btn" aria-label="Modifier l'objectif du jour" title="Modifier">✏️</button>
                                 </div>
                             </div>
                             <?php endif; ?>
@@ -589,13 +601,13 @@ foreach ($couponsData as $code => $infos) {
                     </div>
 
                     <div class="history-column">
-                        <h3>Dernières Commandes</h3>
-                        <div class="order-list">
+                        <h3 id="titre-commandes">Dernières Commandes</h3>
+                        <div class="order-list" role="list" aria-labelledby="titre-commandes">
                             <?php if (empty($mesCommandes)): ?>
                                 <p class="empty-orders">Vous n'avez passé aucune commande.</p>
                             <?php else: ?>
                                 <?php foreach ($mesCommandes as $commande): ?>
-                                    <div class="order-card">
+                                    <div class="order-card" role="listitem">
                                         <div class="order-icon">🍗</div>
                                         <div class="order-details">
                                             <h4>Commande #<?= $commande['id'] ?></h4>
@@ -669,6 +681,8 @@ foreach ($couponsData as $code => $infos) {
                 </div> </div>
         </section>
     </main>
+
+    <div id="aria-notifications" aria-live="assertive" aria-atomic="true" class="sr-only"></div>
 
     <?php include '../LIB/footer.php'; ?>
 

@@ -1,5 +1,5 @@
 <?php
-session_start();
+include __DIR__ . '/../LIB/authentification.php';
 header('Content-Type: application/json');
 
 //Vérification que la requête est bien en POST
@@ -7,6 +7,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => false, 'message' => 'Méthode non autorisée.']);
     exit;
 }
+
+//Vérification du token CSRF
+verifier_csrf();
 
 //Vérification que l'utilisateur est connecté
 $userId = $_POST['user_id'] ?? null;
@@ -23,9 +26,13 @@ if (!isset($_FILES['avatar']) || $_FILES['avatar']['error'] !== UPLOAD_ERR_OK) {
 
 $fichier = $_FILES['avatar'];
 
-//Vérification du type MIME (uniquement des images)
+//Vérification du type MIME réel côté serveur (finfo, pas le type envoyé par le client)
 $typesAutorises = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-if (!in_array($fichier['type'], $typesAutorises)) {
+$finfo = finfo_open(FILEINFO_MIME_TYPE);
+$mimeReel = finfo_file($finfo, $fichier['tmp_name']);
+finfo_close($finfo);
+
+if (!in_array($mimeReel, $typesAutorises)) {
     echo json_encode(['success' => false, 'message' => 'Format non autorisé. Utilisez JPG, PNG, GIF ou WEBP.']);
     exit;
 }
@@ -36,8 +43,16 @@ if ($fichier['size'] > 2 * 1024 * 1024) {
     exit;
 }
 
-//Génération d'un nom unique pour éviter les conflits
-$extension = pathinfo($fichier['name'], PATHINFO_EXTENSION);
+//Vérification que c'est bien une image valide (dimensions lisibles)
+$imageInfo = getimagesize($fichier['tmp_name']);
+if ($imageInfo === false) {
+    echo json_encode(['success' => false, 'message' => 'Le fichier n\'est pas une image valide.']);
+    exit;
+}
+
+//Génération d'un nom unique pour éviter les conflits — extension forcée depuis le MIME réel
+$extensionsMap = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/gif' => 'gif', 'image/webp' => 'webp'];
+$extension = $extensionsMap[$mimeReel];
 $nomFichier = 'avatar_' . $userId . '_' . time() . '.' . $extension;
 $dossierDestination = '../IMAGES/avatars/';
 $cheminComplet = $dossierDestination . $nomFichier;

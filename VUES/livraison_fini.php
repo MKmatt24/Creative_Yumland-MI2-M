@@ -8,8 +8,9 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'livreur') {
 
 $id_commande = $_GET['id'] ?? null;
 
-if (!$id_commande) {
-    die("Aucune course sélectionnée.");
+if (!$id_commande || !ctype_alnum(str_replace(['-', '_'], '', $id_commande))) {
+    header('Location: livraisons_en_attente.php');
+    exit();
 }
 
 //Récupération des data du fichier JSON
@@ -28,7 +29,14 @@ foreach ($commandes as $cmd) {
 }
 
 if (!$commande_trouvee) {
-    die("Erreur : Commande introuvable.");
+    header('Location: livraisons_en_attente.php');
+    exit();
+}
+
+// Vérifier que la commande appartient bien à ce livreur
+if (($commande_trouvee['livreur_id'] ?? '') != $_SESSION['user_id']) {
+    header('Location: livraisons_en_attente.php');
+    exit();
 }
 
 $gain_livreur = $commande_trouvee['gain_livreur'] ?? 0;
@@ -41,6 +49,7 @@ $temps_estime = $commande_trouvee['temps_minutes'] ?? 0;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Confirmation de livraison réussie pour le livreur">
     <title>Livraison Réussie - LOS POLLOS HERMANOS</title>
     <link rel="shortcut icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="icon" type="image/png" href="../IMAGES/logo.png">
@@ -84,38 +93,38 @@ $temps_estime = $commande_trouvee['temps_minutes'] ?? 0;
         </button>
     </div>
     
-    <main class="success-page">
-        
+    <main class="success-page" role="main" aria-label="Confirmation de livraison">
+
         <div class="success-container">
-            <div class="check-animation">
-                <svg viewBox="0 0 52 52" class="checkmark">
+            <div class="check-animation" aria-hidden="true">
+                <svg viewBox="0 0 52 52" class="checkmark" role="img" aria-label="Succès">
                     <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
                     <path class="checkmark__check" fill="none" d="M14.1 27.2 l7.1 7.2 16.7 -16.8"/>
                 </svg>
             </div>
 
             <h1>Livraison Terminée !</h1>
-            <p>Merci pour votre rapidité ⚡</p>
+            <p>Merci pour votre rapidité</p>
 
-            <div class="earnings-card">
-                <span class="label">Gain de la course</span>
-                <span class="amount">+ <?= number_format($gain_livreur, 2, ',', ' ') ?> €</span>
+            <div class="earnings-card" aria-label="Résumé des gains">
+                <span class="label" id="lbl-gain">Gain de la course</span>
+                <span class="amount" aria-labelledby="lbl-gain">+ <?= number_format($gain_livreur, 2, ',', ' ') ?> €</span>
                 <hr>
                 <div class="stats-row">
                     <div>
-                        <span class="small-label">Temps</span>
-                        <span class="value"><?= $temps_estime ?> min</span>
+                        <span class="small-label" id="lbl-temps">Temps</span>
+                        <span class="value" aria-labelledby="lbl-temps"><?= intval($temps_estime) ?> min</span>
                     </div>
                     <div>
-                        <span class="small-label">Distance</span>
-                        <span class="value"><?= $distance_km ?> km</span>
+                        <span class="small-label" id="lbl-dist">Distance</span>
+                        <span class="value" aria-labelledby="lbl-dist"><?= htmlspecialchars($distance_km) ?> km</span>
                     </div>
                 </div>
             </div>
 
-            <div class="action-buttons">
-                <a href="livraisons_en_attente.php" class="primary-btn">🏠 Retour à la page de livraison</a>
-            </div>
+            <nav class="action-buttons" aria-label="Navigation après livraison">
+                <a href="livraisons_en_attente.php" class="primary-btn">Retour à la page de livraison</a>
+            </nav>
         </div>
 
     </main>

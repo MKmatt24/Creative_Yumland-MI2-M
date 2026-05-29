@@ -1,5 +1,5 @@
 <?php
-session_start();
+include __DIR__ . '/../LIB/authentification.php';
 header('Content-Type: application/json');
 
 //Vérification que la requête est bien en POST
@@ -7,6 +7,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => false, 'message' => 'Méthode non autorisée.']);
     exit;
 }
+
+//Vérification du token CSRF
+verifier_csrf();
 
 //Récupération des données envoyées par le formulaire
 $userId = $_POST['user_id'] ?? null;
@@ -23,6 +26,12 @@ if (!$userId || !$champ || $valeur === null) {
 if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] != $userId) {
     echo json_encode(['success' => false, 'message' => 'Non autorisé.']);
     exit;
+}
+
+//Nettoyage de la valeur contre les injections XSS
+$valeur = trim($valeur);
+if ($champ !== 'date_naissance' && $champ !== 'objectif_jour') {
+    $valeur = strip_tags($valeur);
 }
 
 //Liste des champs que l'utilisateur a le droit de modifier

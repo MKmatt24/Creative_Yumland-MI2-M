@@ -11,9 +11,14 @@ $fichierCommandes = '../DATA/commande.json';
 $commandesData = file_get_contents($fichierCommandes);
 $commandes = json_decode($commandesData, true);
 
-//Quand le livreur clique sur le bouton pour "finir" la commande
+//Quand le livreur clique sur le bouton pour "finir" la commande (fallback sans JS)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'], $_POST['id_commande'])) {
+    verifier_csrf();
     $idCible = $_POST['id_commande'];
+    if (!ctype_alnum(str_replace(['-', '_'], '', $idCible))) {
+        header('Location: livraison.php');
+        exit();
+    }
     $nouveauStatut = ($_POST['action'] === 'terminer') ? 'livrée' : 'abandonnée';
 
 //Parcours des commandes pour modifier celle souhaité
@@ -70,10 +75,12 @@ if ($commandeEnCours && isset($commandeEnCours['user_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Page de livraison en cours pour les livreurs Los Pollos Hermanos">
     <title>Livraison en cours - LOS POLLOS HERMANOS</title>
     <link rel="shortcut icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="stylesheet" href="../CSS/livraison.css">
+    <meta name="csrf-token" content="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
     <script defer>
     document.addEventListener('DOMContentLoaded', function() {
         //Menu mobile
@@ -156,6 +163,7 @@ if ($commandeEnCours && isset($commandeEnCours['user_id'])) {
             const formData = new FormData();
             formData.append('action', action);
             formData.append('id_commande', idCommande);
+            formData.append('csrf_token', document.querySelector('meta[name="csrf-token"]').content);
 
             return fetch('../TRAITEMENTS/update_livraison.php', {
                 method: 'POST',
@@ -174,6 +182,8 @@ if ($commandeEnCours && isset($commandeEnCours['user_id'])) {
 
             const toast = document.createElement('div');
             toast.className = 'toast-notification toast-' + type;
+            toast.setAttribute('role', 'alert');
+            toast.setAttribute('aria-live', 'assertive');
             toast.textContent = message;
             toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);padding:16px 28px;border-radius:10px;color:#fff;font-weight:bold;font-size:1rem;z-index:9999;opacity:0;transition:opacity 0.3s,transform 0.3s;box-shadow:0 4px 12px rgba(0,0,0,0.3);';
             toast.style.background = type === 'success' ? '#2ecc71' : '#e74c3c';
@@ -198,13 +208,13 @@ if ($commandeEnCours && isset($commandeEnCours['user_id'])) {
         </button>
     </div>
     
-    <main>
+    <main role="main" aria-label="Détails de la livraison en cours">
         <?php if ($commandeEnCours): ?>
-            <section class="delivery-section" id="zone-livraison">
-                
+            <section class="delivery-section" id="zone-livraison" aria-labelledby="titre-commande">
+
                 <div class="delivery-header">
-                    <h2>Commande #<?= htmlspecialchars($commandeEnCours['id']) ?></h2>
-                    <span class="status-badge">En cours de livraison 🛵</span>
+                    <h2 id="titre-commande">Commande #<?= htmlspecialchars($commandeEnCours['id']) ?></h2>
+                    <span class="status-badge" role="status" aria-live="polite">En cours de livraison</span>
                 </div>
 
                 <div class="delivery-container">
@@ -226,21 +236,21 @@ if ($commandeEnCours && isset($commandeEnCours['user_id'])) {
                         </a>
                     </div>
 
-                    <div class="access-grid">
-                        <div class="access-item">
-                            <span class="icon">🔢</span>
-                            <span class="label">Digicode</span>
-                            <span class="value"><?= htmlspecialchars($clientInfo['code_interphone'] ?? 'N/A') ?></span>
+                    <div class="access-grid" role="list" aria-label="Informations d'accès au bâtiment">
+                        <div class="access-item" role="listitem">
+                            <span class="icon" aria-hidden="true">🔢</span>
+                            <span class="label" id="lbl-digicode">Digicode</span>
+                            <span class="value" aria-labelledby="lbl-digicode"><?= htmlspecialchars($clientInfo['code_interphone'] ?? 'N/A') ?></span>
                         </div>
-                        <div class="access-item">
-                            <span class="icon">🏢</span>
-                            <span class="label">Étage</span>
-                            <span class="value"><?= htmlspecialchars($clientInfo['etage'] ?? 'N/A') ?></span>
+                        <div class="access-item" role="listitem">
+                            <span class="icon" aria-hidden="true">🏢</span>
+                            <span class="label" id="lbl-etage">Étage</span>
+                            <span class="value" aria-labelledby="lbl-etage"><?= htmlspecialchars($clientInfo['etage'] ?? 'N/A') ?></span>
                         </div>
-                        <div class="access-item">
-                            <span class="icon">🚪</span>
-                            <span class="label">Appartement</span>
-                            <span class="value"><?= htmlspecialchars($clientInfo['appartement'] ?? 'N/A') ?></span>
+                        <div class="access-item" role="listitem">
+                            <span class="icon" aria-hidden="true">🚪</span>
+                            <span class="label" id="lbl-appart">Appartement</span>
+                            <span class="value" aria-labelledby="lbl-appart"><?= htmlspecialchars($clientInfo['appartement'] ?? 'N/A') ?></span>
                         </div>
                     </div>
 
@@ -251,10 +261,10 @@ if ($commandeEnCours && isset($commandeEnCours['user_id'])) {
                         </div>
                     </div>
 
-                    <div class="delivery-actions">
-                        <button type="button" id="btn-abandonner" class="abandon-btn" data-id="<?= $commandeEnCours['id'] ?>">❌</button>
+                    <div class="delivery-actions" role="group" aria-label="Actions de livraison">
+                        <button type="button" id="btn-abandonner" class="abandon-btn" data-id="<?= $commandeEnCours['id'] ?>" aria-label="Abandonner cette livraison" title="Abandonner la livraison">❌</button>
 
-                        <button type="button" id="btn-terminer" class="finish-btn finish-btn--large" data-id="<?= $commandeEnCours['id'] ?>">✅ Livraison Terminée</button>
+                        <button type="button" id="btn-terminer" class="finish-btn finish-btn--large" data-id="<?= $commandeEnCours['id'] ?>" aria-label="Marquer la livraison comme terminée">✅ Livraison Terminée</button>
                     </div>
 
                 </div>

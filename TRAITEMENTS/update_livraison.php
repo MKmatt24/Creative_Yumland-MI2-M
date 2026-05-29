@@ -1,5 +1,5 @@
 <?php
-session_start();
+include __DIR__ . '/../LIB/authentification.php';
 header('Content-Type: application/json');
 
 //Vérification que la requête est bien en POST
@@ -8,19 +8,29 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+//Vérification du token CSRF
+verifier_csrf();
+
+//Vérification du rôle livreur
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'livreur') {
+    echo json_encode(['success' => false, 'message' => 'Accès réservé aux livreurs.']);
+    exit;
+}
+
 //Récupération des données envoyées par le formulaire
 $action = $_POST['action'] ?? null;
 $idCommande = $_POST['id_commande'] ?? null;
 
 //Vérification que toutes les données nécessaires sont présentes
-if (!$action || !$idCommande) {
-    echo json_encode(['success' => false, 'message' => 'Données manquantes.']);
+if (!$action || !$idCommande || !ctype_alnum(str_replace(['-', '_'], '', $idCommande))) {
+    echo json_encode(['success' => false, 'message' => 'Données manquantes ou invalides.']);
     exit;
 }
 
-//Vérification que le livreur est bien connecté
-if (!isset($_SESSION['user_id'])) {
-    echo json_encode(['success' => false, 'message' => 'Non authentifié.']);
+//Vérification que l'action est connue
+$actionsAutorisees = ['accepter', 'terminer', 'abandonner'];
+if (!in_array($action, $actionsAutorisees, true)) {
+    echo json_encode(['success' => false, 'message' => 'Action non autorisée.']);
     exit;
 }
 
