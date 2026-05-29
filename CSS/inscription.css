@@ -444,3 +444,20 @@ a:focus-visible {
     outline: 2px solid var(--orange);
     outline-offset: 2px;
 }
+
+/* --- Compteur de force du mot de passe --- */
+.pwd-counter {
+    font-size: 0.8rem;
+    margin-top: 5px;
+    text-align: right;
+    color: #888;
+    transition: color 0.3s ease;
+}
+
+.pwd-counter.invalid {
+    color: #e74c3c;
+}
+
+.pwd-counter.valid {
+    color: #2ecc71;
+}
