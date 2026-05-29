@@ -1,398 +1,221 @@
 {
-    "plats": [
-        {
-            "id": 1,
-            "nom": "Albuquerque Bucket",
-            "desc": "12 pièces de poulet frit secret, servi avec 2 sauces.",
-            "prix": 20,
-            "cat": "Poulet",
-            "image": "..\/IMAGES\/albuquerque_bucket.jpg",
-            "infos": {
-                "calories": 1200,
-                "allergènes": [
-                    "Gluten"
-                ]
-            },
-            "ingredients": [
-                "Poulet secret",
-                "Sauce BBQ",
-                "Sauce Miel-Moutarde"
-            ],
-            "tags": [
-                "salé",
-                "épicé",
-                "halal",
-                "coup de coeur"
-            ],
-            "ventes": 150
-        },
-        {
-            "id": 2,
-            "nom": "Pollos Burger",
-            "desc": "Filet de poulet pané, cheddar fondu, laitue, tomate et sauce iconique.",
-            "prix": 8.5,
-            "cat": "Burgers",
-            "image": "..\/IMAGES\/pollos_burger.jpg",
-            "infos": {
-                "calories": 650,
-                "allergènes": [
-                    "Gluten",
-                    "Lactose"
-                ]
-            },
-            "ingredients": [
-                "Filet de poulet",
-                "Cheddar",
-                "Laitue",
-                "Tomate",
-                "Sauce Pollos"
-            ],
-            "substitutions": {
-                "Cheddar": [
-                    "Emmental",
-                    "Sans fromage"
-                ],
-                "Laitue": [
-                    "Salade roquette",
-                    "Sans salade"
-                ]
-            },
-            "tags": [
-                "salé",
-                "halal",
-                "coup de coeur"
-            ],
-            "ventes": 320
-        },
-        {
-            "id": 3,
-            "nom": "Fuego Wings",
-            "desc": "8 ailes marinées dans notre sauce pimentée signature.",
-            "prix": 11,
-            "cat": "Poulet",
-            "image": "..\/IMAGES\/fuego_wings.jpg",
-            "infos": {
-                "calories": 450,
-                "allergènes": []
-            },
-            "ingredients": [
-                "Ailes de poulet",
-                "Sauce Fuego",
-                "Graines de sésame"
-            ],
-            "tags": [
-                "épicé",
-                "halal",
-                "coup de coeur"
-            ],
-            "ventes": 280
-        },
-        {
-            "id": 4,
-            "nom": "Hermano Tenders",
-            "desc": "5 filets de poulet panés à la main, ultra tendres.",
-            "prix": 9,
-            "cat": "Poulet",
-            "image": "..\/IMAGES\/hermano_tenders.jpg",
-            "infos": {
-                "calories": 500,
-                "allergènes": [
-                    "Gluten"
-                ]
-            },
-            "tags": [
-                "salé",
-                "halal"
-            ],
-            "ventes": 110
-        },
-        {
-            "id": 5,
-            "nom": "Burrito Breakfast",
-            "desc": "L'original : œufs, chorizo, pommes de terre et fromage.",
-            "prix": 7.5,
-            "cat": "Spécialités",
-            "image": "..\/IMAGES\/burrito_breakfast.jpg",
-            "infos": {
-                "calories": 720,
-                "allergènes": [
-                    "Lactose",
-                    "Oeufs"
-                ]
-            },
-            "ingredients": [
-                "Tortilla",
-                "Oeufs",
-                "Chorizo",
-                "Pommes de terre",
-                "Fromage"
-            ],
-            "substitutions": {
-                "Chorizo": [
-                    "Bacon",
-                    "Poulet"
-                ],
-                "Fromage": [
-                    "Sauce salsa"
-                ]
-            },
-            "tags": [
-                "salé",
-                "halal"
-            ],
-            "ventes": 95
-        },
-        {
-            "id": 6,
-            "nom": "Tacos Al Pastor",
-            "desc": "3 tacos au porc mariné, oignons rouges et ananas.",
-            "prix": 9.5,
-            "cat": "Spécialités",
-            "image": "..\/IMAGES\/tacos_al_pastor.jpg",
-            "infos": {
-                "calories": 580,
-                "allergènes": []
-            },
-            "tags": [
-                "épicé",
-                "halal"
-            ],
-            "ventes": 190
-        },
-        {
-            "id": 7,
-            "nom": "Ultimate Burrito",
-            "desc": "Poulet effiloché, riz épicé, haricots noirs et salsa.",
-            "prix": 10.5,
-            "cat": "Spécialités",
-            "image": "..\/IMAGES\/ultimate_burrito.jpg",
-            "infos": {
-                "calories": 850,
-                "allergènes": [
-                    "Gluten"
-                ]
-            },
-            "tags": [
-                "salé",
-                "halal"
-            ],
-            "ventes": 140
-        },
-        {
-            "id": 8,
-            "nom": "Quesadilla XL",
-            "desc": "Tortilla géante grillée au mélange de trois fromages.",
-            "prix": 6.5,
-            "cat": "Spécialités",
-            "image": "..\/IMAGES\/quesadilla_xl.jpg",
-            "infos": {
-                "calories": 600,
-                "allergènes": [
-                    "Lactose",
-                    "Gluten"
-                ]
-            },
-            "tags": [
-                "végétarien"
-            ],
-            "ventes": 210
-        },
-        {
-            "id": 9,
-            "nom": "Red enchiladas",
-            "desc": "Nappées de notre sauce chili traditionnelle maison.",
-            "prix": 12,
-            "cat": "Spécialités",
-            "image": "..\/IMAGES\/red_enchiladas.jpg",
-            "infos": {
-                "calories": 780,
-                "allergènes": [
-                    "Lactose"
-                ]
-            },
-            "tags": [
-                "épicé",
-                "végétarien"
-            ],
-            "ventes": 80
-        },
-        {
-            "id": 10,
-            "nom": "Rice Pollos bowl",
-            "desc": "Riz épicé, maïs grillé, poulet et guacamole frais.",
-            "prix": 9.9,
-            "cat": "Accompagnements",
-            "image": "..\/IMAGES\/rice_pollos_bowl.jpg",
-            "infos": {
-                "calories": 540,
-                "allergènes": []
-            },
-            "tags": [
-                "sans gluten",
-                "halal"
-            ],
-            "ventes": 165
-        },
-        {
-            "id": 11,
-            "nom": "Nachos de la Loma",
-            "desc": "Cheddar fondu, jalapeños et crème acidulée.",
-            "prix": 8,
-            "cat": "Accompagnements",
-            "image": "..\/IMAGES\/nachos_de_la_loma.jpg",
-            "infos": {
-                "calories": 900,
-                "allergènes": [
-                    "Lactose"
-                ]
-            },
-            "tags": [
-                "salé",
-                "végétarien"
-            ],
-            "ventes": 230
-        },
-        {
-            "id": 12,
-            "nom": "Spicy Wrap",
-            "desc": "Poulet croustillant, mayo épicée et légumes frais.",
-            "prix": 7.9,
-            "cat": "Burgers",
-            "image": "..\/IMAGES\/spicy_wrap.jpg",
-            "infos": {
-                "calories": 520,
-                "allergènes": [
-                    "Gluten",
-                    "Oeufs"
-                ]
-            },
-            "tags": [
-                "épicé",
-                "halal",
-                "coup de coeur"
-            ],
-            "ventes": 310
-        },
-        {
-            "id": 13,
-            "nom": "Fries",
-            "desc": "Coupées main avec notre mélange de sel secret.",
-            "prix": 3.5,
-            "cat": "Accompagnements",
-            "image": "..\/IMAGES\/fries.jpg",
-            "infos": {
-                "calories": 400,
-                "allergènes": []
-            },
-            "tags": [
-                "vegan",
-                "sans gluten",
-                "coup de coeur"
-            ],
-            "ventes": 500
-        },
-        {
-            "id": 14,
-            "nom": "Creamy Coleslaw",
-            "desc": "La recette originale de Gus, croquante à souhait.",
-            "prix": 3,
-            "cat": "Accompagnements",
-            "image": "..\/IMAGES\/creamy_coleslaw.jpg",
-            "infos": {
-                "calories": 250,
-                "allergènes": [
-                    "Oeufs"
-                ]
-            },
-            "tags": [
-                "végétarien"
-            ],
-            "ventes": 120
-        },
-        {
-            "id": 15,
-            "nom": "Sopapillas",
-            "desc": "Beignets légers servis chauds avec du miel local.",
-            "prix": 4.5,
-            "cat": "Desserts",
-            "image": "..\/IMAGES\/sopapillas.jpg",
-            "infos": {
-                "calories": 350,
-                "allergènes": [
-                    "Gluten"
-                ]
-            },
-            "tags": [
-                "sucré",
-                "coup de coeur"
-            ],
-            "ventes": 410
-        },
-        {
-            "id": 16,
-            "nom": "Butterscotch Pudding",
-            "desc": "Un classique onctueux pour finir en douceur.",
-            "prix": 4,
-            "cat": "Desserts",
-            "image": "..\/IMAGES\/butterscotch_pudding.jpg",
-            "infos": {
-                "calories": 300,
-                "allergènes": [
-                    "Lactose"
-                ]
-            },
-            "tags": [
-                "sucré",
-                "végétarien"
-            ],
-            "ventes": 180
-        }
-    ],
-    "menus": [
-        {
-            "id": 101,
-            "nom": "Menu Los Pollos Classic",
-            "description": "Le burger iconique accompagné de nos frites maison et d'un dessert au choix.",
-            "prix": 14.5,
-            "min_personnes": 1,
-            "creneau": "Toute la journée",
-            "heure_debut": "00:00",
-            "heure_fin": "23:59",
-            "liste_plats": [
-                "Pollos Burger",
-                "Fries",
-                "Sopapillas"
-            ]
-        },
-        {
-            "id": 103,
-            "nom": "Menu Fuego Spécial",
-            "description": "Pour les amateurs de piquant : Ailes Fuego et Burrito Breakfast.",
-            "prix": 16,
-            "min_personnes": 1,
-            "creneau": "Menu Midi (11h30-14h30)",
-            "heure_debut": "11:30",
-            "heure_fin": "14:30",
-            "liste_plats": [
-                "Fuego Wings",
-                "Burrito Breakfast",
-                "Fries"
-            ]
-        },
-        {
-            "id": 102,
-            "nom": "Menu Bucket Family",
-            "description": "L'Albuquerque Bucket pour partager, servi avec Coleslaw et riz.",
-            "prix": 24.9,
-            "min_personnes": 3,
-            "creneau": "Menu soir (18h00-23h00)",
-            "heure_debut": "18:00",
-            "heure_fin": "23:00",
-            "liste_plats": [
-                "Albuquerque Bucket",
-                "Creamy Coleslaw",
-                "Rice Pollos bowl"
-            ]
-        }
-    ]
+  "plats": [
+    {
+      "id": 1,
+      "nom": "Albuquerque Bucket",
+      "desc": "12 pièces de poulet frit secret, servi avec 2 sauces.",
+      "prix": 19.99,
+      "cat": "Poulet",
+      "image": "../IMAGES/albuquerque_bucket.jpg",
+      "infos": { "calories": 1200, "allergènes": ["Gluten"] },
+      "ingredients": ["Poulet secret", "Sauce BBQ", "Sauce Miel-Moutarde"],
+      "tags": ["salé", "épicé", "halal", "coup de coeur"],
+      "ventes": 150
+    },
+    {
+      "id": 2,
+      "nom": "Pollos Burger",
+      "desc": "Filet de poulet pané, cheddar fondu, laitue, tomate et sauce iconique.",
+      "prix": 8.50,
+      "cat": "Burgers",
+      "image": "../IMAGES/pollos_burger.jpg",
+      "infos": { "calories": 650, "allergènes": ["Gluten", "Lactose"] },
+      "ingredients": ["Filet de poulet", "Cheddar", "Laitue", "Tomate", "Sauce Pollos"],
+      "substitutions": { "Cheddar": ["Emmental", "Sans fromage"], "Laitue": ["Salade roquette", "Sans salade"] },
+      "tags": ["salé", "halal", "coup de coeur"],
+      "ventes": 320
+    },
+    {
+      "id": 3,
+      "nom": "Fuego Wings",
+      "desc": "8 ailes marinées dans notre sauce pimentée signature.",
+      "prix": 11.00,
+      "cat": "Poulet",
+      "image": "../IMAGES/fuego_wings.jpg",
+      "infos": { "calories": 450, "allergènes": [] },
+      "ingredients": ["Ailes de poulet", "Sauce Fuego", "Graines de sésame"],
+      "tags": ["épicé", "halal", "coup de coeur"],
+      "ventes": 280
+    },
+    {
+      "id": 4,
+      "nom": "Hermano Tenders",
+      "desc": "5 filets de poulet panés à la main, ultra tendres.",
+      "prix": 9.00,
+      "cat": "Poulet",
+      "image": "../IMAGES/hermano_tenders.jpg",
+      "infos": { "calories": 500, "allergènes": ["Gluten"] },
+      "tags": ["salé", "halal"],
+      "ventes": 110
+    },
+    {
+      "id": 5,
+      "nom": "Burrito Breakfast",
+      "desc": "L'original : œufs, chorizo, pommes de terre et fromage.",
+      "prix": 7.50,
+      "cat": "Spécialités",
+      "image": "../IMAGES/burrito_breakfast.jpg",
+      "infos": { "calories": 720, "allergènes": ["Lactose", "Oeufs"] },
+      "ingredients": ["Tortilla", "Oeufs", "Chorizo", "Pommes de terre", "Fromage"],
+      "substitutions": { "Chorizo": ["Bacon", "Poulet"], "Fromage": ["Sauce salsa"] },
+      "tags": ["salé", "halal"],
+      "ventes": 95
+    },
+    {
+      "id": 6,
+      "nom": "Tacos Al Pastor",
+      "desc": "3 tacos au porc mariné, oignons rouges et ananas.",
+      "prix": 9.50,
+      "cat": "Spécialités",
+      "image": "../IMAGES/tacos_al_pastor.jpg",
+      "infos": { "calories": 580, "allergènes": [] },
+      "tags": ["épicé", "halal"],
+      "ventes": 190
+    },
+    {
+      "id": 7,
+      "nom": "Ultimate Burrito",
+      "desc": "Poulet effiloché, riz épicé, haricots noirs et salsa.",
+      "prix": 10.50,
+      "cat": "Spécialités",
+      "image": "../IMAGES/ultimate_burrito.jpg",
+      "infos": { "calories": 850, "allergènes": ["Gluten"] },
+      "tags": ["salé", "halal"],
+      "ventes": 140
+    },
+    {
+      "id": 8,
+      "nom": "Quesadilla XL",
+      "desc": "Tortilla géante grillée au mélange de trois fromages.",
+      "prix": 6.50,
+      "cat": "Spécialités",
+      "image": "../IMAGES/quesadilla_xl.jpg",
+      "infos": { "calories": 600, "allergènes": ["Lactose", "Gluten"] },
+      "tags": ["végétarien"],
+      "ventes": 210
+    },
+    {
+      "id": 9,
+      "nom": "Red enchiladas",
+      "desc": "Nappées de notre sauce chili traditionnelle maison.",
+      "prix": 12.00,
+      "cat": "Spécialités",
+      "image": "../IMAGES/red_enchiladas.jpg",
+      "infos": { "calories": 780, "allergènes": ["Lactose"] },
+      "tags": ["épicé", "végétarien"],
+      "ventes": 80
+    },
+    {
+      "id": 10,
+      "nom": "Rice Pollos bowl",
+      "desc": "Riz épicé, maïs grillé, poulet et guacamole frais.",
+      "prix": 9.90,
+      "cat": "Accompagnements",
+      "image": "../IMAGES/rice_pollos_bowl.jpg",
+      "infos": { "calories": 540, "allergènes": [] },
+      "tags": ["sans gluten", "halal"],
+      "ventes": 165
+    },
+    {
+      "id": 11,
+      "nom": "Nachos de la Loma",
+      "desc": "Cheddar fondu, jalapeños et crème acidulée.",
+      "prix": 8.00,
+      "cat": "Accompagnements",
+      "image": "../IMAGES/nachos_de_la_loma.jpg",
+      "infos": { "calories": 900, "allergènes": ["Lactose"] },
+      "tags": ["salé", "végétarien"],
+      "ventes": 230
+    },
+    {
+      "id": 12,
+      "nom": "Spicy Wrap",
+      "desc": "Poulet croustillant, mayo épicée et légumes frais.",
+      "prix": 7.90,
+      "cat": "Burgers",
+      "image": "../IMAGES/spicy_wrap.jpg",
+      "infos": { "calories": 520, "allergènes": ["Gluten", "Oeufs"] },
+      "tags": ["épicé", "halal", "coup de coeur"],
+      "ventes": 310
+    },
+    {
+      "id": 13,
+      "nom": "Fries",
+      "desc": "Coupées main avec notre mélange de sel secret.",
+      "prix": 3.50,
+      "cat": "Accompagnements",
+      "image": "../IMAGES/fries.jpg",
+      "infos": { "calories": 400, "allergènes": [] },
+      "tags": ["vegan", "sans gluten", "coup de coeur"],
+      "ventes": 500
+    },
+    {
+      "id": 14,
+      "nom": "Creamy Coleslaw",
+      "desc": "La recette originale de Gus, croquante à souhait.",
+      "prix": 3.00,
+      "cat": "Accompagnements",
+      "image": "../IMAGES/creamy_coleslaw.jpg",
+      "infos": { "calories": 250, "allergènes": ["Oeufs"] },
+      "tags": ["végétarien"],
+      "ventes": 120
+    },
+    {
+      "id": 15,
+      "nom": "Sopapillas",
+      "desc": "Beignets légers servis chauds avec du miel local.",
+      "prix": 4.50,
+      "cat": "Desserts",
+      "image": "../IMAGES/sopapillas.jpg",
+      "infos": { "calories": 350, "allergènes": ["Gluten"] },
+      "tags": ["sucré", "coup de coeur"],
+      "ventes": 410
+    },
+    {
+      "id": 16,
+      "nom": "Butterscotch Pudding",
+      "desc": "Un classique onctueux pour finir en douceur.",
+      "prix": 4.00,
+      "cat": "Desserts",
+      "image": "../IMAGES/butterscotch_pudding.jpg",
+      "infos": { "calories": 300, "allergènes": ["Lactose"] },
+      "tags": ["sucré", "végétarien"],
+      "ventes": 180
+    }
+  ],
+  "menus": [
+    {
+      "id": 101,
+      "nom": "Menu Los Pollos Classic",
+      "description": "Le burger iconique accompagné de nos frites maison et d'un dessert au choix.",
+      "prix": 14.50,
+      "min_personnes": 1,
+      "creneau": "Toute la journée",
+      "heure_debut": "00:00",
+      "heure_fin": "23:59",
+      "liste_plats": ["Pollos Burger", "Fries", "Sopapillas"]
+    },
+    {
+      "id": 103,
+      "nom": "Menu Fuego Spécial",
+      "description": "Pour les amateurs de piquant : Ailes Fuego et Burrito Breakfast.",
+      "prix": 16.00,
+      "min_personnes": 1,
+      "creneau": "Menu Midi (11h30-14h30)",
+      "heure_debut": "11:30",
+      "heure_fin": "14:30",
+      "liste_plats": ["Fuego Wings", "Burrito Breakfast", "Fries"]
+    },
+    {
+      "id": 102,
+      "nom": "Menu Bucket Family",
+      "description": "L'Albuquerque Bucket pour partager, servi avec Coleslaw et riz.",
+      "prix": 24.90,
+      "min_personnes": 3,
+      "creneau": "Menu soir (18h00-23h00)",
+      "heure_debut": "18:00",
+      "heure_fin": "23:00",
+      "liste_plats": ["Albuquerque Bucket", "Creamy Coleslaw", "Rice Pollos bowl"]
+    }
+  ]
 }

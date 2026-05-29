@@ -13,41 +13,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
     
-    // Charger les utilisateurs
-    $users = json_decode(file_get_contents('../DATA/users.json'), true);
-    
-    $login_successful = false;
-    
-    foreach ($users as $user) {
-        if ($user['email'] === $email && password_verify($password, $user['password'])) {
-            // VÉRIFICATION DU STATUT
-            if ($user['statut'] === 'suspendu' || $user['statut'] === 'inactif') {
-                $error = "Ce compte est suspendu. Accès refusé.";
-                break;
-            }
+    // VALIDATION : Limiter à 12 caractères
+    if (strlen($password) > 12) {
+        $error = "Le mot de passe ne peut pas dépasser 12 caractères.";
+    } else {
+        // Charger les utilisateurs
+        $users = json_decode(file_get_contents('../DATA/users.json'), true);
+        
+        $login_successful = false;
+        
+        foreach ($users as $user) {
+            if ($user['email'] === $email && password_verify($password, $user['password'])) {
+                // VÉRIFICATION DU STATUT
+                if ($user['statut'] === 'suspendu' || $user['statut'] === 'inactif') {
+                    $error = "Ce compte est suspendu. Accès refusé.";
+                    break;
+                }
 
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['role'] = $user['role'];
-            $_SESSION['nom'] = $user['nom'];
-            $_SESSION['prenom'] = $user['prenom'];
-            
-            $login_successful = true;
-            
-            // Redirection selon le rôle
-            if ($user['role'] === 'admin') {
-                header('Location: admin.php');
-            } elseif ($user['role'] === 'restaurateur') {
-                header('Location: commande.php');
-            } else {
-                header('Location: profil.php');
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['role'] = $user['role'];
+                $_SESSION['nom'] = $user['nom'];
+                $_SESSION['prenom'] = $user['prenom'];
+                
+                $login_successful = true;
+                
+                // Redirection selon le rôle
+                if ($user['role'] === 'admin') {
+                    header('Location: admin.php');
+                } elseif ($user['role'] === 'restaurateur') {
+                    header('Location: commande.php');
+                } else {
+                    header('Location: profil.php');
+                }
+                exit;
             }
-            exit;
         }
-    }
-    
-    // Si on arrive ici, la connexion a échoué
-    if (!$login_successful && empty($error)) {
-        $error = "Email ou mot de passe incorrect";
+        
+        // Si on arrive ici, la connexion a échoué
+        if (!$login_successful && empty($error)) {
+            $error = "Email ou mot de passe incorrect";
+        }
     }
 }
 ?>
@@ -72,11 +77,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         const passwordInput = document.getElementById('password');
         if (passwordInput) {
             const passwordGroup = passwordInput.parentElement;
-            passwordGroup.classList.add('password-wrapper');
+            passwordGroup.style.position = 'relative';
             
             const togglePassword = document.createElement('span');
             togglePassword.innerHTML = '👁️';
-            togglePassword.className = 'toggle-password';
+            togglePassword.style.cssText = 'position: absolute; right: 15px; top: 38px; cursor: pointer; font-size: 1.3rem; user-select: none; z-index: 10;';
             
             passwordGroup.appendChild(togglePassword);
 
@@ -102,9 +107,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (!emailRegex.test(email)) {
                     e.preventDefault();
                     alert('❌ Veuillez entrer une adresse email valide.');
-                } else if (password.length < 8) {
+                } else if (password.length < 6) {
                     e.preventDefault();
-                    alert('❌ Le mot de passe doit contenir au moins 8 caractères.');
+                    alert('❌ Le mot de passe doit contenir au moins 6 caractères.');
                 }
             });
         }
@@ -113,16 +118,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         const pwdInput = document.getElementById('password');
         if (pwdInput) {
             const counter = document.createElement('div');
-            counter.className = 'pwd-counter';
+            counter.style.fontSize = '0.8rem';
+            counter.style.marginTop = '5px';
+            counter.style.textAlign = 'right';
             pwdInput.parentElement.appendChild(counter);
 
             const updateCounter = () => {
-                counter.textContent = `${pwdInput.value.length} caractères`;
-                if (pwdInput.value.length < 8) {
-                    counter.classList.add('invalid');
-                } else {
-                    counter.classList.remove('invalid');
-                }
+                counter.textContent = `${pwdInput.value.length} / 12`;
+                counter.style.color = pwdInput.value.length >= 12 ? 'var(--orange)' : '#888';
             };
             pwdInput.addEventListener('input', updateCounter);
             updateCounter();
@@ -168,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <div class="form-group">
                         <label for="password">Mot de passe</label>
-                        <input type="password" id="password" name="password" required placeholder="Votre mot de passe">
+                        <input type="password" id="password" name="password" required placeholder="Votre mot de passe" maxlength="12">
                     </div>
 
                     <div class="form-group checkbox-group">

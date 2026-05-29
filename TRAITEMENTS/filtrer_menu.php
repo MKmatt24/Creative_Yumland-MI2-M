@@ -52,12 +52,20 @@ $resultats = array_filter($plats, function($p) use ($search, $cat, $diet, $taste
     return true;
 });
 
-// Les menus ne sont plus pris en compte lors du filtrage (ils disparaissent si un filtre est actif)
+// Filtre pour les menus (uniquement si aucun filtre de régime/goût spécifique n'est actif)
 $resultats_menus = [];
-
-// On ne renvoie les menus que si aucun filtre n'est appliqué (vue initiale)
-if (empty($search) && $cat === 'Tous' && empty($diet) && empty($taste)) {
-    $resultats_menus = $menus;
+if (empty($diet) && empty($taste)) {
+    $resultats_menus = array_filter($menus, function($m) use ($search, $cat) {
+        if ($cat !== 'Tous') return false; // Les menus ne sont affichés que dans la vue globale
+        if (empty($search)) return true;
+        
+        $foundInPlats = false;
+        foreach(($m['liste_plats'] ?? []) as $platNom) {
+            if (stripos($platNom, $search) !== false) { $foundInPlats = true; break; }
+        }
+        
+        return stripos($m['nom'], $search) !== false || stripos($m['description'], $search) !== false || $foundInPlats;
+    });
 }
 
 // On réindexe le tableau pour le JSON

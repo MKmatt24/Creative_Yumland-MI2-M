@@ -50,37 +50,6 @@ $success = $_GET['success'] ?? false;
     <link rel="shortcut icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="stylesheet" href="../CSS/notation.css">
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Menu hamburger toggle
-            const menuToggle = document.querySelector('.menu-toggle');
-            const navMenu = document.querySelector('nav ul');
-
-            if (menuToggle && navMenu) {
-                menuToggle.addEventListener('click', () => {
-                    menuToggle.classList.toggle('active');
-                    navMenu.classList.toggle('active');
-                });
-
-                // Fermer le menu quand on clique sur un lien
-                const navLinks = document.querySelectorAll('nav ul li a');
-                navLinks.forEach(link => {
-                    link.addEventListener('click', () => {
-                        menuToggle.classList.remove('active');
-                        navMenu.classList.remove('active');
-                    });
-                });
-
-                // Fermer le menu si on clique en dehors
-                document.addEventListener('click', (e) => {
-                    if (!e.target.closest('nav')) {
-                        menuToggle.classList.remove('active');
-                        navMenu.classList.remove('active');
-                    }
-                });
-            }
-        });
-    </script>
 </head>
 <body>
     

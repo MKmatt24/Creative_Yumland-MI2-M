@@ -33,12 +33,6 @@ $montant_formatte = number_format($total_final, 2, '.', '');
 // Chargement des données de référence pour comparer les ingrédients
 $menu_data = json_decode(file_get_contents('../DATA/menu.json'), true);
 $plats_ref = $menu_data['plats'] ?? [];
-
-$coupon_error = '';
-if (isset($_SESSION['coupon_error'])) {
-    $coupon_error = $_SESSION['coupon_error'];
-    unset($_SESSION['coupon_error']); // Effacer l'erreur après l'avoir affichée
-}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -55,106 +49,6 @@ if (isset($_SESSION['coupon_error'])) {
         const blockHoraire = document.getElementById('choix_horaire');
         blockHoraire.style.display = (type === 'programmee') ? 'block' : 'none';
     }
-
-    /**
-     * Met à jour la quantité d'un article dans le panier
-     * @param {number} index - L'index de l'article dans la session
-     * @param {string} action - 'plus' ou 'moins'
-     */
-    function updateQty(index, action) {
-        const formData = new FormData();
-        formData.append('index', index);
-        formData.append('action', action);
-
-        fetch('../TRAITEMENTS/modifier_panier.php', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                window.location.reload();
-            } else {
-                alert(data.message);
-            }
-        })
-        .catch(error => console.error('Erreur:', error));
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const couponForm = document.getElementById('coupon-form');
-        const couponInput = document.getElementById('coupon-input');
-        const couponAppliedContainer = document.getElementById('coupon-applied-message-container');
-        const couponErrorContainer = document.getElementById('coupon-error-message-container');
-        const totalDisplay = document.getElementById('cart-total-display');
-        const payBtn = document.getElementById('proceed-to-payment-btn');
-
-        function updateCouponUI(data) {
-            if (couponAppliedContainer) couponAppliedContainer.innerHTML = '';
-            if (couponErrorContainer) couponErrorContainer.innerHTML = '';
-
-            if (data.success) {
-                if (data.coupon) {
-                    const val = data.coupon.valeur;
-                    const type = data.coupon.type === 'pourcentage' ? '%' : '€';
-                    couponAppliedContainer.innerHTML = `
-                        <div class="coupon-message" id="coupon-applied-message">
-                            <span>✅ Coupon <strong>${val}${type}</strong> appliqué !</span>
-                            <a href="#" id="coupon-remove-link" class="coupon-remove" onclick="return false;">Retirer</a>
-                        </div>`;
-                    document.getElementById('coupon-remove-link').addEventListener('click', handleRemoveCoupon);
-                    if (couponInput) couponInput.value = data.coupon.code;
-                } else {
-                    if (couponInput) couponInput.value = '';
-                }
-            } else if (data.message) {
-                couponErrorContainer.innerHTML = `
-                    <div class="coupon-message error" id="coupon-error-message">
-                        <div class="error-wrapper">
-                            <span class="error-icon">⚠️</span>
-                            <span class="error-text">${data.message}</span>
-                        </div>
-                    </div>`;
-            }
-
-            if (totalDisplay) totalDisplay.textContent = data.new_total;
-            if (payBtn && payBtn.textContent.includes('(')) {
-                payBtn.textContent = payBtn.textContent.replace(/\(.*\)/, `(${data.new_total})`);
-            }
-        }
-
-        function handleRemoveCoupon(e) {
-            if (e) e.preventDefault();
-            fetch('../TRAITEMENTS/supprimer_coupon.php', {
-                method: 'POST',
-                headers: { 'X-Requested-With': 'XMLHttpRequest' }
-            })
-            .then(res => res.json())
-            .then(updateCouponUI)
-            .catch(err => console.error('Erreur suppression coupon:', err));
-        }
-
-        if (couponForm) {
-            couponForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const formData = new FormData(this);
-                fetch(this.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
-                })
-                .then(res => res.json())
-                .then(updateCouponUI)
-                .catch(err => console.error('Erreur application coupon:', err));
-            });
-        }
-
-        const initialRemoveBtn = document.getElementById('coupon-remove-link');
-        if (initialRemoveBtn) initialRemoveBtn.addEventListener('click', handleRemoveCoupon);
-    });
     </script>
 </head>
 <body class="page-dark">
@@ -185,7 +79,7 @@ if (isset($_SESSION['coupon_error'])) {
     <?php else: ?>
         
         <div class="summary-box">
-            <?php foreach ($panier as $index => $item): ?>
+            <?php foreach ($panier as $item): ?>
                 <div class="item-row">
                     <div class="item-info">
                         <div class="cart-img-wrapper">
@@ -193,13 +87,7 @@ if (isset($_SESSION['coupon_error'])) {
                         </div>
                         <div class="item-details">
                             <div class="item-main-info">
-                                <span><?= htmlspecialchars($item['nom'] ?? 'Produit') ?></span>
-                                
-                                <div class="cart-qty-selector">
-                                    <button type="button" class="cart-qty-btn" onclick="updateQty(<?= $index ?>, 'moins')">-</button>
-                                    <span class="cart-qty-val"><?= $item['quantite'] ?? 1 ?></span>
-                                    <button type="button" class="cart-qty-btn" onclick="updateQty(<?= $index ?>, 'plus')">+</button>
-                                </div>
+                                <span><?= htmlspecialchars($item['nom'] ?? 'Produit') ?> (x<?= $item['quantite'] ?? 1 ?>)</span>
                                 <span class="text-orange"><?= number_format(($item['prix'] ?? 0) * ($item['quantite'] ?? 1), 2) ?> €</span>
                             </div>
 
@@ -253,38 +141,25 @@ if (isset($_SESSION['coupon_error'])) {
                 </div>
             <?php endforeach; ?>
             <div class="total-display">
-                TOTAL : <span class="text-orange" id="cart-total-display"><?= $montant_formatte ?> €</span>
+                TOTAL : <span class="text-orange"><?= $montant_formatte ?> €</span>
             </div>
         </div>
 
         <div class="coupon-container">
             <label class="mb-10 text-orange">Code Promo / Coupon</label>
             
-            <form action="../TRAITEMENTS/appliquer_coupon.php" method="POST" class="coupon-form" id="coupon-form">
-                <input type="text" name="code_coupon" id="coupon-input" class="coupon-input" placeholder="Entrez votre code ici..." value="<?= htmlspecialchars($_SESSION['coupon']['code'] ?? '') ?>">
+            <form action="../TRAITEMENTS/appliquer_coupon.php" method="POST" class="coupon-form">
+                <input type="text" name="code_coupon" class="coupon-input" placeholder="Entrez votre code ici...">
                 <button type="submit" class="coupon-btn">Appliquer</button>
             </form>
 
-            <div id="coupon-applied-message-container">
-                <?php if(isset($_SESSION['coupon'])): ?>
-                    <div class="coupon-message" id="coupon-applied-message">
-                        <span>
-                            ✅ Coupon <strong><?= $_SESSION['coupon']['valeur'] ?><?= $_SESSION['coupon']['type'] == 'pourcentage' ? '%' : '€' ?></strong> appliqué !
-                        </span>
-                        <a href="#" id="coupon-remove-link" class="coupon-remove" onclick="return false;">Retirer</a>
-                    </div>
-                <?php endif; ?>
-            </div>
-        </div>
-        
-        <div id="coupon-error-message-container">
-            <?php if (!empty($coupon_error)): ?>
-                <div class="coupon-message error" id="coupon-error-message">
-                <div class="error-wrapper">
-                    <span class="error-icon">⚠️</span>
-                    <span class="error-text"><?= htmlspecialchars($coupon_error) ?></span>
+            <?php if(isset($_SESSION['coupon'])): ?>
+                <div class="coupon-message">
+                    <span>
+                        ✅ Coupon <strong><?= $_SESSION['coupon']['valeur'] ?><?= $_SESSION['coupon']['type'] == 'pourcentage' ? '%' : '€' ?></strong> appliqué !
+                    </span>
+                    <a href="../TRAITEMENTS/supprimer_coupon.php" class="coupon-remove">Retirer</a>
                 </div>
-            </div>
             <?php endif; ?>
         </div>
 
@@ -320,7 +195,7 @@ if (isset($_SESSION['coupon_error'])) {
             </div>
 
             <div class="pay-btn-container">
-                <button type="submit" class="btn-full" id="proceed-to-payment-btn">
+                <button type="submit" class="btn-full">
                     <?php if (isset($_SESSION['modification_id'])): ?>
                         VALIDER LES MODIFICATIONS
                     <?php else: ?>

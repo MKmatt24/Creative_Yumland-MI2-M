@@ -19,23 +19,8 @@
             case 'email_exists':
                 $error_message = 'Cette adresse email est déjà utilisée.';
                 break;
-            case 'password_too_short':
-                $error_message = 'Le mot de passe doit contenir au moins 8 caractères.';
-                break;
-            case 'invalid_name':
-                $error_message = 'Le nom et le prénom ne doivent contenir que des lettres.';
-                break;
-            case 'invalid_phone':
-                $error_message = 'Le numéro de téléphone est invalide.';
-                break;
-            case 'invalid_zip':
-                $error_message = 'Le code postal doit contenir exactement 5 chiffres.';
-                break;
-            case 'invalid_city':
-                $error_message = 'La ville ne doit contenir que des lettres.';
-                break;
-            case 'invalid_email':
-                $error_message = 'L\'adresse email est invalide.';
+            case 'password_too_long':
+                $error_message = 'Le mot de passe ne doit pas dépasser 12 caractères.';
                 break;
         }
     }
@@ -65,19 +50,17 @@
             
             pwdInputs.forEach(input => {
                 if (input) {
+                    input.setAttribute('maxlength', '12');
                     const counter = document.createElement('div');
-                    counter.className = 'pwd-counter';
+                    counter.style.fontSize = '0.8rem';
+                    counter.style.marginTop = '5px';
+                    counter.style.textAlign = 'right';
+                    counter.style.color = '#888';
                     input.parentElement.appendChild(counter);
 
                     const updateCounter = () => {
-                        counter.textContent = `${input.value.length} caractères (min. 8)`;
-                        if (input.value.length < 8) {
-                            counter.classList.add('invalid');
-                            counter.classList.remove('valid');
-                        } else {
-                            counter.classList.add('valid');
-                            counter.classList.remove('invalid');
-                        }
+                        counter.textContent = `${input.value.length} / 12`;
+                        counter.style.color = input.value.length >= 12 ? '#ff6b35' : '#888';
                     };
                     input.addEventListener('input', updateCounter);
                     updateCounter();
@@ -118,12 +101,12 @@
                 <form action="../TRAITEMENTS/traitement_inscription.php" method="post">
                     <div class="form-group">
                         <label for="nom">Nom</label>
-                        <input type="text" id="nom" name="nom" required pattern="^[a-zA-ZÀ-ÿ\s\-']+$" value="<?= get_value('nom',$old_values) ?>" placeholder="Votre nom" title="Le nom ne doit contenir que des lettres.">
+                        <input type="text" id="nom" name="nom" required value="<?= get_value('nom',$old_values) ?>" placeholder="Votre nom">
                     </div>
 
                     <div class="form-group">
                         <label for="prenom">Prénom</label>
-                        <input type="text" id="prenom" name="prenom" required pattern="^[a-zA-ZÀ-ÿ\s\-']+$" value="<?= get_value('prenom',$old_values) ?>" placeholder="Votre prénom" title="Le prénom ne doit contenir que des lettres.">
+                        <input type="text" id="prenom" name="prenom" required value="<?= get_value('prenom',$old_values) ?>" placeholder="Votre prénom">
                     </div>
 
                     <div class="form-group">
@@ -133,7 +116,7 @@
 
                     <div class="form-group">
                         <label for="telephone">Numéro de téléphone</label>
-                        <input type="tel" id="telephone" name="telephone" required pattern="^(0|\+33)[1-9]([-. ]?[0-9]{2}){4}$" value="<?= get_value('telephone',$old_values) ?>" placeholder="06 12 34 56 78" title="Format attendu : 0612345678 ou +33612345678.">
+                        <input type="tel" id="telephone" name="telephone" required value="<?= get_value('telephone',$old_values) ?>" placeholder="06 12 34 56 78">
                     </div>
 
                     <div class="form-group">
@@ -158,22 +141,22 @@
 
                     <div class="form-group">
                         <label for="code-postal">Code postal</label>
-                        <input type="text" id="code-postal" name="code-postal" required pattern="[0-9]{5}" value="<?= get_value('code_postal',$old_values) ?>" placeholder="75000" title="Le code postal doit contenir exactement 5 chiffres.">
+                        <input type="text" id="code-postal" name="code-postal" required value="<?= get_value('code_postal',$old_values) ?>" placeholder="75000">
                     </div>
 
                     <div class="form-group">
                         <label for="ville">Ville</label>
-                        <input type="text" id="ville" name="ville" required pattern="^[a-zA-ZÀ-ÿ\s\-']+$" value="<?= get_value('ville',$old_values) ?>" placeholder="Albuquerque" title="La ville ne doit contenir que des lettres.">
+                        <input type="text" id="ville" name="ville" required value="<?= get_value('ville',$old_values) ?>" placeholder="Albuquerque">
                     </div>
 
                     <div class="form-group">
                         <label for="password">Mot de passe</label>
-                        <input type="password" id="password" name="password" required placeholder="Minimum 8 caractères">
+                        <input type="password" id="password" name="password" required placeholder="Maximum 12 caractères" maxlength="12">
                     </div>
 
                     <div class="form-group">
                         <label for="confirm-password">Confirmer le mot de passe</label>
-                        <input type="password" id="confirm-password" name="confirm-password" required placeholder="Retapez votre mot de passe">
+                        <input type="password" id="confirm-password" name="confirm-password" required placeholder="Retapez votre mot de passe" maxlength="12">
                     </div>
 
                     <div class="form-group">
