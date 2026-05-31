@@ -187,8 +187,6 @@ foreach ($commandes as $cmd) {
 
             const toast = document.createElement('div');
             toast.className = 'toast-notification toast-' + type;
-            toast.setAttribute('role', 'alert');
-            toast.setAttribute('aria-live', 'assertive');
             toast.textContent = message;
             toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);padding:16px 28px;border-radius:10px;color:#fff;font-weight:bold;font-size:1rem;z-index:9999;opacity:0;transition:opacity 0.3s,transform 0.3s;box-shadow:0 4px 12px rgba(0,0,0,0.3);';
             toast.style.background = type === 'success' ? '#2ecc71' : '#e74c3c';
@@ -209,20 +207,20 @@ foreach ($commandes as $cmd) {
         </button>
     </div>
     
-    <main role="main" aria-label="Courses disponibles pour livraison">
-        <section class="radar-section" aria-labelledby="titre-radar">
+    <main>
+        <section class="radar-section">
 
-            <div class="status-banner" role="status" aria-live="polite">
-                <div class="pulse-ring" aria-hidden="true"></div>
-                <h2 id="titre-radar">En ligne - Recherche de livraisons en attente...</h2>
+            <div class="status-banner">
+                <div class="pulse-ring"></div>
+                <h2>En ligne - Recherche de livraisons en attente...</h2>
             </div>
 
             <button type="button" class="simulate-btn" id="btn-simuler">🎲 Simuler une commande</button>
 
-            <div class="offers-grid" role="list" aria-label="Liste des courses disponibles">
+            <div class="offers-grid">
 
                 <?php if (empty($offres)): ?>
-                    <div class="empty-state" role="listitem">
+                    <div class="empty-state">
                         <h3>Aucune course disponible</h3>
                         <p>Le restaurant est calme pour le moment. Restez en ligne.</p>
                     </div>
@@ -234,7 +232,7 @@ foreach ($commandes as $cmd) {
                         $gainEstime = $offre['gain_livreur'] ?? round(2.50 + ($distanceKm * 0.80), 2);
                         $tempsEstime = $offre['temps_minutes'] ?? round($distanceKm * 4);
                     ?>
-                        <div class="offer-card" role="listitem" aria-label="Course #<?= htmlspecialchars($offre['id']) ?>">
+                        <div class="offer-card">
                             <div class="offer-header">
                                 <div class="price-block">
                                     <span class="price-label">Gains estimés (Commande #<?= htmlspecialchars($offre['id']) ?>)</span>

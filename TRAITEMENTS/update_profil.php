@@ -28,11 +28,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] != $userId) {
     exit;
 }
 
-//Nettoyage de la valeur contre les injections XSS
 $valeur = trim($valeur);
-if ($champ !== 'date_naissance' && $champ !== 'objectif_jour') {
-    $valeur = strip_tags($valeur);
-}
 
 //Liste des champs que l'utilisateur a le droit de modifier
 $champsAutorises = ['nom_complet', 'email', 'telephone', 'date_naissance', 'adresse', 'objectif_jour'];

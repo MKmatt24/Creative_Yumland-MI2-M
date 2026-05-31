@@ -93,11 +93,11 @@ $temps_estime = $commande_trouvee['temps_minutes'] ?? 0;
         </button>
     </div>
     
-    <main class="success-page" role="main" aria-label="Confirmation de livraison">
+    <main class="success-page">
 
         <div class="success-container">
-            <div class="check-animation" aria-hidden="true">
-                <svg viewBox="0 0 52 52" class="checkmark" role="img" aria-label="Succès">
+            <div class="check-animation">
+                <svg viewBox="0 0 52 52" class="checkmark">
                     <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
                     <path class="checkmark__check" fill="none" d="M14.1 27.2 l7.1 7.2 16.7 -16.8"/>
                 </svg>
@@ -106,25 +106,25 @@ $temps_estime = $commande_trouvee['temps_minutes'] ?? 0;
             <h1>Livraison Terminée !</h1>
             <p>Merci pour votre rapidité</p>
 
-            <div class="earnings-card" aria-label="Résumé des gains">
-                <span class="label" id="lbl-gain">Gain de la course</span>
-                <span class="amount" aria-labelledby="lbl-gain">+ <?= number_format($gain_livreur, 2, ',', ' ') ?> €</span>
+            <div class="earnings-card">
+                <span class="label">Gain de la course</span>
+                <span class="amount">+ <?= number_format($gain_livreur, 2, ',', ' ') ?> €</span>
                 <hr>
                 <div class="stats-row">
                     <div>
-                        <span class="small-label" id="lbl-temps">Temps</span>
-                        <span class="value" aria-labelledby="lbl-temps"><?= intval($temps_estime) ?> min</span>
+                        <span class="small-label">Temps</span>
+                        <span class="value"><?= intval($temps_estime) ?> min</span>
                     </div>
                     <div>
-                        <span class="small-label" id="lbl-dist">Distance</span>
-                        <span class="value" aria-labelledby="lbl-dist"><?= htmlspecialchars($distance_km) ?> km</span>
+                        <span class="small-label">Distance</span>
+                        <span class="value"><?= htmlspecialchars($distance_km) ?> km</span>
                     </div>
                 </div>
             </div>
 
-            <nav class="action-buttons" aria-label="Navigation après livraison">
+            <div class="action-buttons">
                 <a href="livraisons_en_attente.php" class="primary-btn">Retour à la page de livraison</a>
-            </nav>
+            </div>
         </div>
 
     </main>

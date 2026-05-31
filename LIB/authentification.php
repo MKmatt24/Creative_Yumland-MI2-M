@@ -1,17 +1,7 @@
 <?php
-//Initialisation de la session avec paramètres sécurisés
+//Initialisation de la session
 if (session_status() === PHP_SESSION_NONE) {
-    session_set_cookie_params([
-        'httponly' => true,
-        'samesite' => 'Strict'
-    ]);
     session_start();
-}
-
-//Régénération de l'ID de session pour prévenir le session fixation
-if (!isset($_SESSION['_initiated'])) {
-    session_regenerate_id(true);
-    $_SESSION['_initiated'] = true;
 }
 
 //Vérification si l'utilisateur est connecté

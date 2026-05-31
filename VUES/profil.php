@@ -10,11 +10,6 @@ $currentUser = null;
 //On utilise l'ID de l'URL ($_GET) s'il existe, sinon on prend celui de la session
 $idAAfficher = $_GET['id'] ?? $_SESSION['user_id'];
 
-// Seul un admin peut consulter le profil d'un autre utilisateur
-if ($idAAfficher != $_SESSION['user_id'] && (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin')) {
-    $idAAfficher = $_SESSION['user_id'];
-}
-
 
 //Recherche de l'utilisateur correspondant à cet ID
 foreach ($users as $user) {
@@ -375,13 +370,10 @@ foreach ($couponsData as $code => $infos) {
             if (existing) existing.remove();
             const toast = document.createElement('div');
             toast.className = `toast-notification toast-${type}`;
-            toast.setAttribute('role', 'alert');
             toast.textContent = message;
             document.body.appendChild(toast);
             setTimeout(() => toast.classList.add('show'), 10);
             setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); }, 3000);
-            const ariaZone = document.getElementById('aria-notifications');
-            if (ariaZone) ariaZone.textContent = message;
         }
 
         //Gestion du bouton "Commander à nouveau" dans les commandes passées
@@ -495,8 +487,8 @@ foreach ($couponsData as $code => $infos) {
         </button>
     </div>
 
-    <main role="main" aria-label="Profil utilisateur">
-        <section class="profil-section" aria-labelledby="profil-titre">
+    <main>
+        <section class="profil-section">
             <div class="profil-container">
                 
                 <div class="profil-header">
@@ -508,15 +500,15 @@ foreach ($couponsData as $code => $infos) {
 
                     <div class="avatar-container">
                         <?php $avatarPath = $currentUser['avatar'] ?? '../IMAGES/AVATARS/avatar_anonyme.png'; ?>
-                        <img src="<?= htmlspecialchars($avatarPath) ?>" alt="Photo de profil de <?= htmlspecialchars($currentUser['prenom']) ?>">
-                        <button type="button" class="edit-avatar-btn" aria-label="Changer la photo de profil" title="Modifier la photo">📷</button>
-                        <input type="file" id="avatar-input" accept="image/*" hidden aria-label="Sélectionner une nouvelle photo de profil">
+                        <img src="<?= htmlspecialchars($avatarPath) ?>" alt="Photo de profil">
+                        <button type="button" class="edit-avatar-btn" aria-label="Changer la photo">📷</button>
+                        <input type="file" id="avatar-input" accept="image/*" hidden>
                     </div>
                     <div class="user-identity">
-                        <h2 id="profil-titre"><?= htmlspecialchars($currentUser['prenom'] . ' ' . $currentUser['nom']) ?></h2>
+                        <h2><?= htmlspecialchars($currentUser['prenom'] . ' ' . $currentUser['nom']) ?></h2>
                         <p class="member-date">Membre depuis <?= substr($currentUser['date_inscription'] ?? '2024', 0, 4) ?></p>
                         
-                        <div class="loyalty-card" aria-label="Programme de fidélité Los Pollos Club">
+                        <div class="loyalty-card">
                             <h3>Los Pollos Club</h3>
                             <?php
                             $objectif = 500;
@@ -524,7 +516,7 @@ foreach ($couponsData as $code => $infos) {
                             if ($pourcentage > 100) $pourcentage = 100;
                             ?>
                             <p>Vous avez <strong><?= $pointsRestants ?> / <?= $objectif ?> points</strong></p>
-                            <div class="progress-bar" role="progressbar" aria-valuenow="<?= $pointsRestants ?>" aria-valuemin="0" aria-valuemax="<?= $objectif ?>" aria-label="Progression fidélité : <?= $pointsRestants ?> sur <?= $objectif ?> points">
+                            <div class="progress-bar">
                                 <div class="progress-fill" style="width: <?= round($pourcentage) ?>%;"></div>
                             </div>
                             <p class="points-hint">
@@ -538,8 +530,8 @@ foreach ($couponsData as $code => $infos) {
 
                 <div class="profil-content-grid">
                     <div class="info-column">
-                        <h3 id="titre-coordonnees">Mes Coordonnées</h3>
-                        <form class="profil-form" aria-labelledby="titre-coordonnees">
+                        <h3>Mes Coordonnées</h3>
+                        <form class="profil-form">
                             <div class="form-group-row">
                                 <div class="form-group">
                                     <label for="field-nom">Nom complet</label>
@@ -601,13 +593,13 @@ foreach ($couponsData as $code => $infos) {
                     </div>
 
                     <div class="history-column">
-                        <h3 id="titre-commandes">Dernières Commandes</h3>
-                        <div class="order-list" role="list" aria-labelledby="titre-commandes">
+                        <h3>Dernières Commandes</h3>
+                        <div class="order-list">
                             <?php if (empty($mesCommandes)): ?>
                                 <p class="empty-orders">Vous n'avez passé aucune commande.</p>
                             <?php else: ?>
                                 <?php foreach ($mesCommandes as $commande): ?>
-                                    <div class="order-card" role="listitem">
+                                    <div class="order-card">
                                         <div class="order-icon">🍗</div>
                                         <div class="order-details">
                                             <h4>Commande #<?= $commande['id'] ?></h4>
@@ -681,8 +673,6 @@ foreach ($couponsData as $code => $infos) {
                 </div> </div>
         </section>
     </main>
-
-    <div id="aria-notifications" aria-live="assertive" aria-atomic="true" class="sr-only"></div>
 
     <?php include '../LIB/footer.php'; ?>
 

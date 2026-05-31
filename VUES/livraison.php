@@ -182,8 +182,6 @@ if ($commandeEnCours && isset($commandeEnCours['user_id'])) {
 
             const toast = document.createElement('div');
             toast.className = 'toast-notification toast-' + type;
-            toast.setAttribute('role', 'alert');
-            toast.setAttribute('aria-live', 'assertive');
             toast.textContent = message;
             toast.style.cssText = 'position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);padding:16px 28px;border-radius:10px;color:#fff;font-weight:bold;font-size:1rem;z-index:9999;opacity:0;transition:opacity 0.3s,transform 0.3s;box-shadow:0 4px 12px rgba(0,0,0,0.3);';
             toast.style.background = type === 'success' ? '#2ecc71' : '#e74c3c';
@@ -208,13 +206,13 @@ if ($commandeEnCours && isset($commandeEnCours['user_id'])) {
         </button>
     </div>
     
-    <main role="main" aria-label="Détails de la livraison en cours">
+    <main>
         <?php if ($commandeEnCours): ?>
-            <section class="delivery-section" id="zone-livraison" aria-labelledby="titre-commande">
+            <section class="delivery-section" id="zone-livraison">
 
                 <div class="delivery-header">
-                    <h2 id="titre-commande">Commande #<?= htmlspecialchars($commandeEnCours['id']) ?></h2>
-                    <span class="status-badge" role="status" aria-live="polite">En cours de livraison</span>
+                    <h2>Commande #<?= htmlspecialchars($commandeEnCours['id']) ?></h2>
+                    <span class="status-badge">En cours de livraison</span>
                 </div>
 
                 <div class="delivery-container">
@@ -236,21 +234,21 @@ if ($commandeEnCours && isset($commandeEnCours['user_id'])) {
                         </a>
                     </div>
 
-                    <div class="access-grid" role="list" aria-label="Informations d'accès au bâtiment">
-                        <div class="access-item" role="listitem">
-                            <span class="icon" aria-hidden="true">🔢</span>
-                            <span class="label" id="lbl-digicode">Digicode</span>
-                            <span class="value" aria-labelledby="lbl-digicode"><?= htmlspecialchars($clientInfo['code_interphone'] ?? 'N/A') ?></span>
+                    <div class="access-grid">
+                        <div class="access-item">
+                            <span class="icon">🔢</span>
+                            <span class="label">Digicode</span>
+                            <span class="value"><?= htmlspecialchars($clientInfo['code_interphone'] ?? 'N/A') ?></span>
                         </div>
-                        <div class="access-item" role="listitem">
-                            <span class="icon" aria-hidden="true">🏢</span>
-                            <span class="label" id="lbl-etage">Étage</span>
-                            <span class="value" aria-labelledby="lbl-etage"><?= htmlspecialchars($clientInfo['etage'] ?? 'N/A') ?></span>
+                        <div class="access-item">
+                            <span class="icon">🏢</span>
+                            <span class="label">Étage</span>
+                            <span class="value"><?= htmlspecialchars($clientInfo['etage'] ?? 'N/A') ?></span>
                         </div>
-                        <div class="access-item" role="listitem">
-                            <span class="icon" aria-hidden="true">🚪</span>
-                            <span class="label" id="lbl-appart">Appartement</span>
-                            <span class="value" aria-labelledby="lbl-appart"><?= htmlspecialchars($clientInfo['appartement'] ?? 'N/A') ?></span>
+                        <div class="access-item">
+                            <span class="icon">🚪</span>
+                            <span class="label">Appartement</span>
+                            <span class="value"><?= htmlspecialchars($clientInfo['appartement'] ?? 'N/A') ?></span>
                         </div>
                     </div>
 
@@ -261,8 +259,8 @@ if ($commandeEnCours && isset($commandeEnCours['user_id'])) {
                         </div>
                     </div>
 
-                    <div class="delivery-actions" role="group" aria-label="Actions de livraison">
-                        <button type="button" id="btn-abandonner" class="abandon-btn" data-id="<?= $commandeEnCours['id'] ?>" aria-label="Abandonner cette livraison" title="Abandonner la livraison">❌</button>
+                    <div class="delivery-actions">
+                        <button type="button" id="btn-abandonner" class="abandon-btn" data-id="<?= $commandeEnCours['id'] ?>" aria-label="Abandonner cette livraison">❌</button>
 
                         <button type="button" id="btn-terminer" class="finish-btn finish-btn--large" data-id="<?= $commandeEnCours['id'] ?>" aria-label="Marquer la livraison comme terminée">✅ Livraison Terminée</button>
                     </div>
