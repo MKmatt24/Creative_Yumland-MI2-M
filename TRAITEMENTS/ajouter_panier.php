@@ -1,4 +1,6 @@
 <?php
+// Fix crucial : Assure la cohérence de session entre les requêtes AJAX et la navigation
+session_set_cookie_params(['samesite' => 'Lax']);
 session_start();
 
 // Vérification si l'utilisateur est bloqué
@@ -50,28 +52,31 @@ if (isset($_POST['nom'], $_POST['prix'])) {
 
     $modifications = [];
 
+    // Ajout du support pour les modifications envoyées en JSON (cas du re-order)
+    if (!empty($_POST['modifications'])) {
+        $decoded = json_decode($_POST['modifications'], true);
+        if (is_array($decoded)) {
+            $modifications = $decoded;
+        }
+    }
+
     // --- LOGIQUE DU MENU ALÉATOIRE ---
     if ($nom === 'Menu Mystère') {
         $image = '../IMAGES/logo.png'; // Image spécifique pour le mystère
-        $plats_dispo = $menu_json['plats'] ?? [];
+        
+        // On ne génère une composition que si elle n'est pas déjà présente (cas d'une nouvelle commande)
+        if (empty($modifications['composition_aleatoire'])) {
+            $plats_dispo = $menu_json['plats'] ?? [];
+            $entrees_plats = array_filter($plats_dispo, fn($p) => in_array($p['cat'], ['Poulet', 'Burgers', 'Spécialités']));
+            $accompagnements = array_filter($plats_dispo, fn($p) => $p['cat'] === 'Accompagnements');
+            $desserts = array_filter($plats_dispo, fn($p) => $p['cat'] === 'Desserts');
 
-        // On sépare par catégories pour un menu cohérent
-        $entrees_plats = array_filter($plats_dispo, fn($p) => in_array($p['cat'], ['Poulet', 'Burgers', 'Spécialités']));
-        $accompagnements = array_filter($plats_dispo, fn($p) => $p['cat'] === 'Accompagnements');
-        $desserts = array_filter($plats_dispo, fn($p) => $p['cat'] === 'Desserts');
-
-        // Sécurisation de la sélection aléatoire (évite les erreurs si une catégorie est vide)
-        $sel_plat = !empty($entrees_plats) ? $entrees_plats[array_rand($entrees_plats)]['nom'] : 'Poulet croustillant';
-        $sel_acc = !empty($accompagnements) ? $accompagnements[array_rand($accompagnements)]['nom'] : 'Frites';
-        $sel_dessert = !empty($desserts) ? $desserts[array_rand($desserts)]['nom'] : 'Sopapillas';
-
-        // Sélection aléatoire
-        $selection = [
-            'Plat' => $sel_plat,
-            'Accompagnement' => $sel_acc,
-            'Dessert' => $sel_dessert
-        ];
-        $modifications['composition_aleatoire'] = $selection;
+            $modifications['composition_aleatoire'] = [
+                'Plat' => !empty($entrees_plats) ? $entrees_plats[array_rand($entrees_plats)]['nom'] : 'Poulet croustillant',
+                'Accompagnement' => !empty($accompagnements) ? $accompagnements[array_rand($accompagnements)]['nom'] : 'Frites',
+                'Dessert' => !empty($desserts) ? $desserts[array_rand($desserts)]['nom'] : 'Sopapillas'
+            ];
+        }
     }
     
     // Récupération des ingrédients sélectionnés et substitutions

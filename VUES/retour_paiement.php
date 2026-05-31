@@ -1,4 +1,10 @@
 <?php
+// RÉCUPÉRATION DU SID DEPUIS L'URL (Crucial pour localhost après redirection externe)
+if (isset($_GET['sid']) && !empty($_GET['sid'])) {
+    session_id($_GET['sid']);
+}
+// Fix crucial : Autorise la récupération du cookie de session après une redirection externe (Banque)
+session_set_cookie_params(['samesite' => 'Lax']);
 session_start();
 require_once '../TRAITEMENTS/getapikey.php';
 
@@ -31,6 +37,8 @@ $paiement_valide = (
  * 3. TRAITEMENT ET SAUVEGARDE DE LA COMMANDE
  */
 if ($paiement_valide) {
+    // On garde une copie des articles pour le bouton "Commander à nouveau" avant de vider la session
+    $articles_pour_recommande = $_SESSION['panier'] ?? [];
     $file = '../DATA/commande.json';
     $commandesData = file_exists($file) ? json_decode(file_get_contents($file), true) : [];
 
@@ -38,9 +46,9 @@ if ($paiement_valide) {
         // Cas d'une modification : on met à jour la commande existante
         foreach ($commandesData as &$c) {
             if ($c['id'] == $_SESSION['modification_id']) {
-                $c['articles'] = $_SESSION['panier'];
+                $c['articles'] = $_SESSION['panier'] ?? [];
                 // Nouveau total = Ancien total payé + complément
-                $c['prix_total'] = $_SESSION['modification_total_initial'] + (float)$montant;
+                $c['prix_total'] = ($_SESSION['modification_total_initial'] ?? 0) + (float)$montant;
                 $c['date_modification'] = date('d/m/Y H:i');
                 $c['statut'] = "a_preparer"; // Repasse en file d'attente
                 break;
@@ -51,11 +59,11 @@ if ($paiement_valide) {
         $nouvelle_commande = [
             "id" => $transaction,
             "date" => date('d/m/Y H:i'),
-            "client" => $_SESSION['prenom'] . " " . $_SESSION['nom'],
-            "user_id" => $_SESSION['user_id'],
+            "client" => ($_SESSION['prenom'] ?? 'Client') . " " . ($_SESSION['nom'] ?? 'Anonyme'),
+            "user_id" => $_SESSION['user_id'] ?? null,
             "prix_total" => (float)$montant,
             "statut" => "a_preparer",
-            "articles" => $_SESSION['panier'],
+            "articles" => $_SESSION['panier'] ?? [],
             "type" => $_SESSION['planification']['type'] ?? 'direct',
             "horaire" => $_SESSION['planification']['horaire'] ?? 'ASAP',
             "commentaire" => $_SESSION['commentaire_livreur'] ?? ''
@@ -98,6 +106,52 @@ if ($paiement_valide) {
     <link rel="icon" type="image/png" href="../IMAGES/logo.png">
     <link rel="stylesheet" href="../CSS/accueil.css">
     <link rel="stylesheet" href="../CSS/menu.css">
+    <meta name="csrf-token" content="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>">
+    <script defer>
+    document.addEventListener('DOMContentLoaded', function() {
+        const reorderBtn = document.querySelector('.reorder-now-btn');
+        if (reorderBtn) {
+            reorderBtn.addEventListener('click', function() {
+                let articles = [];
+                try {
+                    const raw = this.getAttribute('data-articles');
+                    articles = (raw && raw !== 'null') ? JSON.parse(raw) : [];
+                } catch(e) { console.error("Erreur JSON", e); }
+
+                if (!articles || articles.length === 0) {
+                    alert("Désolé, les détails de la commande n'ont pas pu être récupérés pour recommander.");
+                    return;
+                }
+
+                this.disabled = true;
+                const originalText = this.textContent;
+                this.textContent = '⏳ PRÉPARATION...';
+
+                (async () => {
+                    try {
+                        for (const article of articles) {
+                            const formData = new FormData();
+                            formData.append('nom', article.nom);
+                            formData.append('prix', article.prix || 0);
+                            formData.append('quantite', article.quantite || 1);
+                            
+                            if (article.modifications) {
+                                formData.append('modifications', JSON.stringify(article.modifications));
+                            }
+
+                            await fetch('../TRAITEMENTS/ajouter_panier.php', { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest' }, body: formData }); //
+                        }
+                        window.location.href = 'menu.php'; //
+                    } catch (err) {
+                        console.error(err);
+                        this.disabled = false;
+                        this.textContent = originalText;
+                    }
+                })();
+            });
+        }
+    });
+    </script>
 </head>
 <body class="page-dark">
 
@@ -122,6 +176,11 @@ if ($paiement_valide) {
                 <a href="suivi_commande.php" class="btn-full">
                     SUIVRE MA COMMANDE EN DIRECT
                 </a>
+
+                <!-- Nouveau bouton pour dupliquer la commande -->
+                <button type="button" class="btn-secondary-full reorder-now-btn" data-articles='<?= htmlspecialchars(json_encode($articles_pour_recommande), ENT_QUOTES) ?>' style="margin-top: 15px; width: 100%;">
+                    🔁 RECOMMANDEZ
+                </button>
 
                 <a href="accueil.php" class="btn-secondary-full">
                     Retourner à l'accueil

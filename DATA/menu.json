@@ -4,7 +4,7 @@
             "id": 1,
             "nom": "Albuquerque Bucket",
             "desc": "12 pièces de poulet frit secret, servi avec 2 sauces.",
-            "prix": 20,
+            "prix": 19.99,
             "cat": "Poulet",
             "image": "..\/IMAGES\/albuquerque_bucket.jpg",
             "infos": {
